@@ -1,0 +1,3381 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Польский язык — интервальные повторения + шпаргалка</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            font-family: system-ui, 'Segoe UI', 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            padding: 20px;
+        }
+        .app-container {
+            max-width: 700px;
+            width: 100%;
+            background: rgba(255,255,255,0.95);
+            border-radius: 56px;
+            box-shadow: 0 25px 45px rgba(0,0,0,0.3);
+            padding: 20px;
+        }
+        .stats {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 32px;
+            padding: 15px 20px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .stat-card {
+            background: white;
+            border-radius: 20px;
+            padding: 8px 18px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .stat-label { font-size: 0.7rem; text-transform: uppercase; font-weight: 600; color: #6c7a89; }
+        .stat-value { font-size: 1.5rem; font-weight: 800; color: #2c3e66; line-height: 1; }
+        .card {
+            background: white;
+            border-radius: 48px;
+            padding: 25px 20px 35px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .image-area {
+            width: 100%;
+            min-height: 100px;
+            max-height: 280px;
+            background: #f3f3f3;
+            border-radius: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            overflow-y: auto;
+            cursor: pointer;
+            transition: 0.1s;
+            padding: 12px;
+            font-size: 0.9rem;
+            color: #2c3e66;
+            flex-direction: column;
+            position: relative;
+        }
+        .image-area img { width: 100%; height: 100%; object-fit: cover; border-radius: 24px; }
+        .words-list {
+            text-align: left;
+            width: 100%;
+            max-height: 280px;
+            overflow-y: auto;
+            font-size: 0.85rem;
+            background: #f8fafc;
+            border-radius: 24px;
+            padding: 12px;
+        }
+        .words-list table { width: 100%; border-collapse: collapse; }
+        .words-list th, .words-list td { padding: 6px 8px; text-align: left; border-bottom: 1px solid #e2e8f0; }
+        .words-list th { background: #e9edf2; position: sticky; top: 0; }
+        .close-list-btn {
+            background: #6c757d;
+            color: white;
+            border: none;
+            border-radius: 40px;
+            padding: 6px 16px;
+            margin-top: 12px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.2s;
+            display: inline-block;
+        }
+        .close-list-btn:hover { background: #5a6268; }
+        .list-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .russian-word {
+            font-size: 2.4rem;
+            font-weight: 700;
+            margin: 15px 0 10px;
+            color: #1e2a3a;
+            word-break: break-word;
+        }
+        .translation {
+            font-size: 1.8rem;
+            font-weight: 500;
+            background: #e9ecef;
+            padding: 14px;
+            border-radius: 60px;
+            margin: 15px 0;
+            color: #0b5e2e;
+            min-height: 85px;
+            word-break: break-word;
+        }
+        .hidden-translation {
+            background: #dee2e6;
+            color: #8b9bb0;
+            filter: blur(4px);
+            cursor: pointer;
+        }
+        .mode-switch {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .mode-btn {
+            background: #cfdee9;
+            border: none;
+            padding: 8px 24px;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: 0.2s;
+            color: #1f2a3e;
+        }
+        .mode-btn.active {
+            background: #2b3b4e;
+            color: white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        .counter {
+            background: #e9ecef;
+            border-radius: 40px;
+            padding: 8px 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #2c3e66;
+            margin-top: 10px;
+            margin-bottom: 5px;
+            display: inline-block;
+        }
+        .btn {
+            border: none;
+            color: white;
+            font-size: 0.95rem;
+            font-weight: 600;
+            padding: 10px 18px;
+            border-radius: 60px;
+            margin: 5px;
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+        }
+        .btn-show { background: #1e6f3f; }
+        .btn-show:hover { background: #0f5a33; transform: scale(0.97); }
+        .btn-next { background: #3a5a78; }
+        .btn-next:hover { background: #2c4c6c; }
+        .difficulty-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+        .btn-difficulty { flex: 1; min-width: 80px; font-size: 0.85rem; padding: 10px 12px; }
+        .btn-again { background: #dc3545; }
+        .btn-again:hover { background: #b02a37; }
+        .btn-hard { background: #fd7e14; }
+        .btn-hard:hover { background: #e0620e; }
+        .btn-good { background: #28a745; }
+        .btn-good:hover { background: #1e7e34; }
+        .btn-easy { background: #17a2b8; }
+        .btn-easy:hover { background: #117a8b; }
+        .category-bar {
+            background: rgba(200, 212, 220, 0.95);
+            border-radius: 48px;
+            padding: 12px 15px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            max-height: 220px;
+            overflow-y: auto;
+        }
+        .cat-btn {
+            background: #cbd5e1;
+            color: #1f2a3e;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: 0.1s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
+        }
+        .cat-btn span.count {
+            background: rgba(0,0,0,0.15);
+            border-radius: 20px;
+            padding: 2px 8px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            margin-left: 4px;
+        }
+        .cat-btn.active {
+            background: #2b3b4e;
+            color: white;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+        }
+        .reset-btn { background: #6c757d; font-size: 0.75rem; padding: 5px 12px; }
+        .list-hint { font-size: 0.7rem; color: #2c5f8a; margin-top: 6px; font-weight: normal; }
+        footer { text-align: center; margin-top: 15px; font-size: 0.65rem; color: #5a6e85; }
+        @media (max-width: 550px) {
+            .russian-word { font-size: 1.8rem; }
+            .translation { font-size: 1.3rem; }
+            .btn-difficulty { font-size: 0.7rem; min-width: 65px; }
+            .stat-value { font-size: 1.2rem; }
+            .cat-btn { font-size: 0.65rem; padding: 5px 10px; }
+            .counter { font-size: 0.75rem; padding: 5px 15px; }
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <div class="stats">
+        <div class="stat-card"><div class="stat-label">📚 Всего</div><div class="stat-value" id="totalWordsCount">0</div></div>
+        <div class="stat-card"><div class="stat-label">✅ Выучено</div><div class="stat-value" id="learnedWordsCount">0</div></div>
+        <div class="stat-card"><div class="stat-label">🔄 На повторении</div><div class="stat-value" id="dueWordsCount">0</div></div>
+        <button class="reset-btn btn" id="resetProgressBtn" style="background:#6c757d;">🔄 Сброс</button>
+    </div>
+
+    <div class="mode-switch">
+        <button class="mode-btn active" data-mode="spaced">📆 Интервальные повторения</button>
+        <button class="mode-btn" data-mode="simple">📖 Шпаргалка (без учёта)</button>
+    </div>
+
+    <div class="category-bar" id="categoryBar"></div>
+    <div class="card">
+        <div class="image-area" id="imageContainer">
+            🖼️ Нажмите, чтобы показать список слов
+        </div>
+        <div class="russian-word" id="russianWord">---</div>
+        <div class="counter" id="wordCounter" style="display: none;"></div>
+        <div class="translation hidden-translation" id="translationBlock">🔒 нажмите «Показать перевод»</div>
+        <div class="controls">
+            <button class="btn btn-show" id="showTranslateBtn">📖 Показать перевод</button>
+            <button class="btn btn-next" id="nextWordBtn">➡ Следующее</button>
+        </div>
+        <div class="difficulty-buttons" id="difficultyButtons" style="display: none;">
+            <button class="btn-difficulty btn-again" data-quality="0">🔄 Снова</button>
+            <button class="btn-difficulty btn-hard" data-quality="2">😓 Сложно</button>
+            <button class="btn-difficulty btn-good" data-quality="3">👍 Хорошо</button>
+            <button class="btn-difficulty btn-easy" data-quality="4">⭐ Легко</button>
+        </div>
+    </div>
+    <footer>📊 SM‑2 • нажмите на изображение → список слов категории (кнопка "Скрыть" вернёт карточку)</footer>
+</div>
+
+<script>
+    // ===================== БАЗА ДАННЫХ СЛОВ =====================
+    const wordsDB = [];
+    let idCounter = 0;
+    function addWord(ru, pl, category, image = null) {
+        wordsDB.push({
+            id: idCounter++,
+            ru: ru,
+            pl: pl,
+            category: category,
+            image: image || `https://picsum.photos/id/${(idCounter % 100) + 200}/400/200`
+        });
+    }
+
+    // ---------- РАСШИРЕННАЯ БАЗА СЛОВ ----------
+    addWord("Хлеб", "chleb", "еда");
+    addWord("Масло", "masło", "еда");
+    addWord("Сыр", "ser", "еда");
+    addWord("Колбаса", "kiełbasa", "еда");
+    addWord("Мясо", "mięso", "еда");
+    addWord("Курица", "kurczak", "еда");
+    addWord("Рыба", "ryba", "еда");
+    addWord("Яйцо", "jajko", "еда");
+    addWord("Молоко", "mleko", "еда");
+    addWord("Йогурт", "jogurt", "еда");
+    addWord("Сметана", "śmietana", "еда");
+    addWord("Суп", "zupa", "еда");
+    addWord("Картошка", "ziemniak", "еда");
+    addWord("Макароны", "makaron", "еда");
+    addWord("Рис", "ryż", "еда");
+    addWord("Каша", "kasza", "еда");
+    addWord("Салат (блюдо)", "sałatka", "еда");
+    addWord("Бутерброд", "kanapka", "еда");
+    addWord("Яблоко", "jabłko", "еда");
+    addWord("Банан", "banan", "еда");
+    addWord("Апельсин", "pomarańcza", "еда");
+    addWord("Вода", "woda", "еда");
+    addWord("Сок", "sok", "еда");
+    addWord("Чай", "herbata", "еда");
+    addWord("Кофе", "kawa", "еда");
+    addWord("Сахар", "cukier", "еда");
+    addWord("Соль", "sól", "еда");
+    addWord("Торт", "ciasto", "еда");
+    addWord("Печенье", "ciastko", "еда");
+    addWord("Мороженое", "lody", "еда");
+
+    // ===================== 2. ГОРОД (Miasto) — 30 пар =====================
+    addWord("Город", "miasto", "город");
+    addWord("Улица", "ulica", "город");
+    addWord("Дом (здание)", "budynek", "город");
+    addWord("Магазин", "sklep", "город");
+    addWord("Аптека", "apteka", "город");
+    addWord("Больница", "szpital", "город");
+    addWord("Школа", "szkoła", "город");
+    addWord("Университет", "uniwersytet", "город");
+    addWord("Библиотека", "biblioteka", "город");
+    addWord("Парк", "park", "город");
+    addWord("Площадь", "plac", "город");
+    addWord("Вокзал (ж/д)", "dworzec", "город");
+    addWord("Аэропорт", "lotnisko", "город");
+    addWord("Остановка", "przystanek", "город");
+    addWord("Автобус", "autobus", "город");
+    addWord("Трамвай", "tramwaj", "город");
+    addWord("Такси", "taxi", "город");
+    addWord("Светофор", "sygnalizacja świetlna", "город");
+    addWord("Тротуар", "chodnik", "город");
+    addWord("Ресторан", "restauracja", "город");
+    addWord("Кафе", "kawiarnia", "город");
+    addWord("Кинотеатр", "kino", "город");
+    addWord("Театр", "teatr", "город");
+    addWord("Музей", "muzeum", "город");
+    addWord("Церковь", "kościół", "город");
+    addWord("Рынок", "rynek", "город");
+    addWord("Полиция", "policja", "город");
+    addWord("Почта", "poczta", "город");
+    addWord("Банк", "bank", "город");
+    addWord("Отель", "hotel", "город");
+
+    // ===================== 3. ЖИЛЬЕ (Mieszkanie) — 30 пар =====================
+    addWord("Квартира", "mieszkanie", "жилье");
+    addWord("Комната", "pokój", "жилье");
+    addWord("Кухня", "kuchnia", "жилье");
+    addWord("Ванная", "łazienka", "жилье");
+    addWord("Туалет", "toaleta", "жилье");
+    addWord("Гостиная", "salon", "жилье");
+    addWord("Прихожая", "przedpokój", "жилье");
+    addWord("Балкон", "balkon", "жилье");
+    addWord("Окно", "okno", "жилье");
+    addWord("Дверь", "drzwi", "жилье");
+    addWord("Стена", "ściana", "жилье");
+    addWord("Пол", "podłoga", "жилье");
+    addWord("Потолок", "sufit", "жилье");
+    addWord("Ключ", "klucz", "жилье");
+    addWord("Замок (дверной)", "zamek", "жилье");
+    addWord("Мебель", "meble", "жилье");
+    addWord("Стол", "stół", "жилье");
+    addWord("Стул", "krzesło", "жилье");
+    addWord("Кресло", "fotel", "жилье");
+    addWord("Диван", "kanapa", "жилье");
+    addWord("Кровать", "łóżko", "жилье");
+    addWord("Шкаф", "szafa", "жилье");
+    addWord("Стеллаж", "regał", "жилье");
+    addWord("Лампа", "lampa", "жилье");
+    addWord("Ковёр", "dywan", "жилье");
+    addWord("Холодильник", "lodówka", "жилье");
+    addWord("Плита (кух.)", "kuchenka", "жилье");
+    addWord("Раковина", "zlew", "жилье");
+    addWord("Душ", "prysznic", "жилье");
+    addWord("Стиральная машина", "pralka", "жилье");
+
+    // ===================== 4. ОДЕЖДА (Odzież) — 30 пар =====================
+    addWord("Одежда", "ubranie", "одежда");
+    addWord("Футболка", "koszulka", "одежда");
+    addWord("Рубашка", "koszula", "одежда");
+    addWord("Свитер", "sweter", "одежда");
+    addWord("Куртка", "kurtka", "одежда");
+    addWord("Пальто", "płaszcz", "одежда");
+    addWord("Джинсы", "dżinsy", "одежда");
+    addWord("Брюки", "spodnie", "одежда");
+    addWord("Шорты", "szorty", "одежда");
+    addWord("Юбка", "spódnica", "одежда");
+    addWord("Платье", "sukienka", "одежда");
+    addWord("Носки", "skarpetki", "одежда");
+    addWord("Колготки", "rajstopy", "одежда");
+    addWord("Обувь", "buty", "одежда");
+    addWord("Кроссовки", "trampki", "одежда");
+    addWord("Туфли", "buty wizytowe", "одежда");
+    addWord("Сапоги", "kozaki", "одежда");
+    addWord("Шапка", "czapka", "одежда");
+    addWord("Перчатки", "rękawiczki", "одежда");
+    addWord("Шарф", "szalik", "одежда");
+    addWord("Ремень", "pasek", "одежда");
+    addWord("Пиджак", "marynarka", "одежда");
+    addWord("Костюм", "garnitur", "одежда");
+    addWord("Галстук", "krawat", "одежда");
+    addWord("Купальник", "kostium kąpielowy", "одежда");
+    addWord("Платок (носовой)", "chusteczka", "одежда");
+    addWord("Пижама", "piżama", "одежда");
+    addWord("Тапочки", "kapcie", "одежда");
+    addWord("Рукав", "rękaw", "одежда");
+    addWord("Воротник", "kołnierz", "одежда");
+
+    // ===================== 5. ПРИРОДА (Natura) — 30 пар =====================
+    addWord("Природа", "natura", "природа");
+    addWord("Земля (планета)", "ziemia", "природа");
+    addWord("Небо", "niebo", "природа");
+    addWord("Солнце", "słońce", "природа");
+    addWord("Луна", "księżyc", "природа");
+    addWord("Звезда", "gwiazda", "природа");
+    addWord("Облако", "chmura", "природа");
+    addWord("Дождь", "deszcz", "природа");
+    addWord("Снег", "śnieg", "природа");
+    addWord("Ветер", "wiatr", "природа");
+    addWord("Лес", "las", "природа");
+    addWord("Дерево", "drzewo", "природа");
+    addWord("Лист (дерева)", "liść", "природа");
+    addWord("Цветок", "kwiat", "природа");
+    addWord("Трава", "trawa", "природа");
+    addWord("Гора", "góra", "природа");
+    addWord("Море", "morze", "природа");
+    addWord("Озеро", "jezioro", "природа");
+    addWord("Река", "rzeka", "природа");
+    addWord("Камень", "kamień", "природа");
+    addWord("Песок", "piasek", "природа");
+    addWord("Зверь / Животное", "zwierzę", "природа");
+    addWord("Птица", "ptak", "природа");
+    addWord("Рыба (как вид)", "ryba", "природа");
+    addWord("Собака", "pies", "природа");
+    addWord("Кошка", "kot", "природа");
+    addWord("Лошадь", "koń", "природа");
+    addWord("Корова", "krowa", "природа");
+    addWord("Медведь", "niedźwiedź", "природа");
+    addWord("Заяц", "zając", "природа");
+
+    // ===================== 6. СЕМЬЯ (Rodzina) — 30 пар =====================
+    addWord("Семья", "rodzina", "семья");
+    addWord("Родители", "rodzice", "семья");
+    addWord("Мать", "matka", "семья");
+    addWord("Отец", "ojciec", "семья");
+    addWord("Сын", "syn", "семья");
+    addWord("Дочь", "córka", "семья");
+    addWord("Брат", "brat", "семья");
+    addWord("Сестра", "siostra", "семья");
+    addWord("Дед", "dziadek", "семья");
+    addWord("Бабушка", "babcia", "семья");
+    addWord("Внук", "wnuk", "семья");
+    addWord("Внучка", "wnuczka", "семья");
+    addWord("Дядя", "wujek", "семья");
+    addWord("Тётя", "ciocia", "семья");
+    addWord("Племянник", "bratanek", "семья");
+    addWord("Племянница", "bratanica", "семья");
+    addWord("Кузен", "kuzyn", "семья");
+    addWord("Кузина", "kuzynka", "семья");
+    addWord("Муж", "mąż", "семья");
+    addWord("Жена", "żona", "семья");
+    addWord("Супруги / брак", "małżeństwo", "семья");
+    addWord("Ребёнок", "dziecko", "семья");
+    addWord("Дети", "dzieci", "семья");
+    addWord("Девочка", "dziewczynka", "семья");
+    addWord("Мальчик", "chłopiec", "семья");
+    addWord("Близнецы", "bliźnięta", "семья");
+    addWord("Папа", "tata", "семья");
+    addWord("Мама", "mama", "семья");
+    addWord("Родственник", "krewny", "семья");
+    addWord("Родственница", "krewna", "семья");
+
+    // ===================== 7. РАБОТА (Praca) — 30 пар =====================
+    addWord("Работа", "praca", "работа");
+    addWord("Офис", "biuro", "работа");
+    addWord("Зарплата", "pensja", "работа");
+    addWord("Начальник", "szef", "работа");
+    addWord("Коллега (м.)", "kolega", "работа");
+    addWord("Коллега (ж.)", "koleżanka", "работа");
+    addWord("Сотрудник", "pracownik", "работа");
+    addWord("Карьера", "kariera", "работа");
+    addWord("Должность", "stanowisko", "работа");
+    addWord("Контракт", "umowa", "работа");
+    addWord("Отпуск", "urlop", "работа");
+    addWord("Больничный", "zwolnienie lekarskie", "работа");
+    addWord("Пенсия", "emerytura", "работа");
+    addWord("Безработица", "bezrobocie", "работа");
+    addWord("Собеседование", "rozmowa kwalifikacyjna", "работа");
+    addWord("Резюме", "CV", "работа");
+    addWord("Командировка", "podróż służbowa", "работа");
+    addWord("Переработка", "nadgodziny", "работа");
+    addWord("Декретный отпуск", "urlop macierzyński", "работа");
+    addWord("Увольнение", "zwolnienie", "работа");
+    addWord("Поиск работы", "szukanie pracy", "работа");
+    addWord("Работодатель", "pracodawca", "работа");
+    addWord("Работник", "pracobiorca", "работа");
+    addWord("Стажировка", "staż", "работа");
+    addWord("График (работы)", "grafik pracy", "работа");
+    addWord("Смена (рабочая)", "zmiana", "работа");
+    addWord("Выходной день", "dzień wolny", "работа");
+    addWord("Сверхурочные", "nadgodziny", "работа");
+    addWord("Профессия", "zawód", "работа");
+    addWord("Рынок труда", "rynek pracy", "работа");
+
+    // ===================== 8. ПОСУДА (Naczynia) — 30 пар =====================
+    addWord("Посуда", "naczynia", "посуда");
+    addWord("Тарелка", "talerz", "посуда");
+    addWord("Глубокая тарелка", "talerz głęboki", "посуда");
+    addWord("Миска", "miska", "посуда");
+    addWord("Чашка", "filiżanka", "посуда");
+    addWord("Стакан", "szklanka", "посуда");
+    addWord("Кружка", "kubek", "посуда");
+    addWord("Рюмка", "kieliszek", "посуда");
+    addWord("Бокал", "kieliszek do wina", "посуда");
+    addWord("Ложка", "łyżka", "посуда");
+    addWord("Вилка", "widelec", "посуда");
+    addWord("Нож", "nóż", "посуда");
+    addWord("Чайная ложка", "łyżeczka", "посуда");
+    addWord("Кастрюля", "garnek", "посуда");
+    addWord("Сковорода", "patelnia", "посуда");
+    addWord("Дуршлаг", "durszlak", "посуда");
+    addWord("Тёрка", "tarka", "посуда");
+    addWord("Разделочная доска", "deska do krojenia", "посуда");
+    addWord("Чайник (электрический)", "czajnik elektryczny", "посуда");
+    addWord("Чайник (для плиты)", "czajnik tradycyjny", "посуда");
+    addWord("Кофейник", "dzbanek do kawy", "посуда");
+    addWord("Кувшин", "dzban", "посуда");
+    addWord("Поднос", "taca", "посуда");
+    addWord("Салфетка", "serwetka", "посуда");
+    addWord("Скатерть", "obrus", "посуда");
+    addWord("Открывашка", "otwieracz do butelek", "посуда");
+    addWord("Штопор", "korkociąg", "посуда");
+    addWord("Прихватка", "rękawica kuchenna", "посуда");
+    addWord("Полотенце (кухонное)", "ręcznik kuchenny", "посуда");
+    addWord("Контейнер (для еды)", "pojemnik na żywność", "посуда");
+
+    // ===================== 9. РАСТЕНИЯ (Rośliny) — 30 пар =====================
+    addWord("Растение", "roślina", "растения");
+    addWord("Дерево", "drzewo", "растения");
+    addWord("Куст", "krzak", "растения");
+    addWord("Трава", "trawa", "растения");
+    addWord("Цветок", "kwiat", "растения");
+    addWord("Лист", "liść", "растения");
+    addWord("Корень", "korzeń", "растения");
+    addWord("Стебель", "łodyga", "растения");
+    addWord("Лепесток", "płatek", "растения");
+    addWord("Семя", "nasiono", "растения");
+    addWord("Плод (растения)", "owoc", "растения");
+    addWord("Роза", "róża", "растения");
+    addWord("Тюльпан", "tulipan", "растения");
+    addWord("Ромашка", "rumianek", "растения");
+    addWord("Одуванчик", "mniszek lekarski", "растения");
+    addWord("Кактус", "kaktus", "растения");
+    addWord("Пальма", "palma", "растения");
+    addWord("Ель", "świerk", "растения");
+    addWord("Сосна", "sosna", "растения");
+    addWord("Берёза", "brzoza", "растения");
+    addWord("Дуб", "dąb", "растения");
+    addWord("Клён", "klon", "растения");
+    addWord("Яблоня", "jabłoń", "растения");
+    addWord("Вишня", "wiśnia", "растения");
+    addWord("Клубника", "truskawka", "растения");
+    addWord("Помидор (как растение)", "pomidor", "растения");
+    addWord("Огурец (растение)", "ogórek", "растения");
+    addWord("Лук (растение)", "cebula", "растения");
+    addWord("Морковь (растение)", "marchew", "растения");
+    addWord("Петрушка (зелень)", "pietruszka", "растения");
+
+    // ===================== 10. ЖИВОТНЫЕ (Zwierzęta) — 30 пар =====================
+    addWord("Животное", "zwierzę", "животные");
+    addWord("Собака", "pies", "животные");
+    addWord("Кошка", "kot", "животные");
+    addWord("Мышь", "mysz", "животные");
+    addWord("Крыса", "szczur", "животные");
+    addWord("Кролик", "królik", "животные");
+    addWord("Лошадь", "koń", "животные");
+    addWord("Корова", "krowa", "животные");
+    addWord("Бык", "byk", "животные");
+    addWord("Коза", "koza", "животные");
+    addWord("Овца", "owca", "животные");
+    addWord("Свинья", "świnia", "животные");
+    addWord("Курица (домашняя)", "kura", "животные");
+    addWord("Петух", "kogut", "животные");
+    addWord("Утка", "kaczka", "животные");
+    addWord("Гусь", "gęś", "животные");
+    addWord("Лиса", "lis", "животные");
+    addWord("Волк", "wilk", "животные");
+    addWord("Медведь", "niedźwiedź", "животные");
+    addWord("Заяц", "zając", "животные");
+    addWord("Белка", "wiewiórka", "животные");
+    addWord("Ёж", "jeż", "животные");
+    addWord("Лось", "łoś", "животные");
+    addWord("Олень", "jeleń", "животные");
+    addWord("Тигр", "tygrys", "животные");
+    addWord("Лев", "lew", "животные");
+    addWord("Слон", "słoń", "животные");
+    addWord("Жираф", "żyrafa", "животные");
+    addWord("Обезьяна", "małpa", "животные");
+    addWord("Рыба (как животное)", "ryba", "животные");
+
+    // ===================== 11. ЧЕЛОВЕК (Człowiek) — 30 пар =====================
+    addWord("Человек (личность)", "człowiek", "человек");
+    addWord("Мужчина", "mężczyzna", "человек");
+    addWord("Женщина", "kobieta", "человек");
+    addWord("Ребёнок", "dziecko", "человек");
+    addWord("Младенец", "niemowlę", "человек");
+    addWord("Старик", "starzec", "человек");
+    addWord("Старуха", "staruszka", "человек");
+    addWord("Парень", "chłopak", "человек");
+    addWord("Девушка", "dziewczyna", "человек");
+    addWord("Тело", "ciało", "человек");
+    addWord("Голова", "głowa", "человек");
+    addWord("Лицо", "twarz", "человек");
+    addWord("Глаз", "oko", "человек");
+    addWord("Нос", "nos", "человек");
+    addWord("Рот", "usta", "человек");
+    addWord("Зуб", "ząb", "человек");
+    addWord("Язык (орган)", "język", "человек");
+    addWord("Ухо", "ucho", "человек");
+    addWord("Шея", "szyja", "человек");
+    addWord("Рука (кисть)", "ręka", "человек");
+    addWord("Рука (от плеча)", "ramię", "человек");
+    addWord("Нога (стопа)", "noga", "человек");
+    addWord("Нога (от бедра)", "noga", "человек");
+    addWord("Палец (на руке)", "palec", "человек");
+    addWord("Палец (на ноге)", "palec u nogi", "человек");
+    addWord("Колено", "kolano", "человек");
+    addWord("Сердце", "serce", "человек");
+    addWord("Кровь", "krew", "человек");
+    addWord("Кожа (тела)", "skóra", "человек");
+    addWord("Кость", "kość", "человек");
+
+    // ===================== 12. УВЛЕЧЕНИЯ (Hobby) — 30 пар =====================
+    addWord("Хобби", "hobby", "увлечения");
+    addWord("Увлечение", "zainteresowanie", "увлечения");
+    addWord("Чтение", "czytanie", "увлечения");
+    addWord("Книга", "książka", "увлечения");
+    addWord("Кино", "kino", "увлечения");
+    addWord("Фотография", "fotografowanie", "увлечения");
+    addWord("Музыка", "muzyka", "увлечения");
+    addWord("Игра на гитаре", "gra na gitarze", "увлечения");
+    addWord("Пение", "śpiewanie", "увлечения");
+    addWord("Танцы", "taniec", "увлечения");
+    addWord("Рисование", "rysowanie", "увлечения");
+    addWord("Живопись", "malowanie", "увлечения");
+    addWord("Рукоделие", "rękodzieło", "увлечения");
+    addWord("Вязание", "robienie na drutach", "увлечения");
+    addWord("Вышивка", "haftowanie", "увлечения");
+    addWord("Кулинария", "gotowanie", "увлечения");
+    addWord("Печение (выпечка)", "pieczenie", "увлечения");
+    addWord("Садоводство", "ogrodnictwo", "увлечения");
+    addWord("Компьютерные игры", "gry komputerowe", "увлечения");
+    addWord("Спорт", "sport", "увлечения");
+    addWord("Бег", "bieganie", "увлечения");
+    addWord("Фитнес", "fitness", "увлечения");
+    addWord("Йога", "joga", "увлечения");
+    addWord("Плавание", "pływanie", "увлечения");
+    addWord("Велоспорт", "jazda na rowerze", "увлечения");
+    addWord("Туризм / походы", "turystyka", "увлечения");
+    addWord("Рыбалка", "wędkowanie", "увлечения");
+    addWord("Шахматы", "szachy", "увлечения");
+    addWord("Коллекционирование", "kolekcjonowanie", "увлечения");
+    addWord("Путешествия", "podróżowanie", "увлечения");
+
+    // ===================== 13. ПРОФЕССИИ (Zawody) — 30 пар =====================
+    addWord("Врач", "lekarz", "профессии");
+    addWord("Медсестра", "pielęgniarka", "профессии");
+    addWord("Учитель", "nauczyciel", "профессии");
+    addWord("Учительница", "nauczycielka", "профессии");
+    addWord("Профессор", "profesor", "профессии");
+    addWord("Инженер", "inżynier", "профессии");
+    addWord("Программист", "programista", "профессии");
+    addWord("Строитель", "budowlaniec", "профессии");
+    addWord("Водитель", "kierowca", "профессии");
+    addWord("Пилот", "pilot", "профессии");
+    addWord("Продавец", "sprzedawca", "профессии");
+    addWord("Официант", "kelner", "профессии");
+    addWord("Официантка", "kelnerka", "профессии");
+    addWord("Повар", "kucharz", "профессии");
+    addWord("Шеф-повар", "szef kuchni", "профессии");
+    addWord("Юрист", "prawnik", "профессии");
+    addWord("Судья", "sędzia", "профессии");
+    addWord("Адвокат", "adwokat", "профессии");
+    addWord("Полицейский", "policjant", "профессии");
+    addWord("Пожарный", "strażak", "профессии");
+    addWord("Художник", "artysta malarz", "профессии");
+    addWord("Музыкант", "muzyk", "профессии");
+    addWord("Актёр", "aktor", "профессии");
+    addWord("Актриса", "aktorka", "профессии");
+    addWord("Фотограф", "fotograf", "профессии");
+    addWord("Архитектор", "architekt", "профессии");
+    addWord("Электрик", "elektryk", "профессии");
+    addWord("Механик", "mechanik", "профессии");
+    addWord("Бухгалтер", "księgowy", "профессии");
+    addWord("Фармацевт", "farmaceuta", "профессии");
+
+    // ===================== 14. ЗАКОН (Prawo) — 30 пар =====================
+    addWord("Закон", "prawo", "закон");
+    addWord("Конституция", "konstytucja", "закон");
+    addWord("Кодекс", "kodeks", "закон");
+    addWord("Статья (закона)", "artykuł", "закон");
+    addWord("Пункт (статьи)", "paragraf", "закон");
+    addWord("Суд", "sąd", "закон");
+    addWord("Судья", "sędzia", "закон");
+    addWord("Прокурор", "prokurator", "закон");
+    addWord("Адвокат", "adwokat", "закон");
+    addWord("Истец", "powód", "закон");
+    addWord("Ответчик", "pozwany", "закон");
+    addWord("Преступник", "przestępca", "закон");
+    addWord("Преступление", "przestępstwo", "закон");
+    addWord("Наказание", "kara", "закон");
+    addWord("Штраф", "grzywna", "закон");
+    addWord("Тюрьма", "więzienie", "закон");
+    addWord("Полиция", "policja", "закон");
+    addWord("Дознаватель", "śledczy", "закон");
+    addWord("Арест", "aresztowanie", "закон");
+    addWord("Свидетель", "świadek", "закон");
+    addWord("Доказательство", "dowód", "закон");
+    addWord("Правило", "zasada", "закон");
+    addWord("Обязанность", "obowiązek", "закон");
+    addWord("Право (свобода)", "prawo", "закон");
+    addWord("Гражданин", "obywatel", "закон");
+    addWord("Сделка", "umowa", "закон");
+    addWord("Наследство", "spadek", "закон");
+    addWord("Завещание", "testament", "закон");
+    addWord("Нотариус", "notariusz", "закон");
+    addWord("Договор", "kontrakt", "закон");
+
+    // ===================== 15. ПОГОДА (Pogoda) — 30 пар =====================
+    addWord("Погода", "pogoda", "погода");
+    addWord("Дождь", "deszcz", "погода");
+    addWord("Снег", "śnieg", "погода");
+    addWord("Ветер", "wiatr", "погода");
+    addWord("Солнце", "słońce", "погода");
+    addWord("Облако", "chmura", "погода");
+    addWord("Туман", "mgła", "погода");
+    addWord("Гроза", "burza", "погода");
+    addWord("Град", "grad", "погода");
+    addWord("Лёд", "lód", "погода");
+    addWord("Мороз", "mróz", "погода");
+    addWord("Жара", "upał", "погода");
+    addWord("Тепло", "ciepło", "погода");
+    addWord("Холод", "zimno", "погода");
+    addWord("Градус", "stopień", "погода");
+    addWord("Зонт", "parasol", "погода");
+    addWord("Влажность", "wilgotność", "погода");
+    addWord("Давление", "ciśnienie", "погода");
+    addWord("Прогноз погоды", "prognoza pogody", "погода");
+    addWord("Идёт дождь", "pada deszcz", "погода");
+    addWord("Идёт снег", "pada śnieg", "погода");
+    addWord("Светит солнце", "świeci słońce", "погода");
+    addWord("Дует ветер", "wieje wiatr", "погода");
+    addWord("Небо", "niebo", "погода");
+    addWord("Радуга", "tęcza", "погода");
+    addWord("Молния", "błyskawica", "погода");
+    addWord("Гром", "grzmot", "погода");
+    addWord("Капля", "kropla", "погода");
+    addWord("Лужа", "kałuża", "погода");
+    addWord("Снежинка", "płatek śniegu", "погода");
+
+    // ===================== 16. ТРАНСПОРТ (Transport) — 30 пар =====================
+    addWord("Транспорт", "transport", "транспорт");
+    addWord("Машина / Автомобиль", "samochód", "транспорт");
+    addWord("Грузовик", "ciężarówka", "транспорт");
+    addWord("Автобус", "autobus", "транспорт");
+    addWord("Троллейбус", "trolejbus", "транспорт");
+    addWord("Трамвай", "tramwaj", "транспорт");
+    addWord("Поезд", "pociąg", "транспорт");
+    addWord("Электричка", "pociąg podmiejski", "транспорт");
+    addWord("Метро", "metro", "транспорт");
+    addWord("Такси", "taksówka", "транспорт");
+    addWord("Самолёт", "samolot", "транспорт");
+    addWord("Вертолёт", "śmigłowiec", "транспорт");
+    addWord("Корабль", "statek", "транспорт");
+    addWord("Лодка", "łódka", "транспорт");
+    addWord("Катер", "łódź motorowa", "транспорт");
+    addWord("Паром", "prom", "транспорт");
+    addWord("Велосипед", "rower", "транспорт");
+    addWord("Мотоцикл", "motocykl", "транспорт");
+    addWord("Скутер", "skuter", "транспорт");
+    addWord("Электросамокат", "hulajnoga elektryczna", "транспорт");
+    addWord("Мопед", "motorower", "транспорт");
+    addWord("Фургон", "samochód dostawczy", "транспорт");
+    addWord("Трейлер", "przyczepa", "транспорт");
+    addWord("Трактор", "ciągnik", "транспорт");
+    addWord("Пожарная машина", "wóz strażacki", "транспорт");
+    addWord("Скорая помощь", "karetka", "транспорт");
+    addWord("Полицейская машина", "radiowóz", "транспорт");
+    addWord("Автовоз", "laweta", "транспорт");
+    addWord("Бензовоз", "cysterna", "транспорт");
+    addWord("Мусоровоз", "śmieciarka", "транспорт");
+
+    // ===================== 17. ЗДОРОВЬЕ (Zdrowie) — 30 пар =====================
+    addWord("Здоровье", "zdrowie", "здоровье");
+    addWord("Болезнь", "choroba", "здоровье");
+    addWord("Симптом", "objaw", "здоровье");
+    addWord("Температура", "gorączka", "здоровье");
+    addWord("Кашель", "kaszel", "здоровье");
+    addWord("Насморк", "katar", "здоровье");
+    addWord("Головная боль", "ból głowy", "здоровье");
+    addWord("Боль в горле", "ból gardła", "здоровье");
+    addWord("Боль в животе", "ból brzucha", "здоровье");
+    addWord("Тошнота", "nudności", "здоровье");
+    addWord("Рвота", "wymioty", "здоровье");
+    addWord("Слабость", "osłabienie", "здоровье");
+    addWord("Усталость", "zmęczenie", "здоровье");
+    addWord("Головокружение", "zawroty głowy", "здоровье");
+    addWord("Аллергия", "alergia", "здоровье");
+    addWord("Травма", "uraz", "здоровье");
+    addWord("Перелом", "złamanie", "здоровье");
+    addWord("Ушиб", "stłuczenie", "здоровье");
+    addWord("Порез", "skaleczenie", "здоровье");
+    addWord("Ожог", "oparzenie", "здоровье");
+    addWord("Лекарство", "lekarstwo", "здоровье");
+    addWord("Таблетка", "tabletka", "здоровье");
+    addWord("Сироп", "syrop", "здоровье");
+    addWord("Мазь", "maść", "здоровье");
+    addWord("Укол", "zastrzyk", "здоровье");
+    addWord("Витамины", "witaminy", "здоровье");
+    addWord("Аптека", "apteka", "здоровье");
+    addWord("Рецепт (от врача)", "recepta", "здоровье");
+    addWord("Диета", "dieta", "здоровье");
+    addWord("Отдых", "odpoczynek", "здоровье");
+
+    // ===================== 18. МАГАЗИН (Sklep) — 30 пар =====================
+    addWord("Магазин", "sklep", "магазин");
+    addWord("Покупатель", "klient", "магазин");
+    addWord("Продавец", "sprzedawca", "магазин");
+    addWord("Касса", "kasa", "магазин");
+    addWord("Чек", "paragon", "магазин");
+    addWord("Корзина", "koszyk", "магазин");
+    addWord("Тележка (магазинная)", "wózek sklepowy", "магазин");
+    addWord("Цена", "cena", "магазин");
+    addWord("Скидка", "zniżka", "магазин");
+    addWord("Распродажа", "wyprzedaż", "магазин");
+    addWord("Покупка", "zakup", "магазин");
+    addWord("Покупать", "kupować", "магазин");
+    addWord("Продавать", "sprzedawać", "магазин");
+    addWord("Кошелёк", "portfel", "магазин");
+    addWord("Деньги", "pieniądze", "магазин");
+    addWord("Наличные", "gotówka", "магазин");
+    addWord("Карта (банковская)", "karta płatnicza", "магазин");
+    addWord("Сумка (пакет)", "torba", "магазин");
+    addWord("Кассир", "kasjer", "магазин");
+    addWord("Очередь", "kolejka", "магазин");
+    addWord("Полка", "półka", "магазин");
+    addWord("Витрина", "witryna", "магазин");
+    addWord("Размер (одежды)", "rozmiar", "магазин");
+    addWord("Примерочная", "przymierzalnia", "магазин");
+    addWord("Гарантия", "gwarancja", "магазин");
+    addWord("Возврат (товара)", "zwrot towaru", "магазин");
+    addWord("Обмен (товара)", "wymiana towaru", "магазин");
+    addWord("Продуктовый магазин", "sklep spożywczy", "магазин");
+    addWord("Универмаг", "dom towarowy", "магазин");
+    addWord("Торговый центр", "centrum handlowe", "магазин");
+
+    // ===================== 19. БОЛЬНИЦА (Szpital) — 30 пар =====================
+    addWord("Больница", "szpital", "больница");
+    addWord("Врач", "lekarz", "больница");
+    addWord("Медсестра", "pielęgniarka", "больница");
+    addWord("Медбрат", "pielęgniarz", "больница");
+    addWord("Пациент", "pacjent", "больница");
+    addWord("Отделение", "oddział", "больница");
+    addWord("Палата", "sala", "больница");
+    addWord("Приёмная (регистратура)", "rejestracja", "больница");
+    addWord("Скорая помощь", "pogotowie", "больница");
+    addWord("Операция", "operacja", "больница");
+    addWord("Операционная", "sala operacyjna", "больница");
+    addWord("Анализ (крови и т.п.)", "badanie", "больница");
+    addWord("Анализ крови", "badanie krwi", "больница");
+    addWord("Рентген", "prześwietlenie", "больница");
+    addWord("УЗИ", "USG", "больница");
+    addWord("Томография", "tomografia", "больница");
+    addWord("Капельница", "kroplówka", "больница");
+    addWord("Шприц", "strzykawka", "больница");
+    addWord("Бинт", "bandaż", "больница");
+    addWord("Пластырь", "plaster", "больница");
+    addWord("Шов (хирургический)", "szew", "больница");
+    addWord("Гипс", "gips", "больница");
+    addWord("Носилки", "nosze", "больница");
+    addWord("Каталка", "wózek szpitalny", "больница");
+    addWord("Инвалидное кресло", "wózek inwalidzki", "больница");
+    addWord("Реанимация", "intensywna terapia", "больница");
+    addWord("Детское отделение", "oddział dziecięcy", "больница");
+    addWord("Выписка (из больницы)", "wypis ze szpitala", "больница");
+    addWord("Справка (медицинская)", "zaświadczenie lekarskie", "больница");
+    addWord("Очередь (к врачу)", "kolejka do lekarza", "больница");
+    addWord("Хирург", "chirurg", "больница");
+    addWord("Терапевт", "internista", "больница");
+    addWord("Стоматолог", "dentysta", "больница");
+    addWord("Окулист", "okulista", "больница");
+    addWord("Лор", "laryngolog", "больница");
+    addWord("Педиатр", "pediatra", "больница");
+    addWord("Кардиолог", "kardiolog", "больница");
+    addWord("Поликлиника", "przychodnia", "больница");
+
+    // ===================== 20. КОМПЬЮТЕР И ИНТЕРНЕТ (Komputer i internet) — 30 пар =====================
+    addWord("Компьютер", "komputer", "компьютер");
+    addWord("Ноутбук", "laptop", "компьютер");
+    addWord("Планшет", "tablet", "компьютер");
+    addWord("Смартфон", "smartfon", "компьютер");
+    addWord("Экран", "ekran", "компьютер");
+    addWord("Монитор", "monitor", "компьютер");
+    addWord("Клавиатура", "klawiatura", "компьютер");
+    addWord("Мышь", "myszka komputerowa", "компьютер");
+    addWord("Коврик для мыши", "podkładka pod myszkę", "компьютер");
+    addWord("Принтер", "drukarka", "компьютер");
+    addWord("Сканер", "skaner", "компьютер");
+    addWord("Наушники", "słuchawki", "компьютер");
+    addWord("Микрофон", "mikrofon", "компьютер");
+    addWord("Веб-камера", "kamera internetowa", "компьютер");
+    addWord("Флешка", "pendrive", "компьютер");
+    addWord("Жесткий диск", "dysk twardy", "компьютер");
+    addWord("Зарядное устройство", "ładowarka", "компьютер");
+    addWord("Программа", "program", "компьютер");
+    addWord("Приложение", "aplikacja", "компьютер");
+    addWord("Файл", "plik", "компьютер");
+    addWord("Папка (на компьютере)", "folder", "компьютер");
+    addWord("Интернет", "internet", "компьютер");
+    addWord("Сайт", "strona internetowa", "компьютер");
+    addWord("Ссылка", "link", "компьютер");
+    addWord("Поисковик", "wyszukiwarka", "компьютер");
+    addWord("Электронная почта", "poczta elektroniczna", "компьютер");
+    addWord("Пароль", "hasło", "компьютер");
+    addWord("Wi-Fi", "Wi-Fi", "компьютер");
+    addWord("Облако (хранение)", "chmura", "компьютер");
+    addWord("Скачивать", "pobierać", "компьютер");
+    addWord("Онлайн", "online", "компьютер");
+
+    // ===================== 21. ПУТЕШЕСТВИЯ (Podróże) — 30 пар =====================
+    addWord("Путешествие", "podróż", "путешествия");
+    addWord("Поездка", "wycieczka", "путешествия");
+    addWord("Турист", "turysta", "путешествия");
+    addWord("Отпуск", "urlop", "путешествия");
+    addWord("Чемодан", "walizka", "путешествия");
+    addWord("Рюкзак", "plecak", "путешествия");
+    addWord("Билет", "bilet", "путешествия");
+    addWord("Паспорт", "paszport", "путешествия");
+    addWord("Виза", "wiza", "путешествия");
+    addWord("Страховка", "ubezpieczenie", "путешествия");
+    addWord("Отель", "hotel", "путешествия");
+    addWord("Гостиница", "hotel", "путешествия");
+    addWord("Номер (в отеле)", "pokój hotelowy", "путешествия");
+    addWord("Бронирование", "rezerwacja", "путешествия");
+    addWord("Карта (географическая)", "mapa", "путешествия");
+    addWord("Компас", "kompas", "путешествия");
+    addWord("Навигатор", "nawigacja", "путешествия");
+    addWord("Экскурсия", "wycieczka", "путешествия");
+    addWord("Гид", "przewodnik", "путешествия");
+    addWord("Сувенир", "pamiątka", "путешествия");
+    addWord("Пляж", "plaża", "путешествия");
+    addWord("Горы", "góry", "путешествия");
+    addWord("Море", "morze", "путешествия");
+    addWord("Озеро", "jezioro", "путешествия");
+    addWord("Лагерь", "kemping", "путешествия");
+    addWord("Палатка", "namiot", "путешествия");
+    addWord("Спальный мешок", "śpiwór", "путешествия");
+    addWord("Туристическая трость", "kijek trekkingowy", "путешествия");
+    addWord("Фотоаппарат", "aparat fotograficzny", "путешествия");
+    addWord("Достопримечательности", "zabytki", "путешествия");
+
+    // ===================== 22. ДОМ И МЕБЕЛЬ (Dom i meble) — 30 пар =====================
+    addWord("Дом", "dom", "дом_мебель");
+    addWord("Квартира", "mieszkanie", "дом_мебель");
+    addWord("Коридор", "korytarz", "дом_мебель");
+    addWord("Комната", "pokój", "дом_мебель");
+    addWord("Гостиная", "salon", "дом_мебель");
+    addWord("Спальня", "sypialnia", "дом_мебель");
+    addWord("Детская", "pokój dziecięcy", "дом_мебель");
+    addWord("Кабинет (рабочий)", "gabinet", "дом_мебель");
+    addWord("Кухня", "kuchnia", "дом_мебель");
+    addWord("Столовая", "jadalnia", "дом_мебель");
+    addWord("Ванная комната", "łazienka", "дом_мебель");
+    addWord("Туалет", "toaleta", "дом_мебель");
+    addWord("Балкон", "balkon", "дом_мебель");
+    addWord("Кладовая", "spiżarnia", "дом_мебель");
+    addWord("Гараж", "garaż", "дом_мебель");
+    addWord("Мебель", "meble", "дом_мебель");
+    addWord("Шкаф (платяной)", "szafa", "дом_мебель");
+    addWord("Комод", "komoda", "дом_мебель");
+    addWord("Стеллаж", "regał", "дом_мебель");
+    addWord("Кровать", "łóżko", "дом_мебель");
+    addWord("Матрас", "materac", "дом_мебель");
+    addWord("Тумбочка (прикроватная)", "szafka nocna", "дом_мебель");
+    addWord("Диван", "kanapa", "дом_мебель");
+    addWord("Кресло", "fotel", "дом_мебель");
+    addWord("Стол", "stół", "дом_мебель");
+    addWord("Письменный стол", "biurko", "дом_мебель");
+    addWord("Стул", "krzesło", "дом_мебель");
+    addWord("Табурет", "taboret", "дом_мебель");
+    addWord("Полка", "półka", "дом_мебель");
+    addWord("Зеркало", "lustro", "дом_мебель");
+
+    // ===================== 23. ВРЕМЯ И ДАТЫ (Czas i daty) — 30+ пар =====================
+    addWord("Время", "czas", "время");
+    addWord("Дата", "data", "время");
+    addWord("Секунда", "sekunda", "время");
+    addWord("Минута", "minuta", "время");
+    addWord("Час", "godzina", "время");
+    addWord("День", "dzień", "время");
+    addWord("Ночь", "noc", "время");
+    addWord("Неделя", "tydzień", "время");
+    addWord("Месяц", "miesiąc", "время");
+    addWord("Год", "rok", "время");
+    addWord("Десятилетие", "dekada", "время");
+    addWord("Век", "wiek", "время");
+    addWord("Тысячелетие", "tysiąclecie", "время");
+    addWord("Утро", "ranek", "время");
+    addWord("Вечер", "wieczór", "время");
+    addWord("Полдень", "południe", "время");
+    addWord("Полночь", "północ", "время");
+    addWord("Рассвет", "świt", "время");
+    addWord("Закат", "zachód słońca", "время");
+    addWord("Понедельник", "poniedziałek", "время");
+    addWord("Вторник", "wtorek", "время");
+    addWord("Среда", "środa", "время");
+    addWord("Четверг", "czwartek", "время");
+    addWord("Пятница", "piątek", "время");
+    addWord("Суббота", "sobota", "время");
+    addWord("Воскресенье", "niedziela", "время");
+    addWord("Январь", "styczeń", "время");
+    addWord("Февраль", "luty", "время");
+    addWord("Март", "marzec", "время");
+    addWord("Апрель", "kwiecień", "время");
+    addWord("Май", "maj", "время");
+    addWord("Июнь", "czerwiec", "время");
+    addWord("Июль", "lipiec", "время");
+    addWord("Август", "sierpień", "время");
+    addWord("Сентябрь", "wrzesień", "время");
+    addWord("Октябрь", "październik", "время");
+    addWord("Ноябрь", "listopad", "время");
+    addWord("Декабрь", "grudzień", "время");
+    addWord("Весна", "wiosna", "время");
+    addWord("Лето", "lato", "время");
+    addWord("Осень", "jesień", "время");
+    addWord("Зима", "zima", "время");
+    addWord("Часы (прибор)", "zegar", "время");
+    addWord("Часы (наручные)", "zegarek", "время");
+
+    // ===================== 24. ЦВЕТА И ФОРМЫ (Kolory i kształty) — 30 пар =====================
+    addWord("Цвет", "kolor", "цвета");
+    addWord("Оттенок", "odcień", "цвета");
+    addWord("Форма", "kształt", "цвета");
+    addWord("Красный", "czerwony", "цвета");
+    addWord("Оранжевый", "pomarańczowy", "цвета");
+    addWord("Жёлтый", "żółty", "цвета");
+    addWord("Зелёный", "zielony", "цвета");
+    addWord("Голубой", "błękitny", "цвета");
+    addWord("Синий", "niebieski", "цвета");
+    addWord("Фиолетовый", "fioletowy", "цвета");
+    addWord("Розовый", "różowy", "цвета");
+    addWord("Бежевый", "beżowy", "цвета");
+    addWord("Коричневый", "brązowy", "цвета");
+    addWord("Чёрный", "czarny", "цвета");
+    addWord("Белый", "biały", "цвета");
+    addWord("Серый", "szary", "цвета");
+    addWord("Бордовый", "bordowy", "цвета");
+    addWord("Бирюзовый", "turkusowy", "цвета");
+    addWord("Золотой", "złoty", "цвета");
+    addWord("Серебряный", "srebrny", "цвета");
+    addWord("Яркий", "jaskrawy", "цвета");
+    addWord("Тёмный", "ciemny", "цвета");
+    addWord("Светлый", "jasny", "цвета");
+    addWord("Бледный", "blady", "цвета");
+    addWord("Прозрачный", "przezroczysty", "цвета");
+    addWord("Круг", "koło", "цвета");
+    addWord("Квадрат", "kwadrat", "цвета");
+    addWord("Треугольник", "trójkąt", "цвета");
+    addWord("Прямоугольник", "prostokąt", "цвета");
+    addWord("Овал", "owal", "цвета");
+    addWord("Ромб", "romb", "цвета");
+    addWord("Звезда", "gwiazda", "цвета");
+    addWord("Сердце (форма)", "serce", "цвета");
+
+    // ===================== 25. ЭМОЦИИ И ЧУВСТВА (Emocje i uczucia) — 30 пар =====================
+    addWord("Эмоция", "emocja", "эмоции");
+    addWord("Чувство", "uczucie", "эмоции");
+    addWord("Настроение", "nastrój", "эмоции");
+    addWord("Радость", "radość", "эмоции");
+    addWord("Счастье", "szczęście", "эмоции");
+    addWord("Грусть", "smutek", "эмоции");
+    addWord("Печаль", "żal", "эмоции");
+    addWord("Тоска", "tęsknota", "эмоции");
+    addWord("Злость", "złość", "эмоции");
+    addWord("Гнев", "gniew", "эмоции");
+    addWord("Страх", "strach", "эмоции");
+    addWord("Тревога", "niepokój", "эмоции");
+    addWord("Волнение", "podekscytowanie", "эмоции");
+    addWord("Удивление", "zdziwienie", "эмоции");
+    addWord("Интерес", "zainteresowanie", "эмоции");
+    addWord("Любовь", "miłość", "эмоции");
+    addWord("Ненависть", "nienawiść", "эмоции");
+    addWord("Зависть", "zazdrość", "эмоции");
+    addWord("Ревность", "zazdrość", "эмоции");
+    addWord("Стыд", "wstyd", "эмоции");
+    addWord("Вина", "wina", "эмоции");
+    addWord("Обида", "uraza", "эмоции");
+    addWord("Разочарование", "rozczarowanie", "эмоции");
+    addWord("Спокойствие", "spokój", "эмоции");
+    addWord("Удовлетворение", "zadowolenie", "эмоции");
+    addWord("Гордость", "duma", "эмоции");
+    addWord("Уверенность", "pewność siebie", "эмоции");
+    addWord("Одиночество", "samotność", "эмоции");
+    addWord("Надежда", "nadzieja", "эмоции");
+    addWord("Отчаяние", "rozpacz", "эмоции");
+    addWord("Умиротворение", "błogi spokój", "эмоции");
+
+    // ===================== 26. ГЛАГОЛЫ — ГРУППА 1 (первые 50) =====================
+    addWord("Быть", "być", "глаголы");
+    addWord("Иметь", "mieć", "глаголы");
+    addWord("Делать", "robić", "глаголы");
+    addWord("Говорить", "mówić", "глаголы");
+    addWord("Сказать", "powiedzieć", "глаголы");
+    addWord("Спрашивать", "pytać", "глаголы");
+    addWord("Ответить", "odpowiedzieć", "глаголы");
+    addWord("Знать (факт)", "wiedzieć", "глаголы");
+    addWord("Знать (человека, язык)", "znać", "глаголы");
+    addWord("Понимать", "rozumieć", "глаголы");
+    addWord("Думать", "myśleć", "глаголы");
+    addWord("Хотеть", "chcieć", "глаголы");
+    addWord("Мочь", "móc", "глаголы");
+    addWord("Уметь", "umieć", "глаголы");
+    addWord("Должен", "musieć", "глаголы");
+    addWord("Идти (пешком)", "iść", "глаголы");
+    addWord("Ходить (регулярно)", "chodzić", "глаголы");
+    addWord("Ехать (на транспорте)", "jechać", "глаголы");
+    addWord("Ездить (регулярно)", "jeździć", "глаголы");
+    addWord("Приходить (пешком)", "przyjść", "глаголы");
+    addWord("Приезжать", "przyjechać", "глаголы");
+    addWord("Уходить", "wyjść", "глаголы");
+    addWord("Бежать", "biec", "глаголы");
+    addWord("Лететь", "lecieć", "глаголы");
+    addWord("Плыть", "płynąć", "глаголы");
+    addWord("Видеть", "widzieć", "глаголы");
+    addWord("Смотреть", "patrzeć", "глаголы");
+    addWord("Слышать", "słyszeć", "глаголы");
+    addWord("Слушать", "słuchać", "глаголы");
+    addWord("Чувствовать", "czuć", "глаголы");
+    addWord("Любить (кого-то)", "kochać", "глаголы");
+    addWord("Любить (что-то)", "lubić", "глаголы");
+    addWord("Нравиться", "podobać się", "глаголы");
+    addWord("Брать", "brać", "глаголы");
+    addWord("Взять", "wziąć", "глаголы");
+    addWord("Давать", "dawać", "глаголы");
+    addWord("Дать", "dać", "глаголы");
+    addWord("Получать", "otrzymywać", "глаголы");
+    addWord("Класть", "kłaść", "глаголы");
+    addWord("Положить", "położyć", "глаголы");
+    addWord("Ставить", "stawiać", "глаголы");
+    addWord("Поставить", "postawić", "глаголы");
+    addWord("Открывать", "otwierać", "глаголы");
+    addWord("Открыть", "otworzyć", "глаголы");
+    addWord("Закрывать", "zamykać", "глаголы");
+    addWord("Закрыть", "zamknąć", "глаголы");
+    addWord("Начинать", "zaczynać", "глаголы");
+    addWord("Начать", "zacząć", "глаголы");
+    addWord("Кончать", "kończyć", "глаголы");
+    addWord("Закончить", "skończyć", "глаголы");
+
+    // ===================== 27. ГЛАГОЛЫ — ГРУППА 2 (вторые 50) =====================
+    addWord("Работать", "pracować", "глаголы");
+    addWord("Учиться (самому)", "uczyć się", "глаголы");
+    addWord("Учить (кого-то)", "uczyć", "глаголы");
+    addWord("Изучать", "studiować", "глаголы");
+    addWord("Читать", "czytać", "глаголы");
+    addWord("Писать", "pisać", "глаголы");
+    addWord("Считать", "liczyć", "глаголы");
+    addWord("Рисовать", "rysować", "глаголы");
+    addWord("Играть (в игру)", "grać", "глаголы");
+    addWord("Играть (на инструменте)", "grać na instrumencie", "глаголы");
+    addWord("Петь", "śpiewać", "глаголы");
+    addWord("Танцевать", "tańczyć", "глаголы");
+    addWord("Готовить (еду)", "gotować", "глаголы");
+    addWord("Есть (кушать)", "jeść", "глаголы");
+    addWord("Пить", "pić", "глаголы");
+    addWord("Спать", "spać", "глаголы");
+    addWord("Просыпаться", "budzić się", "глаголы");
+    addWord("Вставать", "wstawać", "глаголы");
+    addWord("Одеваться", "ubierać się", "глаголы");
+    addWord("Раздеваться", "rozbierać się", "глаголы");
+    addWord("Мыть", "myć", "глаголы");
+    addWord("Мыться", "myć się", "глаголы");
+    addWord("Чистить", "czyścić", "глаголы");
+    addWord("Сидеть", "siedzieć", "глаголы");
+    addWord("Стоять", "stać", "глаголы");
+    addWord("Лежать", "leżeć", "глаголы");
+    addWord("Падать", "padać", "глаголы");
+    addWord("Подниматься", "podnosić się", "глаголы");
+    addWord("Менять", "zmieniać", "глаголы");
+    addWord("Покупать", "kupować", "глаголы");
+    addWord("Продавать", "sprzedawać", "глаголы");
+    addWord("Платить", "płacić", "глаголы");
+    addWord("Ждать", "czekać", "глаголы");
+    addWord("Находить", "znajdować", "глаголы");
+    addWord("Найти", "znaleźć", "глаголы");
+    addWord("Терять", "gubić", "глаголы");
+    addWord("Помогать", "pomagać", "глаголы");
+    addWord("Помочь", "pomóc", "глаголы");
+    addWord("Мешать", "przeszkadzać", "глаголы");
+    addWord("Звонить", "dzwonić", "глаголы");
+    addWord("Объяснять", "wyjaśniać", "глаголы");
+    addWord("Повторять", "powtarzać", "глаголы");
+    addWord("Забывать", "zapominać", "глаголы");
+    addWord("Забыть", "zapomnieć", "глаголы");
+    addWord("Вспоминать", "przypominać sobie", "глаголы");
+    addWord("Помнить", "pamiętać", "глаголы");
+    addWord("Решать", "rozwiązywać", "глаголы");
+    addWord("Решить", "rozwiązać", "глаголы");
+    addWord("Выбирать", "wybierać", "глаголы");
+    addWord("Выбрать", "wybrać", "глаголы");
+
+    // ===================== 28. ПРИЛАГАТЕЛЬНЫЕ — ГРУППА 1 (первые 50) =====================
+    addWord("Хороший", "dobry", "прилагательные");
+    addWord("Плохой", "zły", "прилагательные");
+    addWord("Большой", "duży", "прилагательные");
+    addWord("Маленький", "mały", "прилагательные");
+    addWord("Новый", "nowy", "прилагательные");
+    addWord("Старый (вещь)", "stary", "прилагательные");
+    addWord("Старый (человек)", "stary", "прилагательные");
+    addWord("Молодой", "młody", "прилагательные");
+    addWord("Красивый", "piękny", "прилагательные");
+    addWord("Уродливый", "brzydki", "прилагательные");
+    addWord("Умный", "mądry", "прилагательные");
+    addWord("Глупый", "głupi", "прилагательные");
+    addWord("Весёлый", "wesoły", "прилагательные");
+    addWord("Грустный", "smutny", "прилагательные");
+    addWord("Интересный", "interesujący", "прилагательные");
+    addWord("Скучный", "nudny", "прилагательные");
+    addWord("Легкий", "łatwy", "прилагательные");
+    addWord("Трудный", "trudny", "прилагательные");
+    addWord("Дорогой", "drogi", "прилагательные");
+    addWord("Дешёвый", "tani", "прилагательные");
+    addWord("Богатый", "bogaty", "прилагательные");
+    addWord("Бедный", "biedny", "прилагательные");
+    addWord("Сильный", "silny", "прилагательные");
+    addWord("Слабый", "słaby", "прилагательные");
+    addWord("Быстрый", "szybki", "прилагательные");
+    addWord("Медленный", "wolny", "прилагательные");
+    addWord("Высокий (человек)", "wysoki", "прилагательные");
+    addWord("Низкий (человек)", "niski", "прилагательные");
+    addWord("Широкий", "szeroki", "прилагательные");
+    addWord("Узкий", "wąski", "прилагательные");
+    addWord("Длинный", "długi", "прилагательные");
+    addWord("Короткий", "krótki", "прилагательные");
+    addWord("Толстый (предмет)", "gruby", "прилагательные");
+    addWord("Тонкий", "cienki", "прилагательные");
+    addWord("Толстый (человек)", "gruby", "прилагательные");
+    addWord("Худой", "chudy", "прилагательные");
+    addWord("Чистый", "czysty", "прилагательные");
+    addWord("Грязный", "brudny", "прилагательные");
+    addWord("Светлый (цвет)", "jasny", "прилагательные");
+    addWord("Тёмный (цвет)", "ciemny", "прилагательные");
+    addWord("Тёплый", "ciepły", "прилагательные");
+    addWord("Холодный", "zimny", "прилагательные");
+    addWord("Сухой", "suchy", "прилагательные");
+    addWord("Мокрый", "mokry", "прилагательные");
+    addWord("Полный", "pełny", "прилагательные");
+    addWord("Пустой", "pusty", "прилагательные");
+    addWord("Громкий", "głośny", "прилагательные");
+    addWord("Тихий", "cichy", "прилагательные");
+
+    // ===================== 29. ПРИЛАГАТЕЛЬНЫЕ — ГРУППА 2 (вторые 50) =====================
+    addWord("Счастливый", "szczęśliwy", "прилагательные");
+    addWord("Несчастный", "nieszczęśliwy", "прилагательные");
+    addWord("Злой", "zły", "прилагательные");
+    addWord("Добрый", "dobry", "прилагательные");
+    addWord("Мягкий", "miękki", "прилагательные");
+    addWord("Твёрдый", "twardy", "прилагательные");
+    addWord("Острый", "ostry", "прилагательные");
+    addWord("Тупой (нож)", "tępy", "прилагательные");
+    addWord("Горячий", "gorący", "прилагательные");
+    addWord("Свежий", "świeży", "прилагательные");
+    addWord("Испорченный", "zepsuty", "прилагательные");
+    addWord("Вкусный", "smaczny", "прилагательные");
+    addWord("Безвкусный", "niesmaczny", "прилагательные");
+    addWord("Сладкий", "słodki", "прилагательные");
+    addWord("Горький", "gorzki", "прилагательные");
+    addWord("Солёный", "słony", "прилагательные");
+    addWord("Кислый", "kwaśny", "прилагательные");
+    addWord("Жирный", "tłusty", "прилагательные");
+    addWord("Постный", "chudy", "прилагательные");
+    addWord("Здоровый", "zdrowy", "прилагательные");
+    addWord("Больной", "chory", "прилагательные");
+    addWord("Живой", "żywy", "прилагательные");
+    addWord("Мёртвый", "martwy", "прилагательные");
+    addWord("Свободный", "wolny", "прилагательные");
+    addWord("Занятый", "zajęty", "прилагательные");
+    addWord("Важный", "ważny", "прилагательные");
+    addWord("Ненужный", "niepotrzebny", "прилагательные");
+    addWord("Одинаковый", "taki sam", "прилагательные");
+    addWord("Разный", "inny", "прилагательные");
+    addWord("Обычный", "zwykły", "прилагательные");
+    addWord("Странный", "dziwny", "прилагательные");
+    addWord("Правый", "prawy", "прилагательные");
+    addWord("Левый", "lewy", "прилагательные");
+    addWord("Близкий", "bliski", "прилагательные");
+    addWord("Далёкий", "daleki", "прилагательные");
+    addWord("Глубокий", "głęboki", "прилагательные");
+    addWord("Мелкий", "płytki", "прилагательные");
+    addWord("Вежливый", "uprzejmy", "прилагательные");
+    addWord("Грубый", "niegrzeczny", "прилагательные");
+    addWord("Уверенный", "pewny", "прилагательные");
+    addWord("Застенчивый", "nieśmiały", "прилагательные");
+    addWord("Открытый (человек)", "otwarty", "прилагательные");
+    addWord("Закрытый (человек)", "zamknięty", "прилагательные");
+    addWord("Терпеливый", "cierpliwy", "прилагательные");
+    addWord("Нетерпеливый", "niecierpliwy", "прилагательные");
+    addWord("Честный", "uczciwy", "прилагательные");
+    addWord("Лживый", "kłamliwy", "прилагательные");
+    addWord("Ленивый", "leniwy", "прилагательные");
+    addWord("Трудолюбивый", "pracowity", "прилагательные");
+
+    // ===================== 30. НАРЕЧИЯ — ГРУППА 1 (первые 30) =====================
+    addWord("Хорошо", "dobrze", "наречия");
+    addWord("Плохо", "źle", "наречия");
+    addWord("Быстро", "szybko", "наречия");
+    addWord("Медленно", "wolno", "наречия");
+    addWord("Много", "dużo", "наречия");
+    addWord("Мало", "mało", "наречия");
+    addWord("Часто", "często", "наречия");
+    addWord("Редко", "rzadko", "наречия");
+    addWord("Всегда", "zawsze", "наречия");
+    addWord("Никогда", "nigdy", "наречия");
+    addWord("Сейчас", "teraz", "наречия");
+    addWord("Потом", "potem", "наречия");
+    addWord("Вчера", "wczoraj", "наречия");
+    addWord("Сегодня", "dzisiaj", "наречия");
+    addWord("Завтра", "jutro", "наречия");
+    addWord("Рано", "wcześnie", "наречия");
+    addWord("Поздно", "późno", "наречия");
+    addWord("Далеко", "daleko", "наречия");
+    addWord("Близко", "blisko", "наречия");
+    addWord("Высоко", "wysoko", "наречия");
+    addWord("Низко", "nisko", "наречия");
+    addWord("Громко", "głośno", "наречия");
+    addWord("Тихо", "cicho", "наречия");
+    addWord("Красиво", "pięknie", "наречия");
+    addWord("Уродливо", "brzydko", "наречия");
+    addWord("Весело", "wesoło", "наречия");
+    addWord("Грустно", "smutno", "наречия");
+    addWord("Интересно", "ciekawie", "наречия");
+    addWord("Скучно", "nudno", "наречия");
+    addWord("Легко", "łatwo", "наречия");
+
+    // ===================== 31. НАРЕЧИЯ — ГРУППА 2 (вторые 40) =====================
+    addWord("Трудно", "trudno", "наречия");
+    addWord("Дорого", "drogo", "наречия");
+    addWord("Дешево", "tanio", "наречия");
+    addWord("Сильно", "mocno", "наречия");
+    addWord("Слабо", "słabo", "наречия");
+    addWord("Тепло", "ciepło", "наречия");
+    addWord("Холодно", "zimno", "наречия");
+    addWord("Сухо", "sucho", "наречия");
+    addWord("Мокро", "mokro", "наречия");
+    addWord("Чисто", "czysto", "наречия");
+    addWord("Грязно", "brudno", "наречия");
+    addWord("Светло", "jasno", "наречия");
+    addWord("Темно", "ciemno", "наречия");
+    addWord("Вкусно", "smacznie", "наречия");
+    addWord("Безвкусно", "niesmacznie", "наречия");
+    addWord("Осторожно", "ostrożnie", "наречия");
+    addWord("Аккуратно", "starannie", "наречия");
+    addWord("Глупо", "głupio", "наречия");
+    addWord("Умно", "mądrze", "наречия");
+    addWord("Серьёзно", "poważnie", "наречия");
+    addWord("Честно", "uczciwie", "наречия");
+    addWord("Лениво", "leniwie", "наречия");
+    addWord("Терпеливо", "cierpliwie", "наречия");
+    addWord("Нетерпеливо", "niecierpliwie", "наречия");
+    addWord("Горячо", "gorąco", "наречия");
+    addWord("Свежо", "świeżo", "наречия");
+    addWord("Пусто", "pusto", "наречия");
+    addWord("Полно", "pełno", "наречия");
+    addWord("Где", "gdzie", "наречия");
+    addWord("Здесь", "tutaj", "наречия");
+    addWord("Там", "tam", "наречия");
+    addWord("Везде", "wszędzie", "наречия");
+    addWord("Нигде", "nigdzie", "наречия");
+    addWord("Как", "jak", "наречия");
+    addWord("Так", "tak", "наречия");
+    addWord("Очень", "bardzo", "наречия");
+    addWord("Немного", "trochę", "наречия");
+    addWord("Слишком", "zbyt", "наречия");
+    addWord("Достаточно", "wystarczająco", "наречия");
+    addWord("Наверное", "chyba", "наречия");
+
+    // ===================== 32. ВОПРОСИТЕЛЬНЫЕ СЛОВА (Pytania) — 30 пар =====================
+    addWord("Кто?", "kto?", "вопросы");
+    addWord("Что?", "co?", "вопросы");
+    addWord("Где?", "gdzie?", "вопросы");
+    addWord("Куда?", "dokąd?", "вопросы");
+    addWord("Откуда?", "skąd?", "вопросы");
+    addWord("Когда?", "kiedy?", "вопросы");
+    addWord("Как?", "jak?", "вопросы");
+    addWord("Какой?", "jaki?", "вопросы");
+    addWord("Который?", "który?", "вопросы");
+    addWord("Чей?", "czyj?", "вопросы");
+    addWord("Сколько? (количество)", "ile?", "вопросы");
+    addWord("Сколько (стоит)?", "ile kosztuje?", "вопросы");
+    addWord("Почему?", "dlaczego?", "вопросы");
+    addWord("Зачем?", "po co?", "вопросы");
+    addWord("Отчего?", "z jakiego powodu?", "вопросы");
+    addWord("Куда именно?", "dokładnie dokąd?", "вопросы");
+    addWord("Как долго?", "jak długo?", "вопросы");
+    addWord("Как часто?", "jak często?", "вопросы");
+    addWord("Насколько?", "na ile?", "вопросы");
+    addWord("С каких пор?", "od kiedy?", "вопросы");
+    addWord("До каких пор?", "do kiedy?", "вопросы");
+    addWord("С кем?", "z kim?", "вопросы");
+    addWord("С чем?", "z czym?", "вопросы");
+    addWord("О ком?", "o kim?", "вопросы");
+    addWord("О чём?", "o czym?", "вопросы");
+    addWord("У кого?", "u kogo?", "вопросы");
+    addWord("Для кого?", "dla kogo?", "вопросы");
+    addWord("Для чего?", "po co?", "вопросы");
+    addWord("Что случилось?", "co się stało?", "вопросы");
+    addWord("В чём дело?", "o co chodzi?", "вопросы");
+    // ===============================================================
+    // ===================================================================
+    // ===================== 31. ОВОЩИ (Warzywa) — 30 пар =====================
+    addWord("Картофель", "ziemniak", "овощи");
+    addWord("Морковь", "marchew", "овощи");
+    addWord("Лук", "cebula", "овощи");
+    addWord("Чеснок", "czosnek", "овощи");
+    addWord("Капуста", "kapusta", "овощи");
+    addWord("Свёкла", "burak", "овощи");
+    addWord("Помидор", "pomidor", "овощи");
+    addWord("Огурец", "ogórek", "овощи");
+    addWord("Перец", "papryka", "овощи");
+    addWord("Баклажан", "bakłażan", "овощи");
+    addWord("Кабачок", "cukinia", "овощи");
+    addWord("Тыква", "dynia", "овощи");
+    addWord("Редис", "rzodkiewka", "овощи");
+    addWord("Салат (листовой)", "sałata", "овощи");
+    addWord("Шпинат", "szpinak", "овощи");
+    addWord("Брокколи", "brokuł", "овощи");
+    addWord("Цветная капуста", "kalafior", "овощи");
+    addWord("Сельдерей", "seler", "овощи");
+    addWord("Петрушка", "pietruszka", "овощи");
+    addWord("Укроп", "koper", "овощи");
+    addWord("Редька", "rzodkiew", "овощи");
+    addWord("Хрен", "chrzan", "овощи");
+    addWord("Спаржа", "szparag", "овощи");
+    addWord("Фасоль (стручковая)", "fasola szparagowa", "овощи");
+    addWord("Горох", "groch", "овощи");
+    addWord("Чечевица", "soczewica", "овощи");
+    addWord("Топинамбур", "topinambur", "овощи");
+    addWord("Ревень", "rabarbar", "овощи");
+    addWord("Руккола", "rukola", "овощи");
+    addWord("Кукуруза", "kukurydza", "овощи");
+    // ===============================================================
+    // ===================================================================
+    // ===================== ФРУКТЫ (Owoce) — 30 пар =====================
+    addWord("Яблоко", "jabłko", "фрукты");
+    addWord("Груша", "gruszka", "фрукты");
+    addWord("Банан", "banan", "фрукты");
+    addWord("Апельсин", "pomarańcza", "фрукты");
+    addWord("Мандарин", "mandarynka", "фрукты");
+    addWord("Лимон", "cytryna", "фрукты");
+    addWord("Грейпфрут", "grejpfrut", "фрукты");
+    addWord("Киви", "kiwi", "фрукты");
+    addWord("Виноград", "winogrono", "фрукты");
+    addWord("Клубника", "truskawka", "фрукты");
+    addWord("Малина", "malina", "фрукты");
+    addWord("Ежевика", "jeżyna", "фрукты");
+    addWord("Смородина", "porzeczka", "фрукты");
+    addWord("Крыжовник", "agrest", "фрукты");
+    addWord("Черника", "jagoda", "фрукты");
+    addWord("Голубика", "borówka", "фрукты");
+    addWord("Клюква", "żurawina", "фрукты");
+    addWord("Арбуз", "arbuz", "фрукты");
+    addWord("Дыня", "melon", "фрукты");
+    addWord("Персик", "brzoskwinia", "фрукты");
+    addWord("Нектарин", "nektarynka", "фрукты");
+    addWord("Абрикос", "morela", "фрукты");
+    addWord("Слива", "śliwka", "фрукты");
+    addWord("Вишня", "wiśnia", "фрукты");
+    addWord("Черешня", "czereśnia", "фрукты");
+    addWord("Ананас", "ananas", "фрукты");
+    addWord("Манго", "mango", "фрукты");
+    addWord("Папайя", "papaja", "фрукты");
+    addWord("Гранат", "granat", "фрукты");
+    addWord("Инжир", "figa", "фрукты");
+    // ===============================================================
+    // ===================================================================
+    // ===================== НАПИТКИ (Napoje) — 30 пар =====================
+    addWord("Вода", "woda", "напитки");
+    addWord("Минеральная вода", "woda mineralna", "напитки");
+    addWord("Газированная вода", "woda gazowana", "напитки");
+    addWord("Сок", "sok", "напитки");
+    addWord("Апельсиновый сок", "sok pomarańczowy", "напитки");
+    addWord("Яблочный сок", "sok jabłkowy", "напитки");
+    addWord("Чай", "herbata", "напитки");
+    addWord("Чёрный чай", "czarna herbata", "напитки");
+    addWord("Зелёный чай", "zielona herbata", "напитки");
+    addWord("Травяной чай", "herbata ziołowa", "напитки");
+    addWord("Кофе", "kawa", "напитки");
+    addWord("Кофе с молоком", "kawa z mlekiem", "напитки");
+    addWord("Капучино", "cappuccino", "напитки");
+    addWord("Латте", "latte", "напитки");
+    addWord("Эспрессо", "espresso", "напитки");
+    addWord("Молоко", "mleko", "напитки");
+    addWord("Горячий шоколад", "gorąca czekolada", "напитки");
+    addWord("Какао", "kakao", "напитки");
+    addWord("Компот", "kompot", "напитки");
+    addWord("Кисель", "kisiel", "напитки");
+    addWord("Квас", "kwas chlebowy", "напитки");
+    addWord("Пиво", "piwo", "напитки");
+    addWord("Вино", "wino", "напитки");
+    addWord("Красное вино", "czerwone wino", "напитки");
+    addWord("Белое вино", "białe wino", "напитки");
+    addWord("Шампанское", "szampan", "напитки");
+    addWord("Водка", "wódka", "напитки");
+    addWord("Коньяк", "koniak", "напитки");
+    addWord("Лимонад", "lemoniada", "напитки");
+    addWord("Смузи", "koktajl", "напитки");
+    // ===============================================================
+    // ===================================================================
+    // ===================== ПУТЕШЕСТВИЕ (Podróż) — 30 пар =====================
+    addWord("Путешествие", "podróż", "путешествие");
+    addWord("Поездка", "wycieczка", "путешествие");
+    addWord("Турист", "turysta", "путешествие");
+    addWord("Отпуск", "urlop", "путешествие");
+    addWord("Чемодан", "walizka", "путешествие");
+    addWord("Рюкзак", "plecak", "путешествие");
+    addWord("Билет", "bilet", "путешествие");
+    addWord("Паспорт", "paszport", "путешествие");
+    addWord("Виза", "wiza", "путешествие");
+    addWord("Страховка", "ubezpieczenie", "путешествие");
+    addWord("Отель", "hotel", "путешествие");
+    addWord("Гостиница", "hotel", "путешествие");
+    addWord("Номер (в отеле)", "pokój hotelowy", "путешествие");
+    addWord("Бронирование", "rezerwacja", "путешествие");
+    addWord("Карта (географическая)", "mapa", "путешествие");
+    addWord("Компас", "kompas", "путешествие");
+    addWord("Навигатор", "nawigacja", "путешествие");
+    addWord("Экскурсия", "wycieczka", "путешествие");
+    addWord("Гид", "przewodnik", "путешествие");
+    addWord("Сувенир", "pamiątka", "путешествие");
+    addWord("Пляж", "plaża", "путешествие");
+    addWord("Горы", "góry", "путешествие");
+    addWord("Море", "morze", "путешествие");
+    addWord("Озеро", "jezioro", "путешествие");
+    addWord("Лагерь", "kemping", "путешествие");
+    addWord("Палатка", "namiot", "путешествие");
+    addWord("Спальный мешок", "śpiwór", "путешествие");
+    addWord("Туристическая трость", "kij trekkingowy", "путешествие");
+    addWord("Фотоаппарат", "aparat fotograficzny", "путешествие");
+    addWord("Достопримечательности", "zabytki", "путешествие");
+    // ===============================================================
+    // ===================================================================
+    // ===================== ЧАСТИ ТЕЛА (Części ciała) — 30 пар =====================
+    addWord("Голова", "głowa", "части тела");
+    addWord("Лицо", "twarz", "части тела");
+    addWord("Волосы", "włosy", "части тела");
+    addWord("Лоб", "czoło", "части тела");
+    addWord("Глаз", "oko", "части тела");
+    addWord("Бровь", "brew", "части тела");
+    addWord("Ресница", "rzęsa", "части тела");
+    addWord("Нос", "nos", "части тела");
+    addWord("Щека", "policzek", "части тела");
+    addWord("Рот", "usta", "части тела");
+    addWord("Губа", "warga", "части тела");
+    addWord("Зуб", "ząb", "части тела");
+    addWord("Язык", "język", "части тела");
+    addWord("Подбородок", "broda", "части тела");
+    addWord("Ухо", "ucho", "части тела");
+    addWord("Шея", "szyja", "части тела");
+    addWord("Плечо", "ramię", "части тела");
+    addWord("Рука", "ręka", "части тела");
+    addWord("Локоть", "łokieć", "части тела");
+    addWord("Запястье", "nadgarstek", "части тела");
+    addWord("Кисть руки", "dłoń", "части тела");
+    addWord("Палец", "palec", "части тела");
+    addWord("Ноготь", "paznokieć", "части тела");
+    addWord("Грудь", "klatka piersiowa", "части тела");
+    addWord("Живот", "brzuch", "части тела");
+    addWord("Спина", "plecy", "части тела");
+    addWord("Нога", "noga", "части тела");
+    addWord("Колено", "kolano", "части тела");
+    addWord("Стопа", "stopa", "части тела");
+    addWord("Пятка", "pięta", "части тела");
+    // ===============================================================
+    // ===================================================================
+    // ===================== ОФИСНЫЕ ПРЕДМЕТЫ (Przedmioty biurowe) — 30 пар =====================
+    addWord("Стол", "biurko", "офис");
+    addWord("Стул", "krzesło", "офис");
+    addWord("Кресло", "fotel", "офис");
+    addWord("Компьютер", "komputer", "офис");
+    addWord("Ноутбук", "laptop", "офис");
+    addWord("Монитор", "monitor", "офис");
+    addWord("Клавиатура", "klawiatura", "офис");
+    addWord("Мышь", "myszka", "офис");
+    addWord("Коврик для мыши", "podkładka pod myszkę", "офис");
+    addWord("Принтер", "drukarka", "офис");
+    addWord("Сканер", "skaner", "офис");
+    addWord("Ксерокс", "kserokopiarka", "офис");
+    addWord("Телефон", "telefon", "офис");
+    addWord("Бумага", "papier", "офис");
+    addWord("Ручка", "długopis", "офис");
+    addWord("Карандаш", "ołówek", "офис");
+    addWord("Точилка", "tępik", "офис");
+    addWord("Ластик", "gumka", "офис");
+    addWord("Линейка", "linijka", "офис");
+    addWord("Ножницы", "nożyczki", "офис");
+    addWord("Степлер", "zszywacz", "офис");
+    addWord("Скобы", "zszywki", "офис");
+    addWord("Дырокол", "dziurkacz", "офис");
+    addWord("Скоросшиватель", "skoroszyt", "офис");
+    addWord("Папка", "teczka", "офис");
+    addWord("Файл", "koszulka na dokumenty", "офис");
+    addWord("Блокнот", "notatnik", "офис");
+    addWord("Ежедневник", "kalendarz", "офис");
+    addWord("Скрепка", "spinacz", "офис");
+    addWord("Калькулятор", "kalkulator", "офис");
+    // ===============================================================
+    // ===================================================================
+    // ===================== ПРОФЕССИИ (Zawody) — 30 пар =====================
+    addWord("Врач", "lekarz", "профессии");
+    addWord("Медсестра", "pielęgniarka", "профессии");
+    addWord("Учитель", "nauczyciel", "профессии");
+    addWord("Учительница", "nauczycielka", "профессии");
+    addWord("Профессор", "profesor", "профессии");
+    addWord("Инженер", "inżynier", "профессии");
+    addWord("Программист", "programista", "профессии");
+    addWord("Строитель", "budowlaniec", "профессии");
+    addWord("Водитель", "kierowca", "профессии");
+    addWord("Пилот", "pilot", "профессии");
+    addWord("Продавец", "sprzedawca", "профессии");
+    addWord("Официант", "kelner", "профессии");
+    addWord("Официантка", "kelnerka", "профессии");
+    addWord("Повар", "kucharz", "профессии");
+    addWord("Шеф-повар", "szef kuchni", "профессии");
+    addWord("Юрист", "prawnik", "профессии");
+    addWord("Судья", "sędzia", "профессии");
+    addWord("Адвокат", "adwokat", "профессии");
+    addWord("Полицейский", "policjant", "профессии");
+    addWord("Пожарный", "strażak", "профессии");
+    addWord("Художник", "artysta malarz", "профессии");
+    addWord("Музыкант", "muzyk", "профессии");
+    addWord("Актёр", "aktor", "профессии");
+    addWord("Актриса", "aktorka", "профессии");
+    addWord("Фотограф", "fotograf", "профессии");
+    addWord("Архитектор", "architekt", "профессии");
+    addWord("Электрик", "elektryk", "профессии");
+    addWord("Механик", "mechanik", "профессии");
+    addWord("Бухгалтер", "księgowy", "профессии");
+    addWord("Фармацевт", "farmaceuta", "профессии");
+    // ===============================================================
+    // ===================================================================
+    // ===================== ПРИРОДА И ПОГОДА (Natura i pogoda) — 30 пар =====================
+    addWord("Природа", "natura", "природа");
+    addWord("Погода", "pogoda", "природа");
+    addWord("Солнце", "słońce", "природа");
+    addWord("Луна", "księżyc", "природа");
+    addWord("Звезда", "gwiazda", "природа");
+    addWord("Небо", "niebo", "природа");
+    addWord("Облако", "chmura", "природа");
+    addWord("Дождь", "deszcz", "природа");
+    addWord("Снег", "śnieg", "природа");
+    addWord("Ветер", "wiatr", "природа");
+    addWord("Гроза", "burza", "природа");
+    addWord("Молния", "błyskawica", "природа");
+    addWord("Гром", "grzmot", "природа");
+    addWord("Туман", "mgła", "природа");
+    addWord("Град", "grad", "природа");
+    addWord("Лёд", "lód", "природа");
+    addWord("Мороз", "mróz", "природа");
+    addWord("Жара", "upał", "природа");
+    addWord("Тепло", "ciepło", "природа");
+    addWord("Холод", "zimno", "природа");
+    addWord("Лес", "las", "природа");
+    addWord("Дерево", "drzewo", "природа");
+    addWord("Цветок", "kwiat", "природа");
+    addWord("Трава", "trawa", "природа");
+    addWord("Гора", "góra", "природа");
+    addWord("Море", "morze", "природа");
+    addWord("Озеро", "jezioro", "природа");
+    addWord("Река", "rzeka", "природа");
+    addWord("Радуга", "tęcza", "природа");
+    addWord("Водопад", "wodospad", "природа");
+    // ===============================================================
+    // ===================================================================
+    // ===================== ВРЕМЯ И КАЛЕНДАРЬ (Czas i kalendarz) — 30 пар =====================
+    addWord("Время", "czas", "время");
+    addWord("Секунда", "sekunda", "время");
+    addWord("Минута", "minuta", "время");
+    addWord("Час", "godzina", "время");
+    addWord("День", "dzień", "время");
+    addWord("Ночь", "noc", "время");
+    addWord("Неделя", "tydzień", "время");
+    addWord("Месяц", "miesiąc", "время");
+    addWord("Год", "rok", "время");
+    addWord("Утро", "ranek", "время");
+    addWord("День (время суток)", "dzień", "время");
+    addWord("Вечер", "wieczór", "время");
+    addWord("Полдень", "południe", "время");
+    addWord("Полночь", "północ", "время");
+    addWord("Рассвет", "świt", "время");
+    addWord("Закат", "zachód słońca", "время");
+    addWord("Понедельник", "poniedziałek", "время");
+    addWord("Вторник", "wtorek", "время");
+    addWord("Среда", "środa", "время");
+    addWord("Четверг", "czwartek", "время");
+    addWord("Пятница", "piątek", "время");
+    addWord("Суббота", "sobota", "время");
+    addWord("Воскресенье", "niedziela", "время");
+    addWord("Январь", "styczeń", "время");
+    addWord("Февраль", "luty", "время");
+    addWord("Март", "marzec", "время");
+    addWord("Апрель", "kwiecień", "время");
+    addWord("Май", "maj", "время");
+    addWord("Июнь", "czerwiec", "время");
+    addWord("Июль", "lipiec", "время");
+    addWord("Август", "sierpień", "время");
+    addWord("Сентябрь", "wrzesień", "время");
+    addWord("Октябрь", "październik", "время");
+    addWord("Ноябрь", "listopad", "время");
+    addWord("Декабрь", "grudzień", "время");
+    // ===============================================================
+    // ===================================================================
+    // ===================== ДОМАШНИЕ ЖИВОТНЫЕ И ПИТОМЦЫ (Zwierzęta domowe i pupile) — 30 пар =====================
+    addWord("Собака", "pies", "домашние животные");
+    addWord("Кошка", "kot", "домашние животные");
+    addWord("Котёнок", "kotek", "домашние животные");
+    addWord("Щенок", "szczeniak", "домашние животные");
+    addWord("Хомяк", "chomik", "домашние животные");
+    addWord("Морская свинка", "świnka morska", "домашние животные");
+    addWord("Кролик", "królik", "домашние животные");
+    addWord("Попугай", "papuga", "домашние животные");
+    addWord("Канарейка", "kanarek", "домашние животные");
+    addWord("Волнистый попугайчик", "papuga falista", "домашние животные");
+    addWord("Крыса", "szczur", "домашние животные");
+    addWord("Мышь", "mysz", "домашние животные");
+    addWord("Рыбки", "rybki", "домашние животные");
+    addWord("Черепаха", "żółw", "домашние животные");
+    addWord("Ящерица", "jaszczurka", "домашние животные");
+    addWord("Змея", "wąż", "домашние животные");
+    addWord("Хорёк", "fretka", "домашние животные");
+    addWord("Шиншилла", "szynszyla", "домашние животные");
+    addWord("Джунгарский хомяк", "chomik dżungarski", "домашние животные");
+    addWord("Лошадь", "koń", "домашние животные");
+    addWord("Пони", "kucyk", "домашние животные");
+    addWord("Коза", "koza", "домашние животные");
+    addWord("Овца", "owca", "домашние животные");
+    addWord("Корова", "krowa", "домашние животные");
+    addWord("Свинья", "świnia", "домашние животные");
+    addWord("Курица", "kura", "домашние животные");
+    addWord("Петух", "kogut", "домашние животные");
+    addWord("Утка", "kaczka", "домашние животные");
+    addWord("Гусь", "gęś", "домашние животные");
+    addWord("Крольчонок", "króliczek", "домашние животные");
+    // ===============================================================
+    // ===================================================================
+    // ===================== ДИКИЕ ЖИВОТНЫЕ (Zwierzęta dzikie) — 30 пар =====================
+    addWord("Лев", "lew", "дикие животные");
+    addWord("Тигр", "tygrys", "дикие животные");
+    addWord("Медведь", "niedźwiedź", "дикие животные");
+    addWord("Волк", "wilk", "дикие животные");
+    addWord("Лиса", "lis", "дикие животные");
+    addWord("Заяц", "zając", "дикие животные");
+    addWord("Белка", "wiewiórka", "дикие животные");
+    addWord("Ёж", "jeż", "дикие животные");
+    addWord("Лось", "łoś", "дикие животные");
+    addWord("Олень", "jeleń", "дикие животные");
+    addWord("Кабан", "dzik", "дикие животные");
+    addWord("Зебра", "zebra", "дикие животные");
+    addWord("Жираф", "żyrafa", "дикие животные");
+    addWord("Слон", "słoń", "дикие животные");
+    addWord("Носорог", "nosorożec", "дикие животные");
+    addWord("Бегемот", "hipopotam", "дикие животные");
+    addWord("Крокодил", "krokodyl", "дикие животные");
+    addWord("Обезьяна", "małpa", "дикие животные");
+    addWord("Горилла", "goryl", "дикие животные");
+    addWord("Шимпанзе", "szympans", "дикие животные");
+    addWord("Кенгуру", "kangur", "дикие животные");
+    addWord("Панда", "panda", "дикие животные");
+    addWord("Леопард", "leopard", "дикие животные");
+    addWord("Гепард", "gepard", "дикие животные");
+    addWord("Рысь", "ryś", "дикие животные");
+    addWord("Барсук", "borsuk", "дикие животные");
+    addWord("Бобр", "bóbr", "дикие животные");
+    addWord("Выдра", "wydra", "дикие животные");
+    addWord("Норка", "norka", "дикие животные");
+    addWord("Енот", "szop pracz", "дикие животные");
+    // ===============================================================
+    // ===================================================================
+    // ===================== ДИКИЕ ЖИВОТНЫЕ (Zwierzęta dzikie) — 30 пар =====================
+    addWord("Лев", "lew", "дикие животные");
+    addWord("Тигр", "tygrys", "дикие животные");
+    addWord("Медведь", "niedźwiedź", "дикие животные");
+    addWord("Волк", "wilk", "дикие животные");
+    addWord("Лиса", "lis", "дикие животные");
+    addWord("Заяц", "zając", "дикие животные");
+    addWord("Белка", "wiewiórka", "дикие животные");
+    addWord("Ёж", "jeż", "дикие животные");
+    addWord("Лось", "łoś", "дикие животные");
+    addWord("Олень", "jeleń", "дикие животные");
+    addWord("Кабан", "dzik", "дикие животные");
+    addWord("Зебра", "zebra", "дикие животные");
+    addWord("Жираф", "żyrafa", "дикие животные");
+    addWord("Слон", "słoń", "дикие животные");
+    addWord("Носорог", "nosorożec", "дикие животные");
+    addWord("Бегемот", "hipopotam", "дикие животные");
+    addWord("Крокодил", "krokodyl", "дикие животные");
+    addWord("Обезьяна", "małpa", "дикие животные");
+    addWord("Горилла", "goryl", "дикие животные");
+    addWord("Шимпанзе", "szympans", "дикие животные");
+    addWord("Кенгуру", "kangur", "дикие животные");
+    addWord("Панда", "panda", "дикие животные");
+    addWord("Леопард", "leopard", "дикие животные");
+    addWord("Гепард", "gepard", "дикие животные");
+    addWord("Рысь", "ryś", "дикие животные");
+    addWord("Барсук", "borsuk", "дикие животные");
+    addWord("Бобр", "bóbr", "дикие животные");
+    addWord("Выдра", "wydra", "дикие животные");
+    addWord("Норка", "norka", "дикие животные");
+    addWord("Енот", "szop pracz", "дикие животные");
+    // ===============================================================
+    // ===================================================================
+    // ===================== ЦВЕТА И ОТТЕНКИ (Kolory i odcienie) — 30 пар =====================
+    addWord("Красный", "czerwony", "цвета");
+    addWord("Ярко-красный", "jaskrawoczerwony", "цвета");
+    addWord("Тёмно-красный", "ciemnoczerwony", "цвета");
+    addWord("Бордовый", "bordowy", "цвета");
+    addWord("Розовый", "różowy", "цвета");
+    addWord("Светло-розовый", "jasnoróżowy", "цвета");
+    addWord("Оранжевый", "pomarańczowy", "цвета");
+    addWord("Жёлтый", "żółty", "цвета");
+    addWord("Золотистый", "złocisty", "цвета");
+    addWord("Зелёный", "zielony", "цвета");
+    addWord("Салатовый", "jasnozielony", "цвета");
+    addWord("Изумрудный", "szmaragdowy", "цвета");
+    addWord("Оливковый", "oliwkowy", "цвета");
+    addWord("Голубой", "błękitny", "цвета");
+    addWord("Синий", "niebieski", "цвета");
+    addWord("Тёмно-синий", "granatowy", "цвета");
+    addWord("Фиолетовый", "fioletowy", "цвета");
+    addWord("Лиловый", "liliowy", "цвета");
+    addWord("Сиренеый", "bezowy", "цвета");
+    addWord("Коричневый", "brązowy", "цвета");
+    addWord("Бежевый", "beżowy", "цвета");
+    addWord("Шоколадный", "czekoladowy", "цвета");
+    addWord("Чёрный", "czarny", "цвета");
+    addWord("Белый", "biały", "цвета");
+    addWord("Серый", "szary", "цвета");
+    addWord("Серебристый", "srebrzysty", "цвета");
+    addWord("Бирюзовый", "turkusowy", "цвета");
+    addWord("Мятный", "miętowy", "цвета");
+    addWord("Лавандовый", "lawendowy", "цвета");
+    addWord("Пурпурный", "purpurowy", "цвета");
+    // ===============================================================
+    // ===================================================================
+    // ===================== ПОГОДНЫЕ ЯВЛЕНИЯ (Zjawiska pogodowe) — 30 пар =====================
+    addWord("Дождь", "deszcz", "погодные явления");
+    addWord("Мелкий дождь", "mżawka", "погодные явления");
+    addWord("Ливень", "ulewa", "погодные явления");
+    addWord("Снег", "śnieg", "погодные явления");
+    addWord("Снегопад", "opady śniegu", "погодные явления");
+    addWord("Метель", "zamieć", "погодные явления");
+    addWord("Вьюга", "zawieja", "погодные явления");
+    addWord("Град", "grad", "погодные явления");
+    addWord("Гроза", "burza", "погодные явления");
+    addWord("Молния", "błyskawica", "погодные явления");
+    addWord("Гром", "grzmot", "погодные явления");
+    addWord("Ветер", "wiatr", "погодные явления");
+    addWord("Шторм", "sztorm", "погодные явления");
+    addWord("Ураган", "huragan", "погодные явления");
+    addWord("Торнадо", "tornado", "погодные явления");
+    addWord("Тайфун", "tajfun", "погодные явления");
+    addWord("Туман", "mgła", "погодные явления");
+    addWord("Иней", "szron", "погодные явления");
+    addWord("Гололёд", "gołoledź", "погодные явления");
+    addWord("Засуха", "susza", "погодные явления");
+    addWord("Наводнение", "powódź", "погодные явления");
+    addWord("Лавина", "lawina", "погодные явления");
+    addWord("Оползень", "osuwisko", "погодные явления");
+    addWord("Извержение вулкана", "erupcja wulkanu", "погодные явления");
+    addWord("Землетрясение", "trzęsienie ziemi", "погодные явления");
+    addWord("Цунами", "tsunami", "погодные явления");
+    addWord("Радуга", "tęcza", "погодные явления");
+    addWord("Роса", "rosa", "погодные явления");
+    addWord("Северное сияние", "zorza polarna", "погодные явления");
+    addWord("Смерч", "trąba powietrzna", "погодные явления");
+    // ===============================================================
+    // ===================================================================
+    // ===================== ПРОСТРАНСТВО И ПОЛОЖЕНИЕ (Przestrzeń i położenie) — 30 пар =====================
+    addWord("Верх", "góra", "пространство");
+    addWord("Низ", "dół", "пространство");
+    addWord("Лево", "lewo", "пространство");
+    addWord("Право", "prawo", "пространство");
+    addWord("Перед", "przód", "пространство");
+    addWord("Зад", "tył", "пространство");
+    addWord("Центр", "środek", "пространство");
+    addWord("Край", "brzeg", "пространство");
+    addWord("Внутри", "wewnątrz", "пространство");
+    addWord("Снаружи", "na zewnątrz", "пространство");
+    addWord("Близко", "blisko", "пространство");
+    addWord("Далеко", "daleko", "пространство");
+    addWord("Рядом", "obok", "пространство");
+    addWord("Между", "między", "пространство");
+    addWord("Над", "nad", "пространство");
+    addWord("Под", "pod", "пространство");
+    addWord("Около", "koło", "пространство");
+    addWord("Вокруг", "dookoła", "пространство");
+    addWord("Напротив", "naprzeciwko", "пространство");
+    addWord("Позади", "z tyłu", "пространство");
+    addWord("Впереди", "z przodu", "пространство");
+    addWord("Сверху", "z góry", "пространство");
+    addWord("Снизу", "z dołu", "пространство");
+    addWord("Слева", "z lewej", "пространство");
+    addWord("Справа", "z prawej", "пространство");
+    addWord("Вертикально", "pionowo", "пространство");
+    addWord("Горизонтально", "poziomo", "пространство");
+    addWord("Диагонально", "ukos", "пространство");
+    addWord("Параллельно", "równolegle", "пространство");
+    addWord("Перпендикулярно", "prostopadle", "пространство");
+    // ===============================================================
+    // ===================================================================
+    // ===================== РЕМОНТ И ИНСТРУМЕНТЫ (Naprawa i narzędzia) — 30 пар =====================
+    addWord("Молоток", "młotek", "инструменты");
+    addWord("Отвёртка", "śrubokręt", "инструменты");
+    addWord("Плоскогубцы", "szczypce", "инструменты");
+    addWord("Кусачки", "obcęgi", "инструменты");
+    addWord("Гаечный ключ", "klucz", "инструменты");
+    addWord("Разводной ключ", "klucz nastawny", "инструменты");
+    addWord("Дрель", "wiertarka", "инструменты");
+    addWord("Шуруповерт", "wkrętarka", "инструменты");
+    addWord("Перфоратор", "młotowiertarka", "инструменты");
+    addWord("Пила", "piła", "инструменты");
+    addWord("Ножовка", "piłka", "инструменты");
+    addWord("Лобзик", "wyrzynarka", "инструменты");
+    addWord("Рубанок", "strug", "инструменты");
+    addWord("Напильник", "pilnik", "инструменты");
+    addWord("Наждачная бумага", "papier ścierny", "инструменты");
+    addWord("Шпатель", "szpachelka", "инструменты");
+    addWord("Валик", "wałek", "инструменты");
+    addWord("Кисть", "pędzel", "инструменты");
+    addWord("Краска", "farba", "инструменты");
+    addWord("Шпаклёвка", "szpachla", "инструменты");
+    addWord("Клей", "klej", "инструменты");
+    addWord("Гвоздь", "gwóźdź", "инструменты");
+    addWord("Шуруп", "wkręt", "инструменты");
+    addWord("Болт", "śruba", "инструменты");
+    addWord("Гайка", "nakrętka", "инструменты");
+    addWord("Шайба", "podkładka", "инструменты");
+    addWord("Уровень", "poziomica", "инструменты");
+    addWord("Рулетка", "miarka zwijana", "инструменты");
+    addWord("Линейка", "linijka", "инструменты");
+    addWord("Лестница", "drabina", "инструменты");
+    // ===============================================================
+    // ===================================================================
+    // ===================== ЗАПАХИ И АРОМАТЫ (Zapachy i aromaty) — 30 пар =====================
+    addWord("Запах", "zapach", "запахи");
+    addWord("Аромат", "aromat", "запахи");
+    addWord("Амбр", "ambra", "запахи");
+    addWord("Мускус", "piżmo", "запахи");
+    addWord("Ваниль", "wanilia", "запахи");
+    addWord("Корица", "cynamon", "запахи");
+    addWord("Лаванда", "lawenda", "запахи");
+    addWord("Роза", "róża", "запахи");
+    addWord("Жасмин", "jaśmin", "запахи");
+    addWord("Сирень", "bez", "запахи");
+    addWord("Ландыш", "konwalia", "запахи");
+    addWord("Цитрус", "cytrus", "запахи");
+    addWord("Лимон", "cytryna", "запахи");
+    addWord("Апельсин", "pomarańcza", "запахи");
+    addWord("Мята", "mięta", "запахи");
+    addWord("Эвкалипт", "eukaliptus", "запахи");
+    addWord("Сосна", "sosna", "запахи");
+    addWord("Дым", "dym", "запахи");
+    addWord("Гарь", "swąd", "запахи");
+    addWord("Плесень", "pleśń", "запахи");
+    addWord("Сырость", "wilgoć", "запахи");
+    addWord("Бензин", "benzyna", "запахи");
+    addWord("Краска", "farba", "запахи");
+    addWord("Хлорка", "chlor", "запахи");
+    addWord("Чеснок", "czosnek", "запахи");
+    addWord("Лук", "cebula", "запахи");
+    addWord("Кофе", "kawa", "запахи");
+    addWord("Шоколад", "czekolada", "запахи");
+    addWord("Мёд", "miód", "запахи");
+    addWord("Море", "morze", "запахи");
+    // ===============================================================
+    // ===================================================================
+    // ===================== СЕМЬЯ (Rodzina) — 30 пар =====================
+    addWord("Семья", "rodzina", "семья");
+    addWord("Родители", "rodzice", "семья");
+    addWord("Мать", "matka", "семья");
+    addWord("Отец", "ojciec", "семья");
+    addWord("Мама", "mama", "семья");
+    addWord("Папа", "tata", "семья");
+    addWord("Сын", "syn", "семья");
+    addWord("Дочь", "córka", "семья");
+    addWord("Брат", "brat", "семья");
+    addWord("Сестра", "siostra", "семья");
+    addWord("Дед", "dziadek", "семья");
+    addWord("Бабушка", "babcia", "семья");
+    addWord("Внук", "wnuk", "семья");
+    addWord("Внучка", "wnuczka", "семья");
+    addWord("Правнук", "prawnuk", "семья");
+    addWord("Правнучка", "prawnuczka", "семья");
+    addWord("Дядя", "wujek", "семья");
+    addWord("Тётя", "ciocia", "семья");
+    addWord("Племянник", "bratanek", "семья");
+    addWord("Племянница", "bratanica", "семья");
+    addWord("Кузен", "kuzyn", "семья");
+    addWord("Кузина", "kuzynka", "семья");
+    addWord("Муж", "mąż", "семья");
+    addWord("Жена", "żona", "семья");
+    addWord("Супруг", "małżonek", "семья");
+    addWord("Супруга", "małżonka", "семья");
+    addWord("Свекровь", "teściowa", "семья");
+    addWord("Свёкор", "teść", "семья");
+    addWord("Золовка", "szwagierka", "семья");
+    addWord("Деверь", "szwagier", "семья");
+    // ===============================================================
+    // ===================================================================
+    // ===================== ВНЕШНОСТЬ (Wygląd zewnętrzny) — 30 пар =====================
+    addWord("Внешность", "wygląd", "внешность");
+    addWord("Лицо", "twarz", "внешность");
+    addWord("Черты лица", "rysy twarzy", "внешность");
+    addWord("Рост", "wzrost", "внешность");
+    addWord("Высокий", "wysoki", "внешность");
+    addWord("Низкий", "niski", "внешность");
+    addWord("Средний рост", "średni wzrost", "внешность");
+    addWord("Худой", "chudy", "внешность");
+    addWord("Полный", "gruby", "внешность");
+    addWord("Стройный", "szczupły", "внешность");
+    addWord("Атлетичный", "atletyczny", "внешность");
+    addWord("Волосы", "włosy", "внешность");
+    addWord("Светлые волосы", "jasne włosy", "внешность");
+    addWord("Тёмные волосы", "ciemne włosy", "внешность");
+    addWord("Русые волосы", "brązowe włosy", "внешность");
+    addWord("Рыжие волосы", "rude włosy", "внешность");
+    addWord("Седые волосы", "siwe włosy", "внешность");
+    addWord("Лысина", "łysina", "внешность");
+    addWord("Кудрявые волосы", "kręcone włosy", "внешность");
+    addWord("Прямые волосы", "proste włosy", "внешность");
+    addWord("Глаза", "oczy", "внешность");
+    addWord("Голубые глаза", "niebieskie oczy", "внешность");
+    addWord("Зелёные глаза", "zielone oczy", "внешность");
+    addWord("Карие глаза", "brązowe oczy", "внешность");
+    addWord("Серые глаза", "szare oczy", "внешность");
+    addWord("Нос", "nos", "внешность");
+    addWord("Уши", "uszy", "внешность");
+    addWord("Губы", "usta", "внешность");
+    addWord("Борода", "broda", "внешность");
+    addWord("Усы", "wąsy", "внешность");
+
+    // ===================== ВРЕМЯ (czas) — 60 пар =====================
+    // Часы / время дня (10)
+    addWord("Час", "godzina", "время");
+    addWord("Минута", "minuta", "время");
+    addWord("Секунда", "sekunda", "время");
+    addWord("Утро", "ranek", "время");
+    addWord("День", "dzień", "время");
+    addWord("Вечер", "wieczór", "время");
+    addWord("Ночь", "noc", "время");
+    addWord("Полдень", "południe", "время");
+    addWord("Полночь", "północ", "время");
+    addWord("Рассвет", "świt", "время");
+
+    // Дни недели (7)
+    addWord("Понедельник", "poniedziałek", "время");
+    addWord("Вторник", "wtorek", "время");
+    addWord("Среда", "środa", "время");
+    addWord("Четверг", "czwartek", "время");
+    addWord("Пятница", "piątek", "время");
+    addWord("Суббота", "sobota", "время");
+    addWord("Воскресенье", "niedziela", "время");
+
+    // Месяцы (12)
+    addWord("Январь", "styczeń", "время");
+    addWord("Февраль", "luty", "время");
+    addWord("Март", "marzec", "время");
+    addWord("Апрель", "kwiecień", "время");
+    addWord("Май", "maj", "время");
+    addWord("Июнь", "czerwiec", "время");
+    addWord("Июль", "lipiec", "время");
+    addWord("Август", "sierpień", "время");
+    addWord("Сентябрь", "wrzesień", "время");
+    addWord("Октябрь", "październik", "время");
+    addWord("Ноябрь", "listopad", "время");
+    addWord("Декабрь", "grudzień", "время");
+
+    // Времена года (4)
+    addWord("Весна", "wiosna", "время");
+    addWord("Лето", "lato", "время");
+    addWord("Осень", "jesień", "время");
+    addWord("Зима", "zima", "время");
+
+    // Годы / длительные периоды (8)
+    addWord("Год", "rok", "время");
+    addWord("Месяц", "miesiąc", "время");
+    addWord("Неделя", "tydzień", "время");
+    addWord("Десятилетие", "dekada", "время");
+    addWord("Век", "wiek", "время");
+    addWord("Тысячелетие", "tysiąclecie", "время");
+    addWord("Вчера", "wczoraj", "время");
+    addWord("Сегодня", "dzisiaj", "время");
+    addWord("Завтра", "jutro", "время");
+
+    // Части суток / понятия времени (9)
+    addWord("Половина", "pół", "время");
+    addWord("Четверть", "kwadrans", "время");
+    addWord("Сейчас", "teraz", "время");
+    addWord("Потом", "później", "время");
+    addWord("Раньше", "wcześniej", "время");
+    addWord("Поздно", "późno", "время");
+    addWord("Рано", "wcześnie", "время");
+    addWord("Всегда", "zawsze", "время");
+    addWord("Никогда", "nigdy", "время");
+
+    // Дополнительные (оставшиеся до 60) (10)
+    addWord("Секундомер", "stoper", "время");
+    addWord("Будильник", "budzik", "время");
+    addWord("Календарь", "kalendarz", "время");
+    addWord("Часы (прибор)", "zegar", "время");
+    addWord("Наручные часы", "zegarek", "время");
+    addWord("Скоро", "wkrótce", "время");
+    addWord("Давно", "dawno", "время");
+    addWord("Недавно", "niedawno", "время");
+    addWord("Ежедневно", "codziennie", "время");
+    addWord("Еженедельно", "co tydzień", "время");
+
+    // ===================== ПОСУДА (naczynia) — 30 пар =====================
+    addWord("Ложка", "łyżka", "посуда");
+    addWord("Вилка", "widelec", "посуда");
+    addWord("Нож", "nóż", "посуда");
+    addWord("Тарелка", "talerz", "посуда");
+    addWord("Миска", "miska", "посуда");
+    addWord("Чашка", "filiżanka", "посуда");
+    addWord("Кружка", "kubek", "посуда");
+    addWord("Стакан", "szklanka", "посуда");
+    addWord("Бокал", "kieliszek", "посуда");
+    addWord("Сковорода", "patelnia", "посуда");
+    addWord("Кастрюля", "garnek", "посуда");
+    addWord("Крышка", "pokrywka", "посуда");
+    addWord("Половник", "chochla", "посуда");
+    addWord("Шумовка", "szumówka", "посуда");
+    addWord("Тёрка", "tarka", "посуда");
+    addWord("Доска разделочная", "deska do krojenia", "посуда");
+    addWord("Салатница", "salaterka", "посуда");
+    addWord("Супница", "waza", "посуда");
+    addWord("Чайник", "czajnik", "посуда");
+    addWord("Кофейник", "dzbanek do kawy", "посуда");
+    addWord("Кувшин", "dzban", "посуда");
+    addWord("Графин", "karafka", "посуда");
+    addWord("Противень", "blacha do pieczenia", "посуда");
+    addWord("Форма для выпечки", "forma do pieczenia", "посуда");
+    addWord("Дуршлаг", "cedzak", "посуда");
+    addWord("Ступка", "moździerz", "посуда");
+    addWord("Лопатка (кухонная)", "łopatka kuchenna", "посуда");
+    addWord("Венчик", "trzepaczka", "посуда");
+    addWord("Скалка", "wałek do ciasta", "посуда");
+    addWord("Мясорубка", "maszynka do mięsa", "посуда");
+
+    // ===================== КУХНЯ (kuchnia) — 30 пар =====================
+    addWord("Скатерть", "obrus", "кухня");
+    addWord("Чайник", "czajnik", "кухня");
+    addWord("Плита", "kuchenka", "кухня");
+    addWord("Духовка", "piekarnik", "кухня");
+    addWord("Микроволновка", "mikrofalówka", "кухня");
+    addWord("Холодильник", "lodówka", "кухня");
+    addWord("Морозилка", "zamrażarka", "кухня");
+    addWord("Посудомоечная машина", "zmywarka", "кухня");
+    addWord("Вытяжка", "okap", "кухня");
+    addWord("Стол кухонный", "stół kuchenny", "кухня");
+    addWord("Стул", "krzesło", "кухня");
+    addWord("Табурет", "taboret", "кухня");
+    addWord("Шкаф кухонный", "szafka kuchenna", "кухня");
+    addWord("Ящик", "szuflada", "кухня");
+    addWord("Полка", "półka", "кухня");
+    addWord("Раковина", "zlew", "кухня");
+    addWord("Смеситель", "bateria", "кухня");
+    addWord("Кран", "kran", "кухня");
+    addWord("Разделочная доска", "deska do krojenia", "кухня");
+    addWord("Салфетка", "serwetka", "кухня");
+    addWord("Полотенце кухонное", "ręcznik kuchenny", "кухня");
+    addWord("Прихватка", "rękawica kuchenna", "кухня");
+    addWord("Фартук", "fartuch", "кухня");
+    addWord("Весы кухонные", "waga kuchenna", "кухня");
+    addWord("Таймер", "timer", "кухня");
+    addWord("Мерный стакан", "miarka", "кухня");
+    addWord("Сито", "sito", "кухня");
+    addWord("Открывалка", "otwieracz", "кухня");
+    addWord("Тостер", "toster", "кухня");
+    addWord("Электрический чайник", "czajnik elektryczny", "кухня");
+    // ===================== ОБРАЗОВАНИЕ (edukacja) =====================
+    addWord("Школа", "szkoła", "образование");
+    addWord("Университет", "uniwersytet", "образование");
+    addWord("Учёба", "nauka", "образование");
+    addWord("Учитель", "nauczyciel", "образование");
+    addWord("Ученик", "uczeń", "образование");
+    addWord("Студент", "student", "образование");
+    addWord("Класс", "klasa", "образование");
+    addWord("Урок", "lekcja", "образование");
+    addWord("Домашнее задание", "praca domowa", "образование");
+    addWord("Экзамен", "egzamin", "образование");
+    addWord("Оценка", "ocena", "образование");
+    addWord("Пятерка", "piątka", "образование");
+    addWord("Дневник", "dziennik", "образование");
+    addWord("Ручка", "długopis", "образование");
+    addWord("Карандаш", "ołówek", "образование");
+    addWord("Тетрадь", "zeszyt", "образование");
+    addWord("Учебник", "podręcznik", "образование");
+    addWord("Доска", "tablica", "образование");
+    addWord("Мел", "kreda", "образование");
+    addWord("Парта", "ławka", "образование");
+    addWord("Перемена", "przerwa", "образование");
+    addWord("Каникулы", "wakacje", "образование");
+    addWord("Выпускник", "absolwent", "образование");
+    addWord("Диплом", "dyplom", "образование");
+    addWord("Стипендия", "stypendium", "образование");
+    addWord("Библиотека", "biblioteka", "образование");
+    addWord("Лаборатория", "laboratorium", "образование");
+    addWord("Семинар", "seminarium", "образование");
+    addWord("Лекция", "wykład", "образование");
+    addWord("Профессор", "profesor", "образование");
+
+    // ===================== ОБУВЬ (buty) =====================
+    addWord("Ботинки", "buty", "обувь");
+    addWord("Туфли", "czółenka", "обувь");
+    addWord("Кроссовки", "trampki", "обувь");
+    addWord("Сапоги", "buty zimowe", "обувь");
+    addWord("Резиновые сапоги", "kalosze", "обувь");
+    addWord("Сандалии", "sandały", "обувь");
+    addWord("Шлёпанцы", "klapki", "обувь");
+    addWord("Тапочки", "kapcie", "обувь");
+    addWord("Кеды", "tenisówki", "обувь");
+    addWord("Мокасины", "mokasyny", "обувь");
+    addWord("Лоферы", "lofery", "обувь");
+    addWord("Балетки", "baleriny", "обувь");
+    addWord("Угги", "uggsy", "обувь");
+    addWord("Босоножки", "sandałki", "обувь");
+    addWord("Шнурки", "sznurowadła", "обувь");
+    addWord("Подошва", "podeszwa", "обувь");
+    addWord("Каблук", "obcas", "обувь");
+    addWord("Стелька", "wkładka", "обувь");
+    addWord("Обувной магазин", "sklep obuwniczy", "обувь");
+    addWord("Размер обуви", "rozmiar buta", "обувь");
+
+    // ===================== АКСЕССУАРЫ (akcesoria) =====================
+    addWord("Сумка", "torba", "аксессуары");
+    addWord("Рюкзак", "plecak", "аксессуары");
+    addWord("Часы", "zegarek", "аксессуары");
+    addWord("Кольцо", "pierścionek", "аксессуары");
+    addWord("Серьги", "kolczyki", "аксессуары");
+    addWord("Цепочка", "łańcuszek", "аксессуары");
+    addWord("Браслет", "bransoletka", "аксессуары");
+    addWord("Ожерелье", "naszyjnik", "аксессуары");
+    addWord("Бусы", "korale", "аксессуары");
+    addWord("Запонки", "spinki do mankietów", "аксессуары");
+    addWord("Галстук", "krawat", "аксессуары");
+    addWord("Бабочка", "muchą", "аксессуары");
+    addWord("Ремень", "pasek", "аксессуары");
+    addWord("Перчатки", "rękawiczki", "аксессуары");
+    addWord("Шарф", "szalik", "аксессуары");
+    addWord("Платок", "chustka", "аксессуары");
+    addWord("Зонт", "parasol", "аксессуары");
+    addWord("Очки", "okulary", "аксессуары");
+    addWord("Солнцезащитные очки", "okulary przeciwsłoneczne", "аксессуары");
+    addWord("Кошелёк", "portfel", "аксессуары");
+
+    // ===================== ГИГИЕНА (higiena) =====================
+    addWord("Мыло", "mydło", "гигиена");
+    addWord("Шампунь", "szampon", "гигиена");
+    addWord("Зубная паста", "pasta do zębów", "гигиена");
+    addWord("Зубная щётка", "szczoteczka do zębów", "гигиена");
+    addWord("Дезодорант", "dezodorant", "гигиена");
+    addWord("Гель для душа", "żel pod prysznic", "гигиена");
+    addWord("Мочалка", "myjka", "гигиена");
+    addWord("Полотенце", "ręcznik", "гигиена");
+    addWord("Расчёска", "grzebień", "гигиена");
+    addWord("Щётка для волос", "szczotka do włosów", "гигиена");
+    addWord("Фен", "suszarka", "гигиена");
+    addWord("Бритва", "maszynka do golenia", "гигиена");
+    addWord("Пена для бритья", "piana do golenia", "гигиена");
+    addWord("Туалетная бумага", "papier toaletowy", "гигиена");
+    addWord("Влажные салфетки", "chusteczki nawilżane", "гигиена");
+    addWord("Ватные палочки", "patyczki higieniczne", "гигиена");
+    addWord("Маникюрные ножницы", "nożyczki do paznokci", "гигиена");
+    addWord("Пилка для ногтей", "pilnik do paznokci", "гигиена");
+    addWord("Крем для рук", "krem do rąk", "гигиена");
+    addWord("Лосьон для тела", "balsam do ciała", "гигиена");
+
+    // ===================== РЕМОНТ (remont) =====================
+    addWord("Молоток", "młotek", "ремонт");
+    addWord("Отвёртка", "śrubokręt", "ремонт");
+    addWord("Плоскогубцы", "szczypce", "ремонт");
+    addWord("Гаечный ключ", "klucz", "ремонт");
+    addWord("Дрель", "wiertarka", "ремонт");
+    addWord("Шуруповёрт", "wkrętarka", "ремонт");
+    addWord("Гвозди", "gwoździe", "ремонт");
+    addWord("Шурупы", "wkręty", "ремонт");
+    addWord("Дюбель", "kołek rozporowy", "ремонт");
+    addWord("Изолента", "taśma izolacyjna", "ремонт");
+    addWord("Скотч", "taśma klejąca", "ремонт");
+    addWord("Клей", "klej", "ремонт");
+    addWord("Кисть", "pędzel", "ремонт");
+    addWord("Валик", "wałek", "ремонт");
+    addWord("Краска", "farba", "ремонт");
+    addWord("Шпаклёвка", "szpachla", "ремонт");
+    addWord("Шпатель", "szpachelka", "ремонт");
+    addWord("Наждачная бумага", "papier ścierny", "ремонт");
+    addWord("Рулетка", "miarka zwijana", "ремонт");
+    addWord("Уровень", "poziomica", "ремонт");
+    addWord("Лестница", "drabina", "ремонт");
+    addWord("Перчатки рабочие", "rękawice robocze", "ремонт");
+
+    // ===================== ЭЛЕКТРИКА (elektryka) =====================
+    addWord("Розетка", "gniazdko", "электрика");
+    addWord("Лампа", "lampa", "электрика");
+    addWord("Провод", "przewód", "электрика");
+    addWord("Лампочка", "żarówka", "электрика");
+    addWord("Выключатель", "włącznik", "электрика");
+    addWord("Удлинитель", "przedłużacz", "электрика");
+    addWord("Тройник", "rozdzielacz", "электрика");
+    addWord("Адаптер", "adapter", "электрика");
+    addWord("Батарейка", "bateria", "электрика");
+    addWord("Аккумулятор", "akumulator", "электрика");
+    addWord("Зарядное устройство", "ładowarka", "электрика");
+    addWord("Паяльник", "lutownica", "электрика");
+    addWord("Мультиметр", "multimetr", "электрика");
+    addWord("Предохранитель", "bezpiecznik", "электрика");
+    addWord("Электрощиток", "rozdzielnica", "электрика");
+    addWord("Клемма", "klemka", "электрика");
+    addWord("Изоляция", "izolacja", "электрика");
+    addWord("Заземление", "uziemienie", "электрика");
+    addWord("Напряжение", "napięcie", "электрика");
+    addWord("Ток", "prąd", "электрика");
+
+    // ===================== ТЕХНИКА (technika) =====================
+    addWord("Телефон", "telefon", "техника");
+    addWord("Смартфон", "smartfon", "техника");
+    addWord("Ноутбук", "laptop", "техника");
+    addWord("Компьютер", "komputer", "техника");
+    addWord("Телевизор", "telewizor", "техника");
+    addWord("Планшет", "tablet", "техника");
+    addWord("Наушники", "słuchawki", "техника");
+    addWord("Колонка", "głośnik", "техника");
+    addWord("Микрофон", "mikrofon", "техника");
+    addWord("Фотоаппарат", "aparat", "техника");
+    addWord("Видеокамера", "kamera", "техника");
+    addWord("Принтер", "drukarka", "техника");
+    addWord("Сканер", "skaner", "техника");
+    addWord("Ксерокс", "kserokopiarka", "техника");
+    addWord("Роутер", "router", "техника");
+    addWord("Модем", "modem", "техника");
+    addWord("Клавиатура", "klawiatura", "техника");
+    addWord("Мышь", "myszka", "техника");
+    addWord("Монитор", "monitor", "техника");
+    addWord("Проектор", "projektor", "техника");
+    addWord("Флешка", "pendrive", "техника");
+    addWord("Жёсткий диск", "dysk twardy", "техника");
+
+    // ===================== ДОКУМЕНТЫ (dokumenty) =====================
+    addWord("Паспорт", "paszport", "документы");
+    addWord("Водительские права", "prawo jazdy", "документы");
+    addWord("Справка", "zaświadczenie", "документы");
+    addWord("Свидетельство", "świadectwo", "документы");
+    addWord("Диплом", "dyplom", "документы");
+    addWord("Аттестат", "świadectwo", "документы");
+    addWord("Удостоверение", "legitymacja", "документы");
+    addWord("Пропуск", "przepustka", "документы");
+    addWord("Договор", "umowa", "документы");
+    addWord("Контракт", "kontrakt", "документы");
+    addWord("Счёт", "rachunek", "документы");
+    addWord("Квитанция", "paragon", "документы");
+    addWord("Чек", "paragon", "документы");
+    addWord("Накладная", "faktura", "документы");
+    addWord("Заявление", "wniosek", "документы");
+    addWord("Анкета", "ankieta", "документы");
+    addWord("Резюме", "CV", "документы");
+    addWord("Доверенность", "pełnomocnictwo", "документы");
+    addWord("Завещание", "testament", "документы");
+    addWord("Свидетельство о рождении", "akt urodzenia", "документы");
+
+    // ===================== ДЕНЬГИ (pieniądze) =====================
+    addWord("Деньги", "pieniądze", "деньги");
+    addWord("Валюта", "waluta", "деньги");
+    addWord("Монета", "moneta", "деньги");
+    addWord("Купюра", "banknot", "деньги");
+    addWord("Счёт", "rachunek", "деньги");
+    addWord("Зарплата", "pensja", "деньги");
+    addWord("Наличные", "gotówka", "деньги");
+    addWord("Карта", "karta", "деньги");
+    addWord("Кредитка", "karta kredytowa", "деньги");
+    addWord("Дебетовая карта", "karta debetowa", "деньги");
+    addWord("Банкомат", "bankomat", "деньги");
+    addWord("Копилка", "skarbonka", "деньги");
+    addWord("Бюджет", "budżet", "деньги");
+    addWord("Долг", "dług", "деньги");
+    addWord("Кредит", "kredyt", "деньги");
+    addWord("Процент", "procent", "деньги");
+    addWord("Обмен", "wymiana", "деньги");
+    addWord("Курс валют", "kurs walut", "деньги");
+    addWord("Мелочь", "drobne", "деньги");
+    addWord("Сдача", "reszta", "деньги");
+
+    // ===================== ПОКУПКИ (zakupy) =====================
+    addWord("Чек", "paragon", "покупки");
+    addWord("Скидка", "rabat", "покупки");
+    addWord("Касса", "kasa", "покупки");
+    addWord("Продажа", "sprzedaż", "покупки");
+    addWord("Распродажа", "wyprzedaż", "покупки");
+    addWord("Цена", "cena", "покупки");
+    addWord("Стоимость", "koszt", "покупки");
+    addWord("Товар", "towar", "покупки");
+    addWord("Покупка", "zakup", "покупки");
+    addWord("Покупатель", "kupujący", "покупки");
+    addWord("Продавец", "sprzedawca", "покупки");
+    addWord("Магазин", "sklep", "покупки");
+    addWord("Супермаркет", "supermarket", "покупки");
+    addWord("Торговый центр", "centrum handlowe", "покупки");
+    addWord("Рынок", "targ", "покупки");
+    addWord("Корзина", "koszyk", "покупки");
+    addWord("Тележка", "wózek", "покупки");
+    addWord("Сумка для покупок", "torba na zakupy", "покупки");
+    addWord("Пакет", "reklamówka", "покупки");
+    addWord("Гарантия", "gwarancja", "покупки");
+
+    // ===================== РЕСТОРАН (restauracja) =====================
+    addWord("Меню", "menu", "ресторан");
+    addWord("Официант", "kelner", "ресторан");
+    addWord("Официантка", "kelnerka", "ресторан");
+    addWord("Заказ", "zamówienie", "ресторан");
+    addWord("Столик", "stolik", "ресторан");
+    addWord("Бронь", "rezerwacja", "ресторан");
+    addWord("Чаевые", "napiwek", "ресторан");
+    addWord("Счёт", "rachunek", "ресторан");
+    addWord("Шеф-повар", "szef kuchni", "ресторан");
+    addWord("Кухня", "kuchnia", "ресторан");
+    addWord("Закуска", "przekąska", "ресторан");
+    addWord("Горячее", "danie główne", "ресторан");
+    addWord("Десерт", "deser", "ресторан");
+    addWord("Суп", "zupa", "ресторан");
+    addWord("Салат", "sałatka", "ресторан");
+    addWord("Гарнир", "dodatek", "ресторан");
+    addWord("Соус", "sos", "ресторан");
+    addWord("Напитки", "napoje", "ресторан");
+    addWord("Винная карта", "karta win", "ресторан");
+    addWord("Фирменное блюдо", "danie popisowe", "ресторан");
+
+    // ===================== КАФЕ (kawiarnia) =====================
+    addWord("Кофе", "kawa", "кафе");
+    addWord("Десерт", "deser", "кафе");
+    addWord("Столик", "stolik", "кафе");
+    addWord("Бариста", "barista", "кафе");
+    addWord("Капучино", "cappuccino", "кафе");
+    addWord("Латте", "latte", "кафе");
+    addWord("Эспрессо", "espresso", "кафе");
+    addWord("Американо", "americano", "кафе");
+    addWord("Мокко", "mocha", "кафе");
+    addWord("Раф", "raf", "кафе");
+    addWord("Чай", "herbata", "кафе");
+    addWord("Пирожное", "ciastko", "кафе");
+    addWord("Торт", "ciasto", "кафе");
+    addWord("Маффин", "babeczka", "кафе");
+    addWord("Круассан", "rogalik", "кафе");
+    addWord("Печенье", "ciastko", "кафе");
+    addWord("Мороженое", "lody", "кафе");
+    addWord("Сок", "sok", "кафе");
+    addWord("Вода", "woda", "кафе");
+    addWord("Сахар", "cukier", "кафе");
+
+    // ===================== ГОСТИНИЦА (hotel) =====================
+    addWord("Номер", "pokój", "гостиница");
+    addWord("Регистрация", "zameldowanie", "гостиница");
+    addWord("Ключ", "klucz", "гостиница");
+    addWord("Ресепшн", "recepcja", "гостиница");
+    addWord("Портье", "portier", "гостиница");
+    addWord("Горничная", "pokojowa", "гостиница");
+    addWord("Багаж", "bagaż", "гостиница");
+    addWord("Носильщик", "bagażowy", "гостиница");
+    addWord("Люкс", "luksus", "гостиница");
+    addWord("Одноместный номер", "pokój jednoosobowy", "гостиница");
+    addWord("Двухместный номер", "pokój dwuosobowy", "гостиница");
+    addWord("Завтрак", "śniadanie", "гостиница");
+    addWord("Шведский стол", "bufet", "гостиница");
+    addWord("Бронирование", "rezerwacja", "гостиница");
+    addWord("Заезд", "zameldowanie", "гостиница");
+    addWord("Выезд", "wymeldowanie", "гостиница");
+    addWord("Постель", "łóżko", "гостиница");
+    addWord("Подушка", "poduszka", "гостиница");
+    addWord("Одеяло", "kołdra", "гостиница");
+    addWord("Полотенце", "ręcznik", "гостиница");
+
+    // ===================== АЭРОПОРТ (lotnisko) =====================
+    addWord("Рейс", "lot", "аэропорт");
+    addWord("Багаж", "bagaż", "аэропорт");
+    addWord("Посадка", "lądowanie", "аэропорт");
+    addWord("Вылет", "odlot", "аэропорт");
+    addWord("Прилёт", "przylot", "аэропорт");
+    addWord("Стойка регистрации", "odprawa", "аэропорт");
+    addWord("Посадочный талон", "karta pokładowa", "аэропорт");
+    addWord("Паспортный контроль", "kontrola paszportowa", "аэропорт");
+    addWord("Таможня", "cło", "аэропорт");
+    addWord("Досмотр", "kontrola bezpieczeństwa", "аэропорт");
+    addWord("Ручная кладь", "bagaż podręczny", "аэропорт");
+    addWord("Чемодан", "walizka", "аэропорт");
+    addWord("Выход на посадку", "bramka", "аэропорт");
+    addWord("Зал ожидания", "poczekalnia", "аэропорт");
+    addWord("Дьюти-фри", "duty free", "аэропорт");
+    addWord("Задержка рейса", "opóźnienie lotu", "аэропорт");
+    addWord("Отмена рейса", "odwołanie lotu", "аэропорт");
+    addWord("Трансфер", "transfer", "аэропорт");
+    addWord("Посадка на рейс", "boarding", "аэропорт");
+    addWord("Авиакомпания", "linie lotnicze", "аэропорт");
+
+    // ===================== ВОКЗАЛ (dworzec) =====================
+    addWord("Поезд", "pociąg", "вокзал");
+    addWord("Билет", "bilet", "вокзал");
+    addWord("Платформа", "peron", "вокзал");
+    addWord("Расписание", "rozkład", "вокзал");
+    addWord("Касса", "kasa", "вокзал");
+    addWord("Автомат", "automat", "вокзал");
+    addWord("Купе", "przedział", "вокзал");
+    addWord("Плацкарт", "miejscówka", "вокзал");
+    addWord("Вагон", "wagon", "вокзал");
+    addWord("Локомотив", "lokomotywa", "вокзал");
+    addWord("Рельсы", "tory", "вокзал");
+    addWord("Вокзал", "dworzec", "вокзал");
+    addWord("Ожидание", "oczekiwanie", "вокзал");
+    addWord("Опоздание", "spóźnienie", "вокзал");
+    addWord("Проводник", "konduktor", "вокзал");
+    addWord("Посадка", "wsiadanie", "вокзал");
+    addWord("Выход", "wyjście", "вокзал");
+    addWord("Камера хранения", "przechowalnia bagażu", "вокзал");
+    addWord("Вокзальная площадь", "plac dworcowy", "вокзал");
+    addWord("Электричка", "pociąg elektryczny", "вокзал");
+
+    // ===================== ПОЧТА (poczta) =====================
+    addWord("Письмо", "list", "почта");
+    addWord("Посылка", "paczka", "почта");
+    addWord("Марка", "znaczek", "почта");
+    addWord("Отправить", "wysłać", "почта");
+    addWord("Получить", "otrzymać", "почта");
+    addWord("Конверт", "koperta", "почта");
+    addWord("Открытка", "pocztówka", "почта");
+    addWord("Почтовый индекс", "kod pocztowy", "почта");
+    addWord("Адрес", "adres", "почта");
+    addWord("Отправитель", "nadawca", "почта");
+    addWord("Получатель", "odbiorca", "почта");
+    addWord("Почтовое отделение", "poczta", "почта");
+    addWord("Почтальон", "listonosz", "почта");
+    addWord("Почтовый ящик", "skrzynka pocztowa", "почта");
+    addWord("Ценное письмо", "list polecony", "почта");
+    addWord("Уведомление", "potwierdzenie", "почта");
+    addWord("Бланк", "formularz", "почта");
+    addWord("Вес", "waga", "почта");
+    addWord("Тариф", "taryfa", "почта");
+    addWord("Доставка", "dostawa", "почта");
+
+    // ===================== БАНК (bank) =====================
+    addWord("Кредит", "kredyt", "банк");
+    addWord("Вклад", "lokata", "банк");
+    addWord("Карта", "karta", "банк");
+    addWord("Счёт", "konto", "банк");
+    addWord("Банкомат", "bankomat", "банк");
+    addWord("Оператор", "operator", "банк");
+    addWord("Процент", "procent", "банк");
+    addWord("Комиссия", "prowizja", "банк");
+    addWord("Перевод", "przelew", "банк");
+    addWord("Валюта", "waluta", "банк");
+    addWord("Обмен валюты", "wymiana waluty", "банк");
+    addWord("Ипотека", "hipoteka", "банк");
+    addWord("Рассрочка", "raty", "банк");
+    addWord("Кредитная история", "historia kredytowa", "банк");
+    addWord("Зарплатная карта", "karta płacowa", "банк");
+    addWord("Дебетовая карта", "karta debetowa", "банк");
+    addWord("Кредитная карта", "karta kredytowa", "банк");
+    addWord("Пин-код", "PIN", "банк");
+    addWord("Баланс", "saldo", "банк");
+    addWord("Выписка", "wyciąg", "банк");
+
+    // ===================== ПОЛИЦИЯ (policja) =====================
+    addWord("Участок", "komisariat", "полиция");
+    addWord("Штраф", "mandat", "полиция");
+    addWord("Документы", "dokumenty", "полиция");
+    addWord("Полицейский", "policjant", "полиция");
+    addWord("Патруль", "patrol", "полиция");
+    addWord("Машина полиции", "radiowóz", "полиция");
+    addWord("Сирена", "syrena", "полиция");
+    addWord("Жезл", "pałka", "полиция");
+    addWord("Наручники", "kajdanki", "полиция");
+    addWord("Протокол", "protokół", "полиция");
+    addWord("Преступление", "przestępstwo", "полиция");
+    addWord("Преступник", "przestępca", "полиция");
+    addWord("Вор", "złodziej", "полиция");
+    addWord("Кража", "kradzież", "полиция");
+    addWord("Допрос", "przesłuchanie", "полиция");
+    addWord("Обыск", "przeszukanie", "полиция");
+    addWord("Арест", "aresztowanie", "полиция");
+    addWord("Тюрьма", "więzienie", "полиция");
+    addWord("Вызов полиции", "wezwanie policji", "полиция");
+    addWord("Безопасность", "bezpieczeństwo", "полиция");
+
+    // ===================== ПРАЗДНИКИ (święta) =====================
+    addWord("Новый год", "Nowy Rok", "праздники");
+    addWord("Пасха", "Wielkanoc", "праздники");
+    addWord("Подарок", "prezent", "праздники");
+    addWord("Рождество", "Boże Narodzenie", "праздники");
+    addWord("День рождения", "urodziny", "праздники");
+    addWord("Свадьба", "ślub", "праздники");
+    addWord("Юбилей", "jubileusz", "праздники");
+    addWord("Фейерверк", "fajerwerki", "праздники");
+    addWord("Торт", "tort", "праздники");
+    addWord("Свечи", "świece", "праздники");
+    addWord("Поздравление", "życzenia", "праздники");
+    addWord("Открытка", "kartka", "праздники");
+    addWord("Гости", "goście", "праздники");
+    addWord("Застолье", "uczta", "праздники");
+    addWord("Праздничный стол", "świąteczny stół", "праздники");
+    addWord("Ёлка", "choinka", "праздники");
+    addWord("Дед Мороз", "Święty Mikołaj", "праздники");
+    addWord("Снегурочка", "Śnieżynka", "праздники");
+    addWord("Костюм", "kostium", "праздники");
+    addWord("Маскарад", "maskarada", "праздники");
+
+    // ===================== ЕДА_НАПИТКИ (jedzenie_napoje) =====================
+    addWord("Фастфуд", "fast food", "еда_напитки");
+    addWord("Соки", "soki", "еда_напитки");
+    addWord("Закуски", "przekąski", "еда_напитки");
+    addWord("Гамбургер", "hamburger", "еда_напитки");
+    addWord("Картошка фри", "frytki", "еда_напитки");
+    addWord("Пицца", "pizza", "еда_напитки");
+    addWord("Хот-дог", "hot dog", "еда_напитки");
+    addWord("Наггетсы", "nuggetsy", "еда_напитки");
+    addWord("Кола", "cola", "еда_напитки");
+    addWord("Лимонад", "lemoniada", "еда_напитки");
+    addWord("Морс", "napoje owocowe", "еда_напитки");
+    addWord("Компот", "kompot", "еда_напитки");
+    addWord("Квас", "kwas chlebowy", "еда_напитки");
+    addWord("Смузи", "koktajl", "еда_напитки");
+    addWord("Молочный коктейль", "koktajl mleczny", "еда_напитки");
+    addWord("Чипсы", "chipsy", "еда_напитки");
+    addWord("Попкорн", "popcorn", "еда_напитки");
+    addWord("Сухарики", "grzanki", "еда_напитки");
+    addWord("Орешки", "orzeszki", "еда_напитки");
+    addWord("Мороженое", "lody", "еда_напитки");
+
+    // ===================== СЕМЕЙНОЕ ПОЛОЖЕНИЕ (stan cywilny) =====================
+    addWord("Женат", "żonaty", "семейное_положение");
+    addWord("Замужем", "zamężna", "семейное_положение");
+    addWord("Разведён", "rozwiedziony", "семейное_положение");
+    addWord("Разведена", "rozwiedziona", "семейное_положение");
+    addWord("Холост", "kawaler", "семейное_положение");
+    addWord("Не замужем", "panna", "семейное_положение");
+    addWord("Вдовец", "wdowiec", "семейное_положение");
+    addWord("Вдова", "wdowa", "семейное_положение");
+    addWord("Помолвлен", "zaręczony", "семейное_положение");
+    addWord("Помолвлена", "zaręczona", "семейное_положение");
+    addWord("В отношениях", "w związku", "семейное_положение");
+    addWord("Гражданский брак", "konkubinat", "семейное_положение");
+    addWord("Сожитель", "partner", "семейное_положение");
+    addWord("Сожительница", "partnerka", "семейное_положение");
+    addWord("Жених", "pan młody", "семейное_положение");
+    addWord("Невеста", "panna młoda", "семейное_положение");
+    addWord("Супруг", "małżonek", "семейное_положение");
+    addWord("Супруга", "małżonka", "семейное_положение");
+    addWord("Бывший муж", "były mąż", "семейное_положение");
+    addWord("Бывшая жена", "była żona", "семейное_положение");
+
+    // ===================== ПТИЦЫ (ptaki) =====================
+    addWord("Воробей", "wróbel", "птицы");
+    addWord("Орёл", "orzeł", "птицы");
+    addWord("Сова", "sowa", "птицы");
+    addWord("Голубь", "gołąb", "птицы");
+    addWord("Ворона", "wrona", "птицы");
+    addWord("Синица", "sikorka", "птицы");
+    addWord("Снегирь", "gil", "птицы");
+    addWord("Дятел", "dzięcioł", "птицы");
+    addWord("Ласточка", "jaskółka", "птицы");
+    addWord("Соловей", "słowik", "птицы");
+    addWord("Кукушка", "kukułka", "птицы");
+    addWord("Филин", "puchacz", "птицы");
+    addWord("Ястреб", "jastrząb", "птицы");
+    addWord("Сокол", "sokół", "птицы");
+    addWord("Чайка", "mewa", "птицы");
+    addWord("Пингвин", "pingwin", "птицы");
+    addWord("Страус", "struś", "птицы");
+    addWord("Павлин", "paw", "птицы");
+    addWord("Попугай", "papuga", "птицы");
+    addWord("Колибри", "koliber", "птицы");
+
+    // ===================== РЫБЫ (ryby) =====================
+    addWord("Карп", "karp", "рыбы");
+    addWord("Лосось", "łosoś", "рыбы");
+    addWord("Форель", "pstrąg", "рыбы");
+    addWord("Щука", "szczupak", "рыбы");
+    addWord("Окунь", "okoń", "рыбы");
+    addWord("Сом", "sum", "рыбы");
+    addWord("Лещ", "leszcz", "рыбы");
+    addWord("Карась", "karaś", "рыбы");
+    addWord("Сельдь", "śledź", "рыбы");
+    addWord("Скумбрия", "makrela", "рыбы");
+    addWord("Тунец", "tuńczyk", "рыбы");
+    addWord("Палтус", "halibut", "рыбы");
+    addWord("Камбала", "flądra", "рыбы");
+    addWord("Осётр", "jesiotr", "рыбы");
+    addWord("Угорь", "węgorz", "рыбы");
+    addWord("Золотая рыбка", "złota rybka", "рыбы");
+    addWord("Акула", "rekin", "рыбы");
+    addWord("Кит", "wieloryb", "рыбы");
+    addWord("Дельфин", "delfin", "рыбы");
+    addWord("Скат", "płaszczka", "рыбы");
+
+    // ===================== НАСЕКОМЫЕ (owady) =====================
+    addWord("Пчела", "pszczoła", "насекомые");
+    addWord("Муравей", "mrówka", "насекомые");
+    addWord("Бабочка", "motyl", "насекомые");
+    addWord("Комар", "komar", "насекомые");
+    addWord("Муха", "mucha", "насекомые");
+    addWord("Стрекоза", "ważka", "насекомые");
+    addWord("Божья коровка", "biedronka", "насекомые");
+    addWord("Кузнечик", "konik polny", "насекомые");
+    addWord("Сверчок", "świerszcz", "насекомые");
+    addWord("Жук", "chrząszcz", "насекомые");
+    addWord("Таракан", "karaluch", "насекомые");
+    addWord("Паук", "pająk", "насекомые");
+    addWord("Клещ", "kleszcz", "насекомые");
+    addWord("Оса", "osa", "насекомые");
+    addWord("Шмель", "trzmiel", "насекомые");
+    addWord("Мотылёк", "ćma", "насекомые");
+    addWord("Светлячок", "świetlik", "насекомые");
+    addWord("Богомол", "modliszka", "насекомые");
+    addWord("Гусеница", "gąsienica", "насекомые");
+    addWord("Личинка", "larwa", "насекомые");
+
+    // ===================== ЦВЕТЫ (kwiaty) =====================
+    addWord("Роза", "róża", "цветы");
+    addWord("Тюльпан", "tulipan", "цветы");
+    addWord("Ромашка", "rumianek", "цветы");
+    addWord("Лилия", "lilia", "цветы");
+    addWord("Орхидея", "orchidea", "цветы");
+    addWord("Пион", "piwonia", "цветы");
+    addWord("Гвоздика", "goździk", "цветы");
+    addWord("Нарцисс", "narcyz", "цветы");
+    addWord("Подсолнух", "słonecznik", "цветы");
+    addWord("Василёк", "chaber", "цветы");
+    addWord("Ландыш", "konwalia", "цветы");
+    addWord("Фиалка", "fiołek", "цветы");
+    addWord("Мимоза", "mimoza", "цветы");
+    addWord("Георгин", "dalia", "цветы");
+    addWord("Ирис", "irys", "цветы");
+    addWord("Хризантема", "chryzantema", "цветы");
+    addWord("Астра", "aster", "цветы");
+    addWord("Мак", "mak", "цветы");
+    addWord("Незабудка", "niezapominajka", "цветы");
+    addWord("Одуванчик", "mniszek lekarski", "цветы");
+
+    // ===================== ДЕРЕВЬЯ (drzewa) =====================
+    addWord("Дуб", "dąb", "деревья");
+    addWord("Сосна", "sosna", "деревья");
+    addWord("Берёза", "brzoza", "деревья");
+    addWord("Ель", "świerk", "деревья");
+    addWord("Клён", "klon", "деревья");
+    addWord("Ива", "wierzba", "деревья");
+    addWord("Осина", "osika", "деревья");
+    addWord("Тополь", "topola", "деревья");
+    addWord("Ясень", "jesion", "деревья");
+    addWord("Вяз", "wiąz", "деревья");
+    addWord("Липа", "lipa", "деревья");
+    addWord("Ольха", "olsza", "деревья");
+    addWord("Каштан", "kasztanowiec", "деревья");
+    addWord("Граб", "grab", "деревья");
+    addWord("Бук", "buk", "деревья");
+    addWord("Яблоня", "jabłoń", "деревья");
+    addWord("Груша", "grusza", "деревья");
+    addWord("Вишня", "wiśnia", "деревья");
+    addWord("Слива", "śliwa", "деревья");
+    addWord("Пальма", "palma", "деревья");
+
+    // ===================== ГЕОГРАФИЯ (geografia) =====================
+    addWord("Река", "rzeka", "география");
+    addWord("Гора", "góra", "география");
+    addWord("Море", "morze", "география");
+    addWord("Океан", "ocean", "география");
+    addWord("Озеро", "jezioro", "география");
+    addWord("Лес", "las", "география");
+    addWord("Поле", "pole", "география");
+    addWord("Долина", "dolina", "география");
+    addWord("Равнина", "równina", "география");
+    addWord("Пустыня", "pustynia", "география");
+    addWord("Вулкан", "wulkan", "география");
+    addWord("Водопад", "wodospad", "география");
+    addWord("Остров", "wyspa", "география");
+    addWord("Полуостров", "półwysep", "география");
+    addWord("Залив", "zatoka", "география");
+    addWord("Пролив", "cieśnina", "география");
+    addWord("Холм", "wzgórze", "география");
+    addWord("Скала", "skała", "география");
+    addWord("Пещера", "jaskinia", "география");
+    addWord("Ледник", "lodowiec", "география");
+
+    // === ОСНОВНЫЕ КОЛИЧЕСТВЕННЫЕ 1-20 ===
+    addWord("Ноль", "zero", "числительные  (количественные)");
+    addWord("Один (м.р.)", "jeden", "числительные  (количественные)");
+    addWord("Одна (ж.р.)", "jedna", "числительные  (количественные)");
+    addWord("Одно (ср.р.)", "jedno", "числительные  (количественные)");
+    addWord("Два (м.р.)", "dwa", "числительные  (количественные)");
+    addWord("Две (ж.р.)", "dwie", "числительные  (количественные)");
+    addWord("Три", "trzy", "числительные  (количественные)");
+    addWord("Четыре", "cztery", "числительные  (количественные)");
+    addWord("Пять", "pięć", "числительные  (количественные)");
+    addWord("Шесть", "sześć", "числительные  (количественные)");
+    addWord("Семь", "siedem", "числительные  (количественные)");
+    addWord("Восемь", "osiem", "числительные  (количественные)");
+    addWord("Девять", "dziewięć", "числительные  (количественные)");
+    addWord("Десять", "dziesięć", "числительные  (количественные)");
+    addWord("Одиннадцать", "jedenaście", "числительные  (количественные)");
+    addWord("Двенадцать", "dwanaście", "числительные  (количественные)");
+    addWord("Тринадцать", "trzynaście", "числительные  (количественные)");
+    addWord("Четырнадцать", "czternaście", "числительные  (количественные)");
+    addWord("Пятнадцать", "piętnaście", "числительные  (количественные)");
+    addWord("Шестнадцать", "szesnaście", "числительные  (количественные)");
+    addWord("Семнадцать", "siedemnaście", "числительные  (количественные)");
+    addWord("Восемнадцать", "osiemnaście", "числительные  (количественные)");
+    addWord("Девятнадцать", "dziewiętnaście", "числительные  (количественные)");
+    addWord("Двадцать", "dwadzieścia", "числительные  (количественные)");
+
+    // === ДЕСЯТКИ (20-90) ===
+    addWord("Двадцать", "dwadzieścia", "числительные  (количественные)");
+    addWord("Тридцать", "trzydzieści", "числительные  (количественные)");
+    addWord("Сорок", "czterdzieści", "числительные  (количественные)");
+    addWord("Пятьдесят", "pięćdziesiąt", "числительные  (количественные)");
+    addWord("Шестьдесят", "sześćdziesiąt", "числительные  (количественные)");
+    addWord("Семьдесят", "siedemdziesiąt", "числительные  (количественные)");
+    addWord("Восемьдесят", "osiemdziesiąt", "числительные  (количественные)");
+    addWord("Девяносто", "dziewięćdziesiąt", "числительные  (количественные)");
+
+    // === СОТНИ (100-900) ===
+    addWord("Сто", "sto", "числительные  (количественные)");
+    addWord("Двести", "dwieście", "числительные  (количественные)");
+    addWord("Триста", "trzysta", "числительные  (количественные)");
+    addWord("Четыреста", "czterysta", "числительные  (количественные)");
+    addWord("Пятьсот", "pięćset", "числительные  (количественные)");
+    addWord("Шестьсот", "sześćset", "числительные  (количественные)");
+    addWord("Семьсот", "siedemset", "числительные  (количественные)");
+    addWord("Восемьсот", "osiemset", "числительные  (количественные)");
+    addWord("Девятьсот", "dziewięćset", "числительные  (количественные)");
+
+    // === ТЫСЯЧИ И БОЛЬШЕ ===
+    addWord("Тысяча", "tysiąc", "числительные  (количественные)");
+    addWord("Две тысячи", "dwa tysiące", "числительные  (количественные)");
+    addWord("Пять тысяч", "pięć tysięcy", "числительные  (количественные)");
+    addWord("Миллион", "milion", "числительные  (количественные)");
+    addWord("Два миллиона", "dwa miliony", "числительные  (количественные)");
+    addWord("Пять миллионов", "pięć milionów", "числительные  (количественные)");
+    addWord("Миллиард", "miliard", "числительные");
+    // === СЛОЖНЫЕ ЧИСЛА (23, 45, 78 и т.д.) ===
+    addWord("Двадцать один", "dwadzieścia jeden", "числительные  (количественные)");
+    addWord("Двадцать два", "dwadzieścia dwa", "числительные  (количественные)");
+    addWord("Тридцать три", "trzydzieści trzy", "числительные  (количественные)");
+    addWord("Сорок четыре", "czterdzieści cztery", "числительные  (количественные)");
+    addWord("Пятьдесят пять", "pięćdziesiąt pięć", "числительные  (количественные)");
+    addWord("Шестьдесят шесть", "sześćdziesiąt sześć", "числительные  (количественные)");
+    addWord("Семьдесят семь", "siedemdziesiąt siedem", "числительные  (количественные)");
+    addWord("Восемьдесят восемь", "osiemdziesiąt osiem", "числительные  (количественные)");
+    addWord("Девяносто девять", "dziewięćdziesiąt dziewięć", "числительные  (количественные)");
+    addWord("Сто один", "sto jeden", "числительные  (количественные)");
+    addWord("Сто двадцать три", "sto dwadzieścia trzy", "числительные  (количественные)");
+    addWord("Двести пятьдесят", "dwieście pięćdziesiąt", "числительные  (количественные)");
+
+    // === ПОРЯДКОВЫЕ ЧИСЛИТЕЛЬНЫЕ ===
+    addWord("Первый (м.р.)", "pierwszy", "числительные (порядковые)");
+    addWord("Первая (ж.р.)", "pierwsza", "числительные (порядковые)");
+    addWord("Первое (ср.р.)", "pierwsze", "числительные (порядковые)");
+    addWord("Второй", "drugi", "числительные (порядковые)");
+    addWord("Третий", "trzeci", "числительные (порядковые)");
+    addWord("Четвёртый", "czwarty", "числительные (порядковые)");
+    addWord("Пятый", "piąty", "числительные (порядковые)");
+    addWord("Шестой", "szósty", "числительные (порядковые)");
+    addWord("Седьмой", "siódmy", "числительные (порядковые)");
+    addWord("Восьмой", "ósmy", "числительные (порядковые)");
+    addWord("Девятый", "dziewiąty", "числительные (порядковые)");
+    addWord("Десятый", "dziesiąty", "числительные (порядковые)");
+    addWord("Одиннадцатый", "jedenasty", "числительные (порядковые)");
+    addWord("Двенадцатый", "dwunasty", "числительные (порядковые)");
+    addWord("Двадцатый", "dwudziesty", "числительные (порядковые)");
+    addWord("Тридцатый", "trzydziesty", "числительные (порядковые)");
+    addWord("Сороковой", "czterdziesty", "числительные (порядковые)");
+    addWord("Пятидесятый", "pięćdziesiąty", "числительные (порядковые)");
+    addWord("Шестидесятый", "sześćdziesiąty", "числительные (порядковые)");
+    addWord("Семидесятый", "siedemdziesiąty", "числительные (порядковые)");
+    addWord("Восьмидесятый", "osiemdziesiąty", "числительные (порядковые)");
+    addWord("Девяностый", "dziewięćdziesiąty", "числительные (порядковые)");
+    addWord("Сотый", "setny", "числительные (порядковые)");
+    addWord("Тысячный", "tysięczny", "числительные (порядковые)");
+    addWord("Тысяча первый", "tysiąc pierwszy", "числительные (порядковые)");
+    addWord("Двести первый", "dwieście pierwszy", "числительные (порядковые)");
+    addWord("Триста второй", "trzysta drugi", "числительные (порядковые)");
+    addWord("Двадцать пятый", "dwudziesty piąty", "числительные (порядковые)");
+    addWord("Сорок седьмой", "czterdziesty siódmy", "числительные (порядковые)");
+    addWord("Пятьдесят девятый", "pięćdziesiąty dziewiąty", "числительные (порядковые)");
+    addWord("Шестьдесят третий", "sześćdziesiąty trzeci", "числительные (порядковые)");
+    addWord("Семьдесят четвёртый", "siedemdziesiąty czwarty", "числительные (порядковые)");
+    addWord("Восемьдесят восьмой", "osiemdziesiąty ósmy", "числительные (порядковые)");
+    addWord("Девяносто девятый", "dziewięćdziesiąty dziewiąty", "числительные (порядковые)");
+    addWord("Миллионный", "milionowy", "числительные (порядковые)");
+    // === ИСКЛЮЧЕНИЯ И ОСОБЫЕ СЛУЧАИ ===
+    addWord("Оба (м.р.)", "obaj", "числительные (исключения)");
+    addWord("Обе (ж.р.)", "obie", "числительные (исключения)");
+    addWord("Обоих", "obu", "числительные (исключения)");
+    addWord("Полтораста", "półtorej setki", "числительные (исключения)");
+    addWord("Дюжина", "tuzin", "числительные (исключения)");
+    addWord("Дюжина (12 штук)", "tuzin", "числительные (исключения)");
+    addWord("Чертова дюжина", "tuzin", "числительные (исключения)");
+    addWord("Несколько", "kilka", "числительные (исключения)");
+    addWord("Много", "wiele", "числительные (исключения)");
+    addWord("Мало", "mało", "числительные (исключения)");
+    addWord("Сколько?", "ile", "числительные (исключения)");
+    addWord("Столько", "tyle", "числительные (исключения)");
+    addWord("Неопределённое количество", "kilkanaście", "числительные (исключения)");
+    addWord("Около десяти", "około dziesięciu (исключения)", "числительные");
+
+    // === РАЗГОВОРНЫЕ ФОРМЫ ===
+    addWord("Штук десять", "z dziesięć", "числительные (разговорная)");
+    addWord("Где-то тридцать", "około trzydziestu", "числительные (разговорная)");
+    addWord("Сотня", "setka", "числительные (разговорная)");
+    addWord("Тысяча", "tysiąc", "числительные (разговорная)");
+    addWord("Десяток", "dziesiątka", "числительные (разговорная)");
+    addWord("Пара", "para", "числительные (разговорная)");
+    addWord("Тройка", "trójka", "числительные (разговорная)");
+    addWord("Четвёрка", "czwórka", "числительные (разговорная)");
+    addWord("Пятёрка", "piątka", "числительные (разговорная)");
+    addWord("Шестёрка", "szóstka", "числительные (разговорная)");
+    addWord("Семёрка", "siódemka", "числительные (разговорная)");
+    addWord("Восьмёрка", "ósemka", "числительные (разговорная)");
+    addWord("Девятка", "dziewiątka", "числительные (разговорная)");
+    addWord("Десятка", "dziesiątka", "числительные (разговорная)");
+    console.log(`Загружено слов: ${wordsDB.length}`);
+
+    function getCategoryCounts() {
+        const counts = {};
+        wordsDB.forEach(word => { counts[word.category] = (counts[word.category] || 0) + 1; });
+        return counts;
+    }
+
+    // Иконки для категорий
+    const categoryIcons = {
+        "все": "📁",
+        "еда": "🍲",
+        "город": "🏙️",
+        "жилье": "🏠",
+        "одежда": "👕",
+        "природа": "🌿",
+        "семья": "👨‍👩‍👧",
+        "работа": "💼",
+        "посуда": "🍽️",
+        "растения": "🌻",
+        "животные": "🐕",
+        "человек": "👤",
+        "увлечения": "🎨",
+        "профессии": "👨‍⚕️",
+        "закон": "⚖️",
+        "погода": "☀️",
+        "транспорт": "🚗",
+        "здоровье": "💊",
+        "магазин": "🛒",
+        "больница": "🏥",
+        "компьютер": "💻",
+        "путешествия": "✈️",
+        "дом_мебель": "🪑",
+        "время": "⏰",
+        "цвета": "🎨",
+        "эмоции": "😊",
+        "глаголы": "🏃",
+        "прилагательные": "📝",
+        "наречия": "📍",
+        "вопросы": "❓",
+        "овощи": "🥕.",
+        "фрукты": "🍎.",
+        "напитки": "🥤.",
+        "путешествие": "✈️.",
+        "части тела": "👃.",
+        "офис": "📎.",
+        "домашние животные": "🐕.",
+        "дикие животные": "🦁.",
+        "погодные явления": "🌩️.",
+        "пространство": "🧭.",
+        "инструменты": "🔧.",
+        "запахи": "👃.",
+        "внешность": "👨.",
+        ////////////
+        "посуда": "🍽️.",
+        "кухня": "🍳",
+        "образование": "🎓",
+        "обувь": "👟",
+        "аксессуары": "🕶️",
+        "гигиена": "🧴",
+        "ремонт": "🔨",
+        "электрика": "🔌",
+        "техника": "📱",
+        "документы": "📄",
+        "деньги": "💰",
+        "покупки": "🛍️",
+        "ресторан": "🍽️",
+        "кафе": "☕",
+        "гостиница": "🏨",
+        "аэропорт": "🛫",
+        "вокзал": "🚉",
+        "почта": "📮",
+        "банк": "🏦",
+        "полиция": "👮",
+        "праздники": "🎉",
+        "еда_напитки": "🍕",
+        "семейное_положение": "💍",
+        "птицы": "🐦",
+        "рыбы": "🐟",
+        "насекомые": "🐝",
+        "цветы": "🌹",
+        "деревья": "🌳",
+        "география": "🗺️",
+        "числительные (количественные)": "🔟",
+        "числительные (порядковые)": "🔢",
+        "числительные (исключения)": "✨",
+        "числительные (разговорная)": "🎲",
+    };
+
+    // ----- Система интервальных повторений -----
+    function loadProgress() {
+        const saved = localStorage.getItem("polish_spaced_repetition_full_v2");
+        if (saved) return JSON.parse(saved);
+        const progress = {};
+        const today = new Date().toDateString();
+        wordsDB.forEach(word => {
+            progress[word.id] = {
+                repetitions: 0, interval: 1, easeFactor: 2.5, nextReview: today, learned: false
+            };
+        });
+        return progress;
+    }
+
+    let progressData = loadProgress();
+    function saveProgress() { localStorage.setItem("polish_spaced_repetition_full_v2", JSON.stringify(progressData)); updateStats(); }
+
+    function updateStats() {
+        const total = wordsDB.length;
+        let learned = 0, due = 0;
+        const today = new Date().toDateString();
+        wordsDB.forEach(word => {
+            const p = progressData[word.id];
+            if (p && p.interval >= 21) learned++;
+            if (p && p.nextReview <= today) due++;
+        });
+        document.getElementById("totalWordsCount").innerText = total;
+        document.getElementById("learnedWordsCount").innerText = learned;
+        document.getElementById("dueWordsCount").innerText = due;
+    }
+
+    function updateWordInterval(wordId, quality) {
+        const p = progressData[wordId];
+        if (!p) return;
+        if (quality >= 3) {
+            if (p.repetitions === 0) p.interval = 1;
+            else if (p.repetitions === 1) p.interval = 6;
+            else p.interval = Math.round(p.interval * p.easeFactor);
+            p.repetitions += 1;
+        } else {
+            p.repetitions = 0;
+            p.interval = 1;
+        }
+        let newEase = p.easeFactor + (0.1 - (5 - quality) * (0.08 + (5 - quality) * 0.02));
+        if (newEase < 1.3) newEase = 1.3;
+        p.easeFactor = newEase;
+        if (quality === 0) { p.interval = 1; p.repetitions = 0; }
+        const nextDate = new Date();
+        nextDate.setDate(nextDate.getDate() + p.interval);
+        p.nextReview = nextDate.toDateString();
+        saveProgress();
+    }
+
+    // Глобальные переменные
+    let currentMode = "spaced";
+    let currentWord = null;
+    let translationVisible = false;
+    let currentCategory = "все";
+    let simpleIndex = 0;
+    let simpleCategoryWords = [];
+    let isShowingList = false;
+
+    function getWordsForCurrentMode() {
+        if (currentMode === "spaced") {
+            const today = new Date().toDateString();
+            let filtered = wordsDB.filter(word => {
+                if (currentCategory !== "все" && word.category !== currentCategory) return false;
+                const p = progressData[word.id];
+                return p && p.nextReview <= today;
+            });
+            if (filtered.length === 0) {
+                filtered = wordsDB.filter(word => {
+                    if (currentCategory !== "все" && word.category !== currentCategory) return false;
+                    const p = progressData[word.id];
+                    return p && p.repetitions === 0;
+                });
+            }
+            if (filtered.length === 0) {
+                filtered = wordsDB.filter(word => currentCategory === "все" || word.category === currentCategory);
+            }
+            return filtered;
+        } else {
+            let catWords = wordsDB.filter(w => currentCategory === "все" || w.category === currentCategory);
+            return catWords;
+        }
+    }
+
+    function updateCounter() {
+        const counterElement = document.getElementById("wordCounter");
+        if (currentMode === "simple" && simpleCategoryWords.length > 0) {
+            // Находим индекс текущего слова в списке simpleCategoryWords
+            const currentIndex = simpleCategoryWords.findIndex(w => w.id === currentWord?.id);
+            if (currentIndex !== -1) {
+                const displayNumber = currentIndex + 1;
+                counterElement.style.display = "inline-block";
+                counterElement.innerText = `📌 ${displayNumber} / ${simpleCategoryWords.length}`;
+            } else {
+                counterElement.style.display = "none";
+            }
+        } else {
+            counterElement.style.display = "none";
+        }
+    }
+
+    function updateImageDisplayNormal() {
+        isShowingList = false;
+        const imgContainer = document.getElementById("imageContainer");
+        if (!currentWord) {
+            imgContainer.innerHTML = `<div>🖼️ Нет слова</div>`;
+            return;
+        }
+        // imgContainer.innerHTML = `<img src="${currentWord.image}" alt="иллюстрация" style="max-height:180px; width:auto;">`;
+        imgContainer.innerHTML = '';
+        imgContainer.style.cursor = "pointer";
+        imgContainer.style.flexDirection = "column";
+        const hintSpan = document.createElement("div");
+        hintSpan.className = "list-hint";
+        hintSpan.innerText = "📋 нажмите → список слов категории";
+        imgContainer.appendChild(hintSpan);
+    }
+
+    function showFullCategoryWords() {
+        let categoryWords = wordsDB.filter(w => currentCategory === "все" || w.category === currentCategory);
+        if (categoryWords.length === 0) {
+            document.getElementById("imageContainer").innerHTML = `<div class="words-list">📭 Нет слов в категории</div>`;
+            isShowingList = true;
+            return;
+        }
+        let html = `<div class="words-list">
+                        <div class="list-header">
+                            <strong>📋 Слова категории «${currentCategory === "все" ? "Все категории" : currentCategory}» (${categoryWords.length})</strong>
+                            <button class="close-list-btn" id="hideListBtn">✖️ Скрыть список</button>
+                        </div>
+                        <table>
+                            <thead><tr><th>🇵🇱 Польский</th><th>🇷🇺 Русский</th></tr></thead>
+                            <tbody>`;
+        categoryWords.forEach(w => {
+            html += `<tr><td><strong>${w.pl}</strong></td><td>${w.ru}</td></tr>`;
+        });
+        html += `</tbody></table><div class="list-hint" style="text-align:center; margin-top:8px;">✨ Всего слов: ${categoryWords.length}</div></div>`;
+
+        const imgContainer = document.getElementById("imageContainer");
+        imgContainer.innerHTML = html;
+        imgContainer.style.cursor = "default";
+        isShowingList = true;
+
+        const hideBtn = document.getElementById("hideListBtn");
+        if (hideBtn) {
+            hideBtn.addEventListener("click", (e) => {
+                e.stopPropagation();
+                hideWordList();
+            });
+        }
+    }
+
+    function hideWordList() {
+        if (!isShowingList) return;
+        if (currentWord) {
+            updateImageDisplayNormal();
+        } else {
+            const imgContainer = document.getElementById("imageContainer");
+            imgContainer.innerHTML = `🖼️ Нажмите, чтобы показать список слов`;
+            imgContainer.style.cursor = "pointer";
+            isShowingList = false;
+        }
+    }
+
+    function loadNextWord() {
+        if (currentMode === "spaced") {
+            const due = getWordsForCurrentMode();
+            if (due.length === 0) return;
+            const randomIndex = Math.floor(Math.random() * due.length);
+            currentWord = due[randomIndex];
+        } else {
+            let targetList = getWordsForCurrentMode();
+            if (targetList.length === 0) return;
+            // Обновляем кэш, если список изменился (например, при смене категории)
+            if (simpleCategoryWords.length === 0 ||
+                simpleCategoryWords.length !== targetList.length ||
+                simpleCategoryWords[0]?.id !== targetList[0]?.id) {
+                simpleCategoryWords = [...targetList];
+                simpleIndex = 0;
+            }
+            if (simpleIndex >= simpleCategoryWords.length) simpleIndex = 0;
+            currentWord = simpleCategoryWords[simpleIndex];
+            simpleIndex = (simpleIndex + 1) % simpleCategoryWords.length;
+        }
+
+        if (!currentWord) return;
+        document.getElementById("russianWord").innerText = currentWord.ru;
+
+        if (isShowingList) {
+            updateImageDisplayNormal();
+        } else {
+            updateImageDisplayNormal();
+        }
+
+        translationVisible = false;
+        const transBlock = document.getElementById("translationBlock");
+        transBlock.classList.add("hidden-translation");
+        transBlock.innerText = "🔒 Нажмите «Показать перевод»";
+
+        if (currentMode === "spaced") {
+            document.getElementById("difficultyButtons").style.display = "none";
+        } else {
+            document.getElementById("difficultyButtons").style.display = "none";
+        }
+
+        // Обновляем счётчик для режима шпаргалки
+        updateCounter();
+    }
+
+    function showTranslation() {
+        if (!currentWord) return;
+        if (!translationVisible) {
+            translationVisible = true;
+            const transBlock = document.getElementById("translationBlock");
+            transBlock.classList.remove("hidden-translation");
+            transBlock.innerText = `🇵🇱 ${currentWord.pl}`;
+            if (currentMode === "spaced") {
+                document.getElementById("difficultyButtons").style.display = "flex";
+            } else {
+                document.getElementById("difficultyButtons").style.display = "none";
+            }
+        }
+    }
+
+    function handleRating(quality) {
+        if (!currentWord || currentMode !== "spaced") return;
+        updateWordInterval(currentWord.id, quality);
+        loadNextWord();
+        updateStats();
+    }
+
+    function resetAllProgress() {
+        if (confirm("Сбросить прогресс интервальных повторений? (режим шпаргалки не зависит от прогресса)")) {
+            const today = new Date().toDateString();
+            wordsDB.forEach(word => {
+                progressData[word.id] = {
+                    repetitions: 0, interval: 1, easeFactor: 2.5, nextReview: today, learned: false
+                };
+            });
+            saveProgress();
+            if (currentMode === "spaced") loadNextWord();
+            updateStats();
+        }
+    }
+
+    function switchMode(mode) {
+        currentMode = mode;
+        translationVisible = false;
+        document.getElementById("difficultyButtons").style.display = "none";
+        document.querySelectorAll(".mode-btn").forEach(btn => {
+            if (btn.getAttribute("data-mode") === mode) btn.classList.add("active");
+            else btn.classList.remove("active");
+        });
+        simpleIndex = 0;
+        simpleCategoryWords = [];
+        if (isShowingList) hideWordList();
+        loadNextWord();
+        updateStats();
+    }
+
+    function renderCategoryButtons() {
+        const bar = document.getElementById("categoryBar");
+        bar.innerHTML = "";
+        const categoryCounts = getCategoryCounts();
+        const allCategories = ["все", ...new Set(wordsDB.map(w => w.category))];
+        allCategories.forEach(cat => {
+            const btn = document.createElement("button");
+            const icon = categoryIcons[cat] || "📌";
+            const count = cat === "все" ? wordsDB.length : (categoryCounts[cat] || 0);
+            btn.innerHTML = `${icon} ${cat === "все" ? "Все" : cat} <span class="count">${count}</span>`;
+            btn.classList.add("cat-btn");
+            if (currentCategory === cat) btn.classList.add("active");
+            btn.addEventListener("click", () => {
+                currentCategory = cat;
+                translationVisible = false;
+                document.getElementById("difficultyButtons").style.display = "none";
+                if (currentMode === "simple") {
+                    simpleIndex = 0;
+                    simpleCategoryWords = [];
+                }
+                if (isShowingList) hideWordList();
+                loadNextWord();
+                renderCategoryButtons();
+                updateStats();
+            });
+            bar.appendChild(btn);
+        });
+    }
+
+    function init() {
+        renderCategoryButtons();
+        loadNextWord();
+        updateStats();
+
+        document.getElementById("showTranslateBtn").addEventListener("click", showTranslation);
+        document.getElementById("nextWordBtn").addEventListener("click", () => {
+            if (isShowingList) hideWordList();
+            loadNextWord();
+            updateStats();
+        });
+        document.getElementById("resetProgressBtn").addEventListener("click", resetAllProgress);
+
+        document.querySelectorAll(".btn-difficulty").forEach(btn => {
+            btn.addEventListener("click", (e) => {
+                const quality = parseInt(btn.getAttribute("data-quality"));
+                if (!isNaN(quality)) handleRating(quality);
+            });
+        });
+
+        document.getElementById("translationBlock").addEventListener("click", () => {
+            if (!translationVisible) showTranslation();
+        });
+
+        const imageContainer = document.getElementById("imageContainer");
+        imageContainer.addEventListener("click", (e) => {
+            if (e.target.closest('.close-list-btn')) return;
+            if (isShowingList) {
+                hideWordList();
+            } else {
+                showFullCategoryWords();
+            }
+        });
+
+        document.querySelectorAll(".mode-btn").forEach(btn => {
+            btn.addEventListener("click", (e) => {
+                const mode = btn.getAttribute("data-mode");
+                if (mode === "spaced") switchMode("spaced");
+                else if (mode === "simple") switchMode("simple");
+            });
+        });
+    }
+
+    init();
+</script>
+</body>
+</html>
