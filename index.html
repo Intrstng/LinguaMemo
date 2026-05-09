@@ -1,3 +1,1469 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="ru">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">-->
+<!--    <title>Польский язык — интервальные повторения</title>-->
+<!--    <style>-->
+<!--        * { box-sizing: border-box; }-->
+<!--        body {-->
+<!--            font-family: system-ui, 'Segoe UI', 'Roboto', sans-serif;-->
+<!--            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);-->
+<!--            min-height: 100vh;-->
+<!--            display: flex;-->
+<!--            justify-content: center;-->
+<!--            align-items: center;-->
+<!--            margin: 0;-->
+<!--            padding: 20px;-->
+<!--        }-->
+<!--        .app-container {-->
+<!--            max-width: 700px;-->
+<!--            width: 100%;-->
+<!--            background: rgba(255,255,255,0.95);-->
+<!--            border-radius: 56px;-->
+<!--            box-shadow: 0 25px 45px rgba(0,0,0,0.3);-->
+<!--            padding: 20px;-->
+<!--        }-->
+<!--        .stats {-->
+<!--            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);-->
+<!--            border-radius: 32px;-->
+<!--            padding: 15px 20px;-->
+<!--            margin-bottom: 20px;-->
+<!--            display: flex;-->
+<!--            justify-content: space-between;-->
+<!--            align-items: center;-->
+<!--            flex-wrap: wrap;-->
+<!--            gap: 12px;-->
+<!--        }-->
+<!--        .stat-card {-->
+<!--            background: white;-->
+<!--            border-radius: 20px;-->
+<!--            padding: 8px 18px;-->
+<!--            text-align: center;-->
+<!--            box-shadow: 0 2px 8px rgba(0,0,0,0.1);-->
+<!--        }-->
+<!--        .stat-label { font-size: 0.7rem; text-transform: uppercase; font-weight: 600; color: #6c7a89; }-->
+<!--        .stat-value { font-size: 1.5rem; font-weight: 800; color: #2c3e66; line-height: 1; }-->
+<!--        .card {-->
+<!--            background: white;-->
+<!--            border-radius: 48px;-->
+<!--            padding: 25px 20px 35px;-->
+<!--            box-shadow: 0 10px 25px rgba(0,0,0,0.1);-->
+<!--            text-align: center;-->
+<!--        }-->
+<!--        .image-area {-->
+<!--            width: 100%;-->
+<!--            min-height: 100px;-->
+<!--            max-height: 280px;-->
+<!--            background: #f3f3f3;-->
+<!--            border-radius: 32px;-->
+<!--            display: flex;-->
+<!--            align-items: center;-->
+<!--            justify-content: center;-->
+<!--            margin-bottom: 20px;-->
+<!--            overflow-y: auto;-->
+<!--            cursor: pointer;-->
+<!--            transition: 0.1s;-->
+<!--            padding: 12px;-->
+<!--            font-size: 0.9rem;-->
+<!--            color: #2c3e66;-->
+<!--            flex-direction: column;-->
+<!--            position: relative;-->
+<!--        }-->
+<!--        .image-area img { width: 100%; height: 100%; object-fit: cover; border-radius: 24px; }-->
+<!--        .words-list {-->
+<!--            text-align: left;-->
+<!--            width: 100%;-->
+<!--            max-height: 280px;-->
+<!--            overflow-y: auto;-->
+<!--            font-size: 0.85rem;-->
+<!--            background: #f8fafc;-->
+<!--            border-radius: 24px;-->
+<!--            padding: 12px;-->
+<!--        }-->
+<!--        .words-list table { width: 100%; border-collapse: collapse; }-->
+<!--        .words-list th, .words-list td { padding: 6px 8px; text-align: left; border-bottom: 1px solid #e2e8f0; }-->
+<!--        .words-list th { background: #e9edf2; position: sticky; top: 0; }-->
+<!--        .close-list-btn {-->
+<!--            background: #6c757d;-->
+<!--            color: white;-->
+<!--            border: none;-->
+<!--            border-radius: 40px;-->
+<!--            padding: 6px 16px;-->
+<!--            margin-top: 12px;-->
+<!--            font-size: 0.75rem;-->
+<!--            cursor: pointer;-->
+<!--            font-weight: 600;-->
+<!--            transition: 0.2s;-->
+<!--            display: inline-block;-->
+<!--        }-->
+<!--        .close-list-btn:hover { background: #5a6268; }-->
+<!--        .list-header {-->
+<!--            display: flex;-->
+<!--            justify-content: space-between;-->
+<!--            align-items: center;-->
+<!--            margin-bottom: 8px;-->
+<!--            flex-wrap: wrap;-->
+<!--            gap: 8px;-->
+<!--        }-->
+<!--        .russian-word {-->
+<!--            font-size: 2.4rem;-->
+<!--            font-weight: 700;-->
+<!--            margin: 15px 0 10px;-->
+<!--            color: #1e2a3a;-->
+<!--            word-break: break-word;-->
+<!--        }-->
+<!--        .translation {-->
+<!--            font-size: 1.8rem;-->
+<!--            font-weight: 500;-->
+<!--            background: #e9ecef;-->
+<!--            padding: 14px;-->
+<!--            border-radius: 60px;-->
+<!--            margin: 15px 0;-->
+<!--            color: #0b5e2e;-->
+<!--            min-height: 85px;-->
+<!--            word-break: break-word;-->
+<!--        }-->
+<!--        .hidden-translation {-->
+<!--            background: #dee2e6;-->
+<!--            color: #8b9bb0;-->
+<!--            filter: blur(4px);-->
+<!--            cursor: pointer;-->
+<!--        }-->
+<!--        .mode-switch {-->
+<!--            display: flex;-->
+<!--            gap: 12px;-->
+<!--            justify-content: center;-->
+<!--            margin-bottom: 20px;-->
+<!--        }-->
+<!--        .mode-btn {-->
+<!--            background: #cfdee9;-->
+<!--            border: none;-->
+<!--            padding: 8px 24px;-->
+<!--            border-radius: 60px;-->
+<!--            font-weight: 700;-->
+<!--            font-size: 0.9rem;-->
+<!--            cursor: pointer;-->
+<!--            transition: 0.2s;-->
+<!--            color: #1f2a3e;-->
+<!--        }-->
+<!--        .mode-btn.active {-->
+<!--            background: #2b3b4e;-->
+<!--            color: white;-->
+<!--            box-shadow: 0 4px 10px rgba(0,0,0,0.2);-->
+<!--        }-->
+<!--        .counter {-->
+<!--            background: #e9ecef;-->
+<!--            border-radius: 40px;-->
+<!--            padding: 8px 20px;-->
+<!--            font-size: 0.9rem;-->
+<!--            font-weight: 600;-->
+<!--            color: #2c3e66;-->
+<!--            margin-top: 10px;-->
+<!--            margin-bottom: 5px;-->
+<!--            display: inline-block;-->
+<!--        }-->
+<!--        .btn {-->
+<!--            border: none;-->
+<!--            color: white;-->
+<!--            font-size: 0.95rem;-->
+<!--            font-weight: 600;-->
+<!--            padding: 10px 18px;-->
+<!--            border-radius: 60px;-->
+<!--            margin: 5px;-->
+<!--            cursor: pointer;-->
+<!--            transition: 0.2s;-->
+<!--            box-shadow: 0 3px 6px rgba(0,0,0,0.1);-->
+<!--        }-->
+<!--        .btn-show { background: #1e6f3f; }-->
+<!--        .btn-show:hover { background: #0f5a33; transform: scale(0.97); }-->
+<!--        .btn-next { background: #3a5a78; }-->
+<!--        .btn-next:hover { background: #2c4c6c; }-->
+<!--        .difficulty-buttons {-->
+<!--            display: flex;-->
+<!--            justify-content: center;-->
+<!--            gap: 8px;-->
+<!--            margin-top: 15px;-->
+<!--            flex-wrap: wrap;-->
+<!--        }-->
+<!--        .btn-difficulty { flex: 1; min-width: 80px; font-size: 0.85rem; padding: 10px 12px; }-->
+<!--        .btn-again { background: #dc3545; }-->
+<!--        .btn-again:hover { background: #b02a37; }-->
+<!--        .btn-hard { background: #fd7e14; }-->
+<!--        .btn-hard:hover { background: #e0620e; }-->
+<!--        .btn-good { background: #28a745; }-->
+<!--        .btn-good:hover { background: #1e7e34; }-->
+<!--        .btn-easy { background: #17a2b8; }-->
+<!--        .btn-easy:hover { background: #117a8b; }-->
+<!--        .category-bar {-->
+<!--            background: rgba(200, 212, 220, 0.95);-->
+<!--            border-radius: 48px;-->
+<!--            padding: 12px 15px;-->
+<!--            margin-bottom: 20px;-->
+<!--            display: flex;-->
+<!--            justify-content: center;-->
+<!--            gap: 10px;-->
+<!--            flex-wrap: wrap;-->
+<!--            max-height: 220px;-->
+<!--            overflow-y: auto;-->
+<!--        }-->
+<!--        .cat-btn {-->
+<!--            background: #cbd5e1;-->
+<!--            color: #1f2a3e;-->
+<!--            border: none;-->
+<!--            padding: 8px 16px;-->
+<!--            border-radius: 40px;-->
+<!--            font-weight: 600;-->
+<!--            font-size: 0.8rem;-->
+<!--            cursor: pointer;-->
+<!--            transition: 0.1s;-->
+<!--            display: inline-flex;-->
+<!--            align-items: center;-->
+<!--            gap: 6px;-->
+<!--            white-space: nowrap;-->
+<!--        }-->
+<!--        .cat-btn span.count {-->
+<!--            background: rgba(0,0,0,0.15);-->
+<!--            border-radius: 20px;-->
+<!--            padding: 2px 8px;-->
+<!--            font-size: 0.7rem;-->
+<!--            font-weight: 700;-->
+<!--            margin-left: 4px;-->
+<!--        }-->
+<!--        .cat-btn.active {-->
+<!--            background: #2b3b4e;-->
+<!--            color: white;-->
+<!--            box-shadow: 0 3px 8px rgba(0,0,0,0.2);-->
+<!--        }-->
+<!--        .reset-btn { background: #6c757d; font-size: 0.75rem; padding: 5px 12px; }-->
+<!--        .list-hint { font-size: 0.7rem; color: #2c5f8a; margin-top: 6px; font-weight: normal; }-->
+<!--        footer { text-align: center; margin-top: 15px; font-size: 0.65rem; color: #5a6e85; }-->
+<!--        @media (max-width: 550px) {-->
+<!--            .russian-word { font-size: 1.8rem; }-->
+<!--            .translation { font-size: 1.3rem; }-->
+<!--            .btn-difficulty { font-size: 0.7rem; min-width: 65px; }-->
+<!--            .stat-value { font-size: 1.2rem; }-->
+<!--            .cat-btn { font-size: 0.65rem; padding: 5px 10px; }-->
+<!--            .counter { font-size: 0.75rem; padding: 5px 15px; }-->
+<!--        }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--<div class="app-container">-->
+<!--    <div class="stats">-->
+<!--        <div class="stat-card"><div class="stat-label">📚 Всего</div><div class="stat-value" id="totalWordsCount">0</div></div>-->
+<!--        <div class="stat-card"><div class="stat-label">✅ Выучено</div><div class="stat-value" id="learnedWordsCount">0</div></div>-->
+<!--        <div class="stat-card"><div class="stat-label">🔄 На повторении</div><div class="stat-value" id="dueWordsCount">0</div></div>-->
+<!--        <button class="reset-btn btn" id="resetProgressBtn" style="background:#6c757d;">🔄 Сброс</button>-->
+<!--    </div>-->
+
+<!--    <div class="mode-switch">-->
+<!--        <button class="mode-btn active" data-mode="spaced">📆 Интервальные повторения</button>-->
+<!--        <button class="mode-btn" data-mode="simple">📖 Шпаргалка (без учёта)</button>-->
+<!--    </div>-->
+
+<!--    <div class="category-bar" id="categoryBar"></div>-->
+<!--    <div class="card">-->
+<!--        <div class="image-area" id="imageContainer">-->
+<!--            🖼️ Нажмите, чтобы показать список слов-->
+<!--        </div>-->
+<!--        <div class="russian-word" id="russianWord">-&#45;&#45;</div>-->
+<!--        <div class="counter" id="wordCounter" style="display: none;"></div>-->
+<!--        <div class="translation hidden-translation" id="translationBlock">🔒 нажмите «Показать перевод»</div>-->
+<!--        <div class="controls">-->
+<!--            <button class="btn btn-show" id="showTranslateBtn">📖 Показать перевод</button>-->
+<!--            <button class="btn btn-next" id="nextWordBtn">➡ Следующее</button>-->
+<!--        </div>-->
+<!--        <div class="difficulty-buttons" id="difficultyButtons" style="display: none;">-->
+<!--            <button class="btn-difficulty btn-again" data-quality="0">🔄 Снова</button>-->
+<!--            <button class="btn-difficulty btn-hard" data-quality="2">😓 Сложно</button>-->
+<!--            <button class="btn-difficulty btn-good" data-quality="3">👍 Хорошо</button>-->
+<!--            <button class="btn-difficulty btn-easy" data-quality="4">⭐ Легко</button>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <footer>📊 SM‑2 • нажмите на изображение → список слов категории (кнопка "Скрыть" вернёт карточку)</footer>-->
+<!--</div>-->
+
+<!--<script>-->
+<!--    // ===================== БАЗА ДАННЫХ СЛОВ =====================-->
+<!--    const wordsDB = [];-->
+<!--    let idCounter = 0;-->
+<!--    function addWord(ru, pl, category, image = null) {-->
+<!--        wordsDB.push({-->
+<!--            id: idCounter++,-->
+<!--            ru: ru,-->
+<!--            pl: pl,-->
+<!--            category: category,-->
+<!--            image: image || `https://picsum.photos/id/${(idCounter % 100) + 200}/400/200`-->
+<!--        });-->
+<!--    }-->
+
+<!--    // &#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45; РАСШИРЕННАЯ БАЗА СЛОВ &#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
+<!--    addWord("Хлеб", "chleb", "еда");-->
+<!--    addWord("Масло", "masło", "еда");-->
+<!--    addWord("Сыр", "ser", "еда");-->
+<!--  -->
+<!--    // -&#45;&#45;&#45;&#45; Система интервальных повторений -&#45;&#45;&#45;&#45;-->
+<!--    function loadProgress() {-->
+<!--        const saved = localStorage.getItem("polish_spaced_repetition_full_v2");-->
+<!--        if (saved) return JSON.parse(saved);-->
+<!--        const progress = {};-->
+<!--        const today = new Date().toDateString();-->
+<!--        wordsDB.forEach(word => {-->
+<!--            progress[word.id] = {-->
+<!--                repetitions: 0, interval: 1, easeFactor: 2.5, nextReview: today, learned: false-->
+<!--            };-->
+<!--        });-->
+<!--        return progress;-->
+<!--    }-->
+
+<!--    let progressData = loadProgress();-->
+<!--    function saveProgress() { localStorage.setItem("polish_spaced_repetition_full_v2", JSON.stringify(progressData)); updateStats(); }-->
+
+<!--    function updateStats() {-->
+<!--        const total = wordsDB.length;-->
+<!--        let learned = 0, due = 0;-->
+<!--        const today = new Date().toDateString();-->
+<!--        wordsDB.forEach(word => {-->
+<!--            const p = progressData[word.id];-->
+<!--            if (p && p.interval >= 21) learned++;-->
+<!--            if (p && p.nextReview <= today) due++;-->
+<!--        });-->
+<!--        document.getElementById("totalWordsCount").innerText = total;-->
+<!--        document.getElementById("learnedWordsCount").innerText = learned;-->
+<!--        document.getElementById("dueWordsCount").innerText = due;-->
+<!--    }-->
+
+<!--    function updateWordInterval(wordId, quality) {-->
+<!--        const p = progressData[wordId];-->
+<!--        if (!p) return;-->
+<!--        if (quality >= 3) {-->
+<!--            if (p.repetitions === 0) p.interval = 1;-->
+<!--            else if (p.repetitions === 1) p.interval = 6;-->
+<!--            else p.interval = Math.round(p.interval * p.easeFactor);-->
+<!--            p.repetitions += 1;-->
+<!--        } else {-->
+<!--            p.repetitions = 0;-->
+<!--            p.interval = 1;-->
+<!--        }-->
+<!--        let newEase = p.easeFactor + (0.1 - (5 - quality) * (0.08 + (5 - quality) * 0.02));-->
+<!--        if (newEase < 1.3) newEase = 1.3;-->
+<!--        p.easeFactor = newEase;-->
+<!--        if (quality === 0) { p.interval = 1; p.repetitions = 0; }-->
+<!--        const nextDate = new Date();-->
+<!--        nextDate.setDate(nextDate.getDate() + p.interval);-->
+<!--        p.nextReview = nextDate.toDateString();-->
+<!--        saveProgress();-->
+<!--    }-->
+
+<!--    // Глобальные переменные-->
+<!--    let currentMode = "spaced";-->
+<!--    let currentWord = null;-->
+<!--    let translationVisible = false;-->
+<!--    let currentCategory = "все";-->
+<!--    let simpleIndex = 0;-->
+<!--    let simpleCategoryWords = [];-->
+<!--    let isShowingList = false;-->
+
+<!--    function getWordsForCurrentMode() {-->
+<!--        if (currentMode === "spaced") {-->
+<!--            const today = new Date().toDateString();-->
+<!--            let filtered = wordsDB.filter(word => {-->
+<!--                if (currentCategory !== "все" && word.category !== currentCategory) return false;-->
+<!--                const p = progressData[word.id];-->
+<!--                return p && p.nextReview <= today;-->
+<!--            });-->
+<!--            if (filtered.length === 0) {-->
+<!--                filtered = wordsDB.filter(word => {-->
+<!--                    if (currentCategory !== "все" && word.category !== currentCategory) return false;-->
+<!--                    const p = progressData[word.id];-->
+<!--                    return p && p.repetitions === 0;-->
+<!--                });-->
+<!--            }-->
+<!--            if (filtered.length === 0) {-->
+<!--                filtered = wordsDB.filter(word => currentCategory === "все" || word.category === currentCategory);-->
+<!--            }-->
+<!--            return filtered;-->
+<!--        } else {-->
+<!--            let catWords = wordsDB.filter(w => currentCategory === "все" || w.category === currentCategory);-->
+<!--            return catWords;-->
+<!--        }-->
+<!--    }-->
+
+<!--    function updateCounter() {-->
+<!--        const counterElement = document.getElementById("wordCounter");-->
+<!--        if (currentMode === "simple" && simpleCategoryWords.length > 0) {-->
+<!--            // Находим индекс текущего слова в списке simpleCategoryWords-->
+<!--            const currentIndex = simpleCategoryWords.findIndex(w => w.id === currentWord?.id);-->
+<!--            if (currentIndex !== -1) {-->
+<!--                const displayNumber = currentIndex + 1;-->
+<!--                counterElement.style.display = "inline-block";-->
+<!--                counterElement.innerText = `📌 ${displayNumber} / ${simpleCategoryWords.length}`;-->
+<!--            } else {-->
+<!--                counterElement.style.display = "none";-->
+<!--            }-->
+<!--        } else {-->
+<!--            counterElement.style.display = "none";-->
+<!--        }-->
+<!--    }-->
+
+<!--    function updateImageDisplayNormal() {-->
+<!--        isShowingList = false;-->
+<!--        const imgContainer = document.getElementById("imageContainer");-->
+<!--        if (!currentWord) {-->
+<!--            imgContainer.innerHTML = `<div>🖼️ Нет слова</div>`;-->
+<!--            return;-->
+<!--        }-->
+<!--        // imgContainer.innerHTML = `<img src="${currentWord.image}" alt="иллюстрация" style="max-height:180px; width:auto;">`;-->
+<!--        imgContainer.innerHTML = '';-->
+<!--        imgContainer.style.cursor = "pointer";-->
+<!--        imgContainer.style.flexDirection = "column";-->
+<!--        const hintSpan = document.createElement("div");-->
+<!--        hintSpan.className = "list-hint";-->
+<!--        hintSpan.innerText = "📋 нажмите → список слов категории";-->
+<!--        imgContainer.appendChild(hintSpan);-->
+<!--    }-->
+
+<!--    function showFullCategoryWords() {-->
+<!--        let categoryWords = wordsDB.filter(w => currentCategory === "все" || w.category === currentCategory);-->
+<!--        if (categoryWords.length === 0) {-->
+<!--            document.getElementById("imageContainer").innerHTML = `<div class="words-list">📭 Нет слов в категории</div>`;-->
+<!--            isShowingList = true;-->
+<!--            return;-->
+<!--        }-->
+<!--        let html = `<div class="words-list">-->
+<!--                        <div class="list-header">-->
+<!--                            <strong>📋 Слова категории «${currentCategory === "все" ? "Все категории" : currentCategory}» (${categoryWords.length})</strong>-->
+<!--                            <button class="close-list-btn" id="hideListBtn">✖️ Скрыть список</button>-->
+<!--                        </div>-->
+<!--                        <table>-->
+<!--                            <thead><tr><th>🇵🇱 Польский</th><th>🇷🇺 Русский</th></tr></thead>-->
+<!--                            <tbody>`;-->
+<!--        categoryWords.forEach(w => {-->
+<!--            html += `<tr><td><strong>${w.pl}</strong></td><td>${w.ru}</td></tr>`;-->
+<!--        });-->
+<!--        html += `</tbody></table><div class="list-hint" style="text-align:center; margin-top:8px;">✨ Всего слов: ${categoryWords.length}</div></div>`;-->
+
+<!--        const imgContainer = document.getElementById("imageContainer");-->
+<!--        imgContainer.innerHTML = html;-->
+<!--        imgContainer.style.cursor = "default";-->
+<!--        isShowingList = true;-->
+
+<!--        const hideBtn = document.getElementById("hideListBtn");-->
+<!--        if (hideBtn) {-->
+<!--            hideBtn.addEventListener("click", (e) => {-->
+<!--                e.stopPropagation();-->
+<!--                hideWordList();-->
+<!--            });-->
+<!--        }-->
+<!--    }-->
+
+<!--    function hideWordList() {-->
+<!--        if (!isShowingList) return;-->
+<!--        if (currentWord) {-->
+<!--            updateImageDisplayNormal();-->
+<!--        } else {-->
+<!--            const imgContainer = document.getElementById("imageContainer");-->
+<!--            imgContainer.innerHTML = `🖼️ Нажмите, чтобы показать список слов`;-->
+<!--            imgContainer.style.cursor = "pointer";-->
+<!--            isShowingList = false;-->
+<!--        }-->
+<!--    }-->
+
+<!--    function loadNextWord() {-->
+<!--        if (currentMode === "spaced") {-->
+<!--            const due = getWordsForCurrentMode();-->
+<!--            if (due.length === 0) return;-->
+<!--            const randomIndex = Math.floor(Math.random() * due.length);-->
+<!--            currentWord = due[randomIndex];-->
+<!--        } else {-->
+<!--            let targetList = getWordsForCurrentMode();-->
+<!--            if (targetList.length === 0) return;-->
+<!--            // Обновляем кэш, если список изменился (например, при смене категории)-->
+<!--            if (simpleCategoryWords.length === 0 ||-->
+<!--                simpleCategoryWords.length !== targetList.length ||-->
+<!--                simpleCategoryWords[0]?.id !== targetList[0]?.id) {-->
+<!--                simpleCategoryWords = [...targetList];-->
+<!--                simpleIndex = 0;-->
+<!--            }-->
+<!--            if (simpleIndex >= simpleCategoryWords.length) simpleIndex = 0;-->
+<!--            currentWord = simpleCategoryWords[simpleIndex];-->
+<!--            simpleIndex = (simpleIndex + 1) % simpleCategoryWords.length;-->
+<!--        }-->
+
+<!--        if (!currentWord) return;-->
+<!--        document.getElementById("russianWord").innerText = currentWord.ru;-->
+
+<!--        if (isShowingList) {-->
+<!--            updateImageDisplayNormal();-->
+<!--        } else {-->
+<!--            updateImageDisplayNormal();-->
+<!--        }-->
+
+<!--        translationVisible = false;-->
+<!--        const transBlock = document.getElementById("translationBlock");-->
+<!--        transBlock.classList.add("hidden-translation");-->
+<!--        transBlock.innerText = "🔒 Нажмите «Показать перевод»";-->
+
+<!--        if (currentMode === "spaced") {-->
+<!--            document.getElementById("difficultyButtons").style.display = "none";-->
+<!--        } else {-->
+<!--            document.getElementById("difficultyButtons").style.display = "none";-->
+<!--        }-->
+
+<!--        // Обновляем счётчик для режима шпаргалки-->
+<!--        updateCounter();-->
+<!--    }-->
+
+<!--    function showTranslation() {-->
+<!--        if (!currentWord) return;-->
+<!--        if (!translationVisible) {-->
+<!--            translationVisible = true;-->
+<!--            const transBlock = document.getElementById("translationBlock");-->
+<!--            transBlock.classList.remove("hidden-translation");-->
+<!--            transBlock.innerText = `🇵🇱 ${currentWord.pl}`;-->
+<!--            if (currentMode === "spaced") {-->
+<!--                document.getElementById("difficultyButtons").style.display = "flex";-->
+<!--            } else {-->
+<!--                document.getElementById("difficultyButtons").style.display = "none";-->
+<!--            }-->
+<!--        }-->
+<!--    }-->
+
+<!--    function handleRating(quality) {-->
+<!--        if (!currentWord || currentMode !== "spaced") return;-->
+<!--        updateWordInterval(currentWord.id, quality);-->
+<!--        loadNextWord();-->
+<!--        updateStats();-->
+<!--    }-->
+
+<!--    function resetAllProgress() {-->
+<!--        if (confirm("Сбросить прогресс интервальных повторений? (режим шпаргалки не зависит от прогресса)")) {-->
+<!--            const today = new Date().toDateString();-->
+<!--            wordsDB.forEach(word => {-->
+<!--                progressData[word.id] = {-->
+<!--                    repetitions: 0, interval: 1, easeFactor: 2.5, nextReview: today, learned: false-->
+<!--                };-->
+<!--            });-->
+<!--            saveProgress();-->
+<!--            if (currentMode === "spaced") loadNextWord();-->
+<!--            updateStats();-->
+<!--        }-->
+<!--    }-->
+
+<!--    function switchMode(mode) {-->
+<!--        currentMode = mode;-->
+<!--        translationVisible = false;-->
+<!--        document.getElementById("difficultyButtons").style.display = "none";-->
+<!--        document.querySelectorAll(".mode-btn").forEach(btn => {-->
+<!--            if (btn.getAttribute("data-mode") === mode) btn.classList.add("active");-->
+<!--            else btn.classList.remove("active");-->
+<!--        });-->
+<!--        simpleIndex = 0;-->
+<!--        simpleCategoryWords = [];-->
+<!--        if (isShowingList) hideWordList();-->
+<!--        loadNextWord();-->
+<!--        updateStats();-->
+<!--    }-->
+
+<!--    function renderCategoryButtons() {-->
+<!--        const bar = document.getElementById("categoryBar");-->
+<!--        bar.innerHTML = "";-->
+<!--        const categoryCounts = getCategoryCounts();-->
+<!--        const allCategories = ["все", ...new Set(wordsDB.map(w => w.category))];-->
+<!--        allCategories.forEach(cat => {-->
+<!--            const btn = document.createElement("button");-->
+<!--            const icon = categoryIcons[cat] || "📌";-->
+<!--            const count = cat === "все" ? wordsDB.length : (categoryCounts[cat] || 0);-->
+<!--            btn.innerHTML = `${icon} ${cat === "все" ? "Все" : cat} <span class="count">${count}</span>`;-->
+<!--            btn.classList.add("cat-btn");-->
+<!--            if (currentCategory === cat) btn.classList.add("active");-->
+<!--            btn.addEventListener("click", () => {-->
+<!--                currentCategory = cat;-->
+<!--                translationVisible = false;-->
+<!--                document.getElementById("difficultyButtons").style.display = "none";-->
+<!--                if (currentMode === "simple") {-->
+<!--                    simpleIndex = 0;-->
+<!--                    simpleCategoryWords = [];-->
+<!--                }-->
+<!--                if (isShowingList) hideWordList();-->
+<!--                loadNextWord();-->
+<!--                renderCategoryButtons();-->
+<!--                updateStats();-->
+<!--            });-->
+<!--            bar.appendChild(btn);-->
+<!--        });-->
+<!--    }-->
+
+<!--    function init() {-->
+<!--        renderCategoryButtons();-->
+<!--        loadNextWord();-->
+<!--        updateStats();-->
+
+<!--        document.getElementById("showTranslateBtn").addEventListener("click", showTranslation);-->
+<!--        document.getElementById("nextWordBtn").addEventListener("click", () => {-->
+<!--            if (isShowingList) hideWordList();-->
+<!--            loadNextWord();-->
+<!--            updateStats();-->
+<!--        });-->
+<!--        document.getElementById("resetProgressBtn").addEventListener("click", resetAllProgress);-->
+
+<!--        document.querySelectorAll(".btn-difficulty").forEach(btn => {-->
+<!--            btn.addEventListener("click", (e) => {-->
+<!--                const quality = parseInt(btn.getAttribute("data-quality"));-->
+<!--                if (!isNaN(quality)) handleRating(quality);-->
+<!--            });-->
+<!--        });-->
+
+<!--        document.getElementById("translationBlock").addEventListener("click", () => {-->
+<!--            if (!translationVisible) showTranslation();-->
+<!--        });-->
+
+<!--        const imageContainer = document.getElementById("imageContainer");-->
+<!--        imageContainer.addEventListener("click", (e) => {-->
+<!--            if (e.target.closest('.close-list-btn')) return;-->
+<!--            if (isShowingList) {-->
+<!--                hideWordList();-->
+<!--            } else {-->
+<!--                showFullCategoryWords();-->
+<!--            }-->
+<!--        });-->
+
+<!--        document.querySelectorAll(".mode-btn").forEach(btn => {-->
+<!--            btn.addEventListener("click", (e) => {-->
+<!--                const mode = btn.getAttribute("data-mode");-->
+<!--                if (mode === "spaced") switchMode("spaced");-->
+<!--                else if (mode === "simple") switchMode("simple");-->
+<!--            });-->
+<!--        });-->
+<!--    }-->
+
+<!--    init();-->
+<!--</script>-->
+<!--</body>-->
+<!--</html>-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="ru">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">-->
+<!--    <title>Польский язык — интервальные повторения</title>-->
+<!--    <style>-->
+<!--        * { box-sizing: border-box; }-->
+<!--        body {-->
+<!--            font-family: system-ui, 'Segoe UI', 'Roboto', sans-serif;-->
+<!--            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);-->
+<!--            min-height: 100vh;-->
+<!--            display: flex;-->
+<!--            justify-content: center;-->
+<!--            align-items: center;-->
+<!--            margin: 0;-->
+<!--            padding: 20px;-->
+<!--        }-->
+<!--        .app-container {-->
+<!--            max-width: 700px;-->
+<!--            width: 100%;-->
+<!--            background: rgba(255,255,255,0.95);-->
+<!--            border-radius: 56px;-->
+<!--            box-shadow: 0 25px 45px rgba(0,0,0,0.3);-->
+<!--            padding: 20px;-->
+<!--        }-->
+<!--        .stats {-->
+<!--            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);-->
+<!--            border-radius: 32px;-->
+<!--            padding: 15px 20px;-->
+<!--            margin-bottom: 20px;-->
+<!--            display: flex;-->
+<!--            justify-content: space-between;-->
+<!--            align-items: center;-->
+<!--            flex-wrap: wrap;-->
+<!--            gap: 12px;-->
+<!--        }-->
+<!--        .stat-card {-->
+<!--            background: white;-->
+<!--            border-radius: 20px;-->
+<!--            padding: 8px 18px;-->
+<!--            text-align: center;-->
+<!--            box-shadow: 0 2px 8px rgba(0,0,0,0.1);-->
+<!--        }-->
+<!--        .stat-label { font-size: 0.7rem; text-transform: uppercase; font-weight: 600; color: #6c7a89; }-->
+<!--        .stat-value { font-size: 1.5rem; font-weight: 800; color: #2c3e66; line-height: 1; }-->
+<!--        .card {-->
+<!--            background: white;-->
+<!--            border-radius: 48px;-->
+<!--            padding: 25px 20px 35px;-->
+<!--            box-shadow: 0 10px 25px rgba(0,0,0,0.1);-->
+<!--            text-align: center;-->
+<!--        }-->
+<!--        .image-area {-->
+<!--            width: 100%;-->
+<!--            min-height: 100px;-->
+<!--            max-height: 280px;-->
+<!--            background: #f3f3f3;-->
+<!--            border-radius: 32px;-->
+<!--            display: flex;-->
+<!--            align-items: center;-->
+<!--            justify-content: center;-->
+<!--            margin-bottom: 20px;-->
+<!--            overflow-y: auto;-->
+<!--            cursor: pointer;-->
+<!--            transition: 0.1s;-->
+<!--            padding: 12px;-->
+<!--            font-size: 0.9rem;-->
+<!--            color: #2c3e66;-->
+<!--            flex-direction: column;-->
+<!--            position: relative;-->
+<!--        }-->
+<!--        .image-area img { width: 100%; height: 100%; object-fit: cover; border-radius: 24px; }-->
+<!--        .words-list {-->
+<!--            text-align: left;-->
+<!--            width: 100%;-->
+<!--            max-height: 280px;-->
+<!--            overflow-y: auto;-->
+<!--            font-size: 0.85rem;-->
+<!--            background: #f8fafc;-->
+<!--            border-radius: 24px;-->
+<!--            padding: 12px;-->
+<!--        }-->
+<!--        .words-list table { width: 100%; border-collapse: collapse; }-->
+<!--        .words-list th, .words-list td { padding: 6px 8px; text-align: left; border-bottom: 1px solid #e2e8f0; }-->
+<!--        .words-list th { background: #e9edf2; position: sticky; top: 0; }-->
+<!--        .close-list-btn {-->
+<!--            background: #6c757d;-->
+<!--            color: white;-->
+<!--            border: none;-->
+<!--            border-radius: 40px;-->
+<!--            padding: 6px 16px;-->
+<!--            margin-top: 12px;-->
+<!--            font-size: 0.75rem;-->
+<!--            cursor: pointer;-->
+<!--            font-weight: 600;-->
+<!--            transition: 0.2s;-->
+<!--            display: inline-block;-->
+<!--        }-->
+<!--        .close-list-btn:hover { background: #5a6268; }-->
+<!--        .list-header {-->
+<!--            display: flex;-->
+<!--            justify-content: space-between;-->
+<!--            align-items: center;-->
+<!--            margin-bottom: 8px;-->
+<!--            flex-wrap: wrap;-->
+<!--            gap: 8px;-->
+<!--        }-->
+<!--        .russian-word {-->
+<!--            font-size: 2.4rem;-->
+<!--            font-weight: 700;-->
+<!--            margin: 15px 0 10px;-->
+<!--            color: #1e2a3a;-->
+<!--            word-break: break-word;-->
+<!--        }-->
+<!--        .translation {-->
+<!--            font-size: 1.8rem;-->
+<!--            font-weight: 500;-->
+<!--            background: #e9ecef;-->
+<!--            padding: 14px;-->
+<!--            border-radius: 60px;-->
+<!--            margin: 15px 0;-->
+<!--            color: #0b5e2e;-->
+<!--            min-height: 85px;-->
+<!--            word-break: break-word;-->
+<!--        }-->
+<!--        .hidden-translation {-->
+<!--            background: #dee2e6;-->
+<!--            color: #8b9bb0;-->
+<!--            filter: blur(4px);-->
+<!--            cursor: pointer;-->
+<!--        }-->
+<!--        .mode-switch {-->
+<!--            display: flex;-->
+<!--            gap: 12px;-->
+<!--            justify-content: center;-->
+<!--            margin-bottom: 20px;-->
+<!--        }-->
+<!--        .mode-btn {-->
+<!--            background: #cfdee9;-->
+<!--            border: none;-->
+<!--            padding: 8px 24px;-->
+<!--            border-radius: 60px;-->
+<!--            font-weight: 700;-->
+<!--            font-size: 0.9rem;-->
+<!--            cursor: pointer;-->
+<!--            transition: 0.2s;-->
+<!--            color: #1f2a3e;-->
+<!--        }-->
+<!--        .mode-btn.active {-->
+<!--            background: #2b3b4e;-->
+<!--            color: white;-->
+<!--            box-shadow: 0 4px 10px rgba(0,0,0,0.2);-->
+<!--        }-->
+<!--        .shuffle-btn {-->
+<!--            background: #6f42c1;-->
+<!--            color: white;-->
+<!--            border: none;-->
+<!--            padding: 8px 20px;-->
+<!--            border-radius: 40px;-->
+<!--            font-weight: 600;-->
+<!--            font-size: 0.8rem;-->
+<!--            cursor: pointer;-->
+<!--            transition: 0.2s;-->
+<!--            margin-left: 10px;-->
+<!--        }-->
+<!--        .shuffle-btn:hover { background: #5a32a3; transform: scale(0.98); }-->
+<!--        .counter {-->
+<!--            background: #e9ecef;-->
+<!--            border-radius: 40px;-->
+<!--            padding: 8px 20px;-->
+<!--            font-size: 0.9rem;-->
+<!--            font-weight: 600;-->
+<!--            color: #2c3e66;-->
+<!--            margin-top: 10px;-->
+<!--            margin-bottom: 5px;-->
+<!--            display: inline-block;-->
+<!--        }-->
+<!--        .btn {-->
+<!--            border: none;-->
+<!--            color: white;-->
+<!--            font-size: 0.95rem;-->
+<!--            font-weight: 600;-->
+<!--            padding: 10px 18px;-->
+<!--            border-radius: 60px;-->
+<!--            margin: 5px;-->
+<!--            cursor: pointer;-->
+<!--            transition: 0.2s;-->
+<!--            box-shadow: 0 3px 6px rgba(0,0,0,0.1);-->
+<!--        }-->
+<!--        .btn-show { background: #1e6f3f; }-->
+<!--        .btn-show:hover { background: #0f5a33; transform: scale(0.97); }-->
+<!--        .btn-next { background: #3a5a78; }-->
+<!--        .btn-next:hover { background: #2c4c6c; }-->
+<!--        .difficulty-buttons {-->
+<!--            display: flex;-->
+<!--            justify-content: center;-->
+<!--            gap: 8px;-->
+<!--            margin-top: 15px;-->
+<!--            flex-wrap: wrap;-->
+<!--        }-->
+<!--        .btn-difficulty { flex: 1; min-width: 80px; font-size: 0.85rem; padding: 10px 12px; }-->
+<!--        .btn-again { background: #dc3545; }-->
+<!--        .btn-again:hover { background: #b02a37; }-->
+<!--        .btn-hard { background: #fd7e14; }-->
+<!--        .btn-hard:hover { background: #e0620e; }-->
+<!--        .btn-good { background: #28a745; }-->
+<!--        .btn-good:hover { background: #1e7e34; }-->
+<!--        .btn-easy { background: #17a2b8; }-->
+<!--        .btn-easy:hover { background: #117a8b; }-->
+<!--        .category-bar {-->
+<!--            background: rgba(200, 212, 220, 0.95);-->
+<!--            border-radius: 48px;-->
+<!--            padding: 12px 15px;-->
+<!--            margin-bottom: 20px;-->
+<!--            display: flex;-->
+<!--            justify-content: center;-->
+<!--            gap: 10px;-->
+<!--            flex-wrap: wrap;-->
+<!--            max-height: 260px;-->
+<!--            overflow-y: auto;-->
+<!--        }-->
+<!--        .cat-item {-->
+<!--            display: flex;-->
+<!--            align-items: center;-->
+<!--            gap: 6px;-->
+<!--            background: #cbd5e1;-->
+<!--            border-radius: 40px;-->
+<!--            padding: 4px 12px 4px 8px;-->
+<!--            transition: all 0.2s;-->
+<!--        }-->
+<!--        .cat-item input {-->
+<!--            width: 18px;-->
+<!--            height: 18px;-->
+<!--            cursor: pointer;-->
+<!--            margin: 0;-->
+<!--        }-->
+<!--        .cat-btn {-->
+<!--            background: transparent;-->
+<!--            color: #1f2a3e;-->
+<!--            border: 2px solid transparent;-->
+<!--            padding: 6px 8px 6px 4px;-->
+<!--            border-radius: 40px;-->
+<!--            font-weight: 600;-->
+<!--            font-size: 0.8rem;-->
+<!--            cursor: pointer;-->
+<!--            transition: 0.1s;-->
+<!--            display: inline-flex;-->
+<!--            align-items: center;-->
+<!--            gap: 6px;-->
+<!--            white-space: nowrap;-->
+<!--        }-->
+<!--        /* АКТИВНАЯ КАТЕГОРИЯ — КРАСНАЯ РАМКА */-->
+<!--        .cat-btn.active {-->
+<!--            border: 2px solid #dc3545;-->
+<!--            background: rgba(220, 53, 69, 0.1);-->
+<!--            border-radius: 40px;-->
+<!--        }-->
+<!--        .cat-btn span.count {-->
+<!--            background: rgba(0,0,0,0.15);-->
+<!--            border-radius: 20px;-->
+<!--            padding: 2px 8px;-->
+<!--            font-size: 0.7rem;-->
+<!--            font-weight: 700;-->
+<!--            margin-left: 4px;-->
+<!--        }-->
+<!--        .cat-item.completed {-->
+<!--            background: #9bc48f;-->
+<!--            opacity: 0.8;-->
+<!--        }-->
+<!--        .reset-checkboxes-btn {-->
+<!--            background: #6c757d;-->
+<!--            font-size: 0.7rem;-->
+<!--            padding: 4px 10px;-->
+<!--            margin-left: 8px;-->
+<!--            border: none;-->
+<!--            border-radius: 40px;-->
+<!--            color: white;-->
+<!--            cursor: pointer;-->
+<!--        }-->
+<!--        footer { text-align: center; margin-top: 15px; font-size: 0.65rem; color: #5a6e85; }-->
+<!--        @media (max-width: 550px) {-->
+<!--            .russian-word { font-size: 1.8rem; }-->
+<!--            .translation { font-size: 1.3rem; }-->
+<!--            .btn-difficulty { font-size: 0.7rem; min-width: 65px; }-->
+<!--            .stat-value { font-size: 1.2rem; }-->
+<!--            .cat-btn { font-size: 0.65rem; }-->
+<!--            .counter { font-size: 0.75rem; padding: 5px 15px; }-->
+<!--            .cat-item { padding: 2px 8px 2px 5px; }-->
+<!--            .cat-item input { width: 14px; height: 14px; }-->
+<!--        }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--<div class="app-container">-->
+<!--    <div class="stats">-->
+<!--        <div class="stat-card"><div class="stat-label">📚 Всего</div><div class="stat-value" id="totalWordsCount">0</div></div>-->
+<!--        <div class="stat-card"><div class="stat-label">✅ Выучено</div><div class="stat-value" id="learnedWordsCount">0</div></div>-->
+<!--        <div class="stat-card"><div class="stat-label">🔄 На повторении</div><div class="stat-value" id="dueWordsCount">0</div></div>-->
+<!--        <button class="reset-btn btn" id="resetProgressBtn" style="background:#6c757d;">🔄 Сброс</button>-->
+<!--    </div>-->
+
+<!--    <div class="mode-switch">-->
+<!--        <button class="mode-btn active" data-mode="spaced">📆 Интервальные повторения</button>-->
+<!--        <button class="mode-btn" data-mode="simple">📖 Шпаргалка (без учёта)</button>-->
+<!--        <button class="shuffle-btn" id="shuffleBtn" style="display: none;">🎲 Перемешать</button>-->
+<!--    </div>-->
+
+<!--    <div class="category-bar" id="categoryBar"></div>-->
+<!--    <div class="card">-->
+<!--        <div class="image-area" id="imageContainer">-->
+<!--            🖼️ Нажмите, чтобы показать список слов-->
+<!--        </div>-->
+<!--        <div class="russian-word" id="russianWord">-&#45;&#45;</div>-->
+<!--        <div class="counter" id="wordCounter" style="display: none;"></div>-->
+<!--        <div class="translation hidden-translation" id="translationBlock">🔒 нажмите «Показать перевод»</div>-->
+<!--        <div class="controls">-->
+<!--            <button class="btn btn-show" id="showTranslateBtn">📖 Показать перевод</button>-->
+<!--            <button class="btn btn-next" id="nextWordBtn">➡ Следующее</button>-->
+<!--        </div>-->
+<!--        <div class="difficulty-buttons" id="difficultyButtons" style="display: none;">-->
+<!--            <button class="btn-difficulty btn-again" data-quality="0">🔄 Снова</button>-->
+<!--            <button class="btn-difficulty btn-hard" data-quality="2">😓 Сложно</button>-->
+<!--            <button class="btn-difficulty btn-good" data-quality="3">👍 Хорошо</button>-->
+<!--            <button class="btn-difficulty btn-easy" data-quality="4">⭐ Легко</button>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <footer>📊 SM‑2 • ✅ чекбокс — категория пройдена • 🔴 активная категория — красная рамка</footer>-->
+<!--</div>-->
+
+<!--<script>-->
+<!--    // ===================== БАЗА ДАННЫХ СЛОВ =====================-->
+<!--    const wordsDB = [];-->
+<!--    let idCounter = 0;-->
+<!--    function addWord(ru, pl, category, image = null) {-->
+<!--        wordsDB.push({-->
+<!--            id: idCounter++,-->
+<!--            ru: ru,-->
+<!--            pl: pl,-->
+<!--            category: category,-->
+<!--            image: image || `https://picsum.photos/id/${(idCounter % 100) + 200}/400/200`-->
+<!--        });-->
+<!--    }-->
+
+<!--    // &#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45; БАЗА СЛОВ &#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
+<!--    addWord("Хлеб", "chleb", "еда");-->
+<!--    addWord("Масло", "masło", "еда");-->
+<!--    addWord("Сыр", "ser", "еда");-->
+<!--    addWord("Колбаса", "kiełbasa", "еда");-->
+<!--    addWord("Молоко", "mleko", "еда");-->
+<!--    addWord("Яйцо", "jajko", "еда");-->
+<!--    addWord("Сахар", "cukier", "еда");-->
+<!--    addWord("Соль", "sól", "еда");-->
+<!--    addWord("Вода", "woda", "напитки");-->
+<!--    addWord("Чай", "herbata", "напитки");-->
+<!--    addWord("Кофе", "kawa", "напитки");-->
+<!--    addWord("Кошка", "kot", "животные");-->
+<!--    addWord("Собака", "pies", "животные");-->
+<!--    addWord("Красный", "czerwony", "цвета");-->
+<!--    addWord("Синий", "niebieski", "цвета");-->
+<!--    addWord("Зелёный", "zielony", "цвета");-->
+<!--    addWord("Мама", "mama", "семья");-->
+<!--    addWord("Папа", "tata", "семья");-->
+
+<!--    // ===================== ИКОНКИ КАТЕГОРИЙ =====================-->
+<!--    const categoryIcons = {-->
+<!--        "все": "📁",-->
+<!--        "еда": "🍲",-->
+<!--        "напитки": "🥤",-->
+<!--        "животные": "🐕",-->
+<!--        "цвета": "🎨",-->
+<!--        "семья": "👨‍👩‍👧"-->
+<!--    };-->
+
+<!--    function getCategoryCounts() {-->
+<!--        const counts = {};-->
+<!--        wordsDB.forEach(word => { counts[word.category] = (counts[word.category] || 0) + 1; });-->
+<!--        return counts;-->
+<!--    }-->
+
+<!--    // -&#45;&#45;&#45;&#45; ХРАНЕНИЕ СОСТОЯНИЯ ЧЕКБОКСОВ (пройденные категории) -&#45;&#45;&#45;&#45;-->
+<!--    let completedCategories = {};-->
+
+<!--    function loadCompletedCategories() {-->
+<!--        const saved = localStorage.getItem("polish_completed_categories");-->
+<!--        if (saved) {-->
+<!--            completedCategories = JSON.parse(saved);-->
+<!--        } else {-->
+<!--            completedCategories = {};-->
+<!--        }-->
+<!--    }-->
+
+<!--    function saveCompletedCategories() {-->
+<!--        localStorage.setItem("polish_completed_categories", JSON.stringify(completedCategories));-->
+<!--    }-->
+
+<!--    function toggleCategoryCompleted(category) {-->
+<!--        if (completedCategories[category]) {-->
+<!--            delete completedCategories[category];-->
+<!--        } else {-->
+<!--            completedCategories[category] = true;-->
+<!--        }-->
+<!--        saveCompletedCategories();-->
+<!--        renderCategoryButtons();-->
+<!--    }-->
+
+<!--    // -&#45;&#45;&#45;&#45; Система интервальных повторений -&#45;&#45;&#45;&#45;-->
+<!--    function loadProgress() {-->
+<!--        const saved = localStorage.getItem("polish_spaced_repetition_full_v2");-->
+<!--        if (saved) return JSON.parse(saved);-->
+<!--        const progress = {};-->
+<!--        const today = new Date().toDateString();-->
+<!--        wordsDB.forEach(word => {-->
+<!--            progress[word.id] = {-->
+<!--                repetitions: 0, interval: 1, easeFactor: 2.5, nextReview: today, learned: false-->
+<!--            };-->
+<!--        });-->
+<!--        return progress;-->
+<!--    }-->
+
+<!--    let progressData = loadProgress();-->
+<!--    function saveProgress() { localStorage.setItem("polish_spaced_repetition_full_v2", JSON.stringify(progressData)); updateStats(); }-->
+
+<!--    function updateStats() {-->
+<!--        const total = wordsDB.length;-->
+<!--        let learned = 0, due = 0;-->
+<!--        const today = new Date().toDateString();-->
+<!--        wordsDB.forEach(word => {-->
+<!--            const p = progressData[word.id];-->
+<!--            if (p && p.interval >= 21) learned++;-->
+<!--            if (p && p.nextReview <= today) due++;-->
+<!--        });-->
+<!--        document.getElementById("totalWordsCount").innerText = total;-->
+<!--        document.getElementById("learnedWordsCount").innerText = learned;-->
+<!--        document.getElementById("dueWordsCount").innerText = due;-->
+<!--    }-->
+
+<!--    function updateWordInterval(wordId, quality) {-->
+<!--        const p = progressData[wordId];-->
+<!--        if (!p) return;-->
+<!--        if (quality >= 3) {-->
+<!--            if (p.repetitions === 0) p.interval = 1;-->
+<!--            else if (p.repetitions === 1) p.interval = 6;-->
+<!--            else p.interval = Math.round(p.interval * p.easeFactor);-->
+<!--            p.repetitions += 1;-->
+<!--        } else {-->
+<!--            p.repetitions = 0;-->
+<!--            p.interval = 1;-->
+<!--        }-->
+<!--        let newEase = p.easeFactor + (0.1 - (5 - quality) * (0.08 + (5 - quality) * 0.02));-->
+<!--        if (newEase < 1.3) newEase = 1.3;-->
+<!--        p.easeFactor = newEase;-->
+<!--        if (quality === 0) { p.interval = 1; p.repetitions = 0; }-->
+<!--        const nextDate = new Date();-->
+<!--        nextDate.setDate(nextDate.getDate() + p.interval);-->
+<!--        p.nextReview = nextDate.toDateString();-->
+<!--        saveProgress();-->
+<!--    }-->
+
+<!--    // Глобальные переменные-->
+<!--    let currentMode = "spaced";-->
+<!--    let currentWord = null;-->
+<!--    let translationVisible = false;-->
+<!--    let currentCategory = "все";-->
+<!--    let simpleIndex = 0;-->
+<!--    let simpleCategoryWords = [];-->
+<!--    let isShowingList = false;-->
+
+<!--    function getWordsForCurrentMode() {-->
+<!--        if (currentMode === "spaced") {-->
+<!--            const today = new Date().toDateString();-->
+<!--            let filtered = wordsDB.filter(word => {-->
+<!--                if (currentCategory !== "все" && word.category !== currentCategory) return false;-->
+<!--                const p = progressData[word.id];-->
+<!--                return p && p.nextReview <= today;-->
+<!--            });-->
+<!--            if (filtered.length === 0) {-->
+<!--                filtered = wordsDB.filter(word => {-->
+<!--                    if (currentCategory !== "все" && word.category !== currentCategory) return false;-->
+<!--                    const p = progressData[word.id];-->
+<!--                    return p && p.repetitions === 0;-->
+<!--                });-->
+<!--            }-->
+<!--            if (filtered.length === 0) {-->
+<!--                filtered = wordsDB.filter(word => currentCategory === "все" || word.category === currentCategory);-->
+<!--            }-->
+<!--            return filtered;-->
+<!--        } else {-->
+<!--            let catWords = wordsDB.filter(w => currentCategory === "все" || w.category === currentCategory);-->
+<!--            return catWords;-->
+<!--        }-->
+<!--    }-->
+
+<!--    function shuffleSimpleWords() {-->
+<!--        if (currentMode !== "simple") return;-->
+<!--        let targetList = getWordsForCurrentMode();-->
+<!--        if (targetList.length === 0) return;-->
+<!--        for (let i = targetList.length - 1; i > 0; i&#45;&#45;) {-->
+<!--            const j = Math.floor(Math.random() * (i + 1));-->
+<!--            [targetList[i], targetList[j]] = [targetList[j], targetList[i]];-->
+<!--        }-->
+<!--        simpleCategoryWords = [...targetList];-->
+<!--        simpleIndex = 0;-->
+<!--        if (simpleCategoryWords.length > 0) {-->
+<!--            currentWord = simpleCategoryWords[0];-->
+<!--            simpleIndex = 1;-->
+<!--            document.getElementById("russianWord").innerText = currentWord.ru;-->
+<!--            if (isShowingList) hideWordList();-->
+<!--            updateImageDisplayNormal();-->
+<!--            translationVisible = false;-->
+<!--            const transBlock = document.getElementById("translationBlock");-->
+<!--            transBlock.classList.add("hidden-translation");-->
+<!--            transBlock.innerText = "🔒 Нажмите «Показать перевод»";-->
+<!--            updateCounter();-->
+<!--        }-->
+<!--    }-->
+
+<!--    function updateCounter() {-->
+<!--        const counterElement = document.getElementById("wordCounter");-->
+<!--        if (currentMode === "simple" && simpleCategoryWords.length > 0) {-->
+<!--            const currentIndex = simpleCategoryWords.findIndex(w => w.id === currentWord?.id);-->
+<!--            if (currentIndex !== -1) {-->
+<!--                const displayNumber = currentIndex + 1;-->
+<!--                counterElement.style.display = "inline-block";-->
+<!--                counterElement.innerText = `📌 ${displayNumber} / ${simpleCategoryWords.length}`;-->
+<!--            } else {-->
+<!--                counterElement.style.display = "none";-->
+<!--            }-->
+<!--        } else {-->
+<!--            counterElement.style.display = "none";-->
+<!--        }-->
+<!--    }-->
+
+<!--    function updateImageDisplayNormal() {-->
+<!--        isShowingList = false;-->
+<!--        const imgContainer = document.getElementById("imageContainer");-->
+<!--        if (!currentWord) {-->
+<!--            imgContainer.innerHTML = `<div>🖼️ Нет слова</div>`;-->
+<!--            return;-->
+<!--        }-->
+<!--        imgContainer.innerHTML = '';-->
+<!--        imgContainer.style.cursor = "pointer";-->
+<!--        imgContainer.style.flexDirection = "column";-->
+<!--        const hintSpan = document.createElement("div");-->
+<!--        hintSpan.className = "list-hint";-->
+<!--        hintSpan.innerText = "📋 нажмите → список слов категории";-->
+<!--        imgContainer.appendChild(hintSpan);-->
+<!--    }-->
+
+<!--    function showFullCategoryWords() {-->
+<!--        let categoryWords = wordsDB.filter(w => currentCategory === "все" || w.category === currentCategory);-->
+<!--        if (categoryWords.length === 0) {-->
+<!--            document.getElementById("imageContainer").innerHTML = `<div class="words-list">📭 Нет слов в категории</div>`;-->
+<!--            isShowingList = true;-->
+<!--            return;-->
+<!--        }-->
+<!--        let html = `<div class="words-list">-->
+<!--                        <div class="list-header">-->
+<!--                            <strong>📋 Слова категории «${currentCategory === "все" ? "Все категории" : currentCategory}» (${categoryWords.length})</strong>-->
+<!--                            <button class="close-list-btn" id="hideListBtn">✖️ Скрыть список</button>-->
+<!--                        </div>-->
+<!--                        <table>-->
+<!--                            <thead><tr><th>🇵🇱 Польский</th><th>🇷🇺 Русский</th></tr></thead>-->
+<!--                            <tbody>`;-->
+<!--        categoryWords.forEach(w => {-->
+<!--            html += `<tr><td><strong>${w.pl}</strong></td><td>${w.ru}</td></tr>`;-->
+<!--        });-->
+<!--        html += `</tbody></table><div class="list-hint" style="text-align:center; margin-top:8px;">✨ Всего слов: ${categoryWords.length}</div></div>`;-->
+
+<!--        const imgContainer = document.getElementById("imageContainer");-->
+<!--        imgContainer.innerHTML = html;-->
+<!--        imgContainer.style.cursor = "default";-->
+<!--        isShowingList = true;-->
+
+<!--        const hideBtn = document.getElementById("hideListBtn");-->
+<!--        if (hideBtn) {-->
+<!--            hideBtn.addEventListener("click", (e) => {-->
+<!--                e.stopPropagation();-->
+<!--                hideWordList();-->
+<!--            });-->
+<!--        }-->
+<!--    }-->
+
+<!--    function hideWordList() {-->
+<!--        if (!isShowingList) return;-->
+<!--        if (currentWord) {-->
+<!--            updateImageDisplayNormal();-->
+<!--        } else {-->
+<!--            const imgContainer = document.getElementById("imageContainer");-->
+<!--            imgContainer.innerHTML = `🖼️ Нажмите, чтобы показать список слов`;-->
+<!--            imgContainer.style.cursor = "pointer";-->
+<!--            isShowingList = false;-->
+<!--        }-->
+<!--    }-->
+
+<!--    function loadNextWord() {-->
+<!--        if (currentMode === "spaced") {-->
+<!--            const due = getWordsForCurrentMode();-->
+<!--            if (due.length === 0) return;-->
+<!--            const randomIndex = Math.floor(Math.random() * due.length);-->
+<!--            currentWord = due[randomIndex];-->
+<!--        } else {-->
+<!--            let targetList = getWordsForCurrentMode();-->
+<!--            if (targetList.length === 0) return;-->
+<!--            if (simpleCategoryWords.length === 0 ||-->
+<!--                simpleCategoryWords.length !== targetList.length ||-->
+<!--                simpleCategoryWords[0]?.id !== targetList[0]?.id) {-->
+<!--                simpleCategoryWords = [...targetList];-->
+<!--                simpleIndex = 0;-->
+<!--            }-->
+<!--            if (simpleIndex >= simpleCategoryWords.length) simpleIndex = 0;-->
+<!--            currentWord = simpleCategoryWords[simpleIndex];-->
+<!--            simpleIndex = (simpleIndex + 1) % simpleCategoryWords.length;-->
+<!--        }-->
+
+<!--        if (!currentWord) return;-->
+<!--        document.getElementById("russianWord").innerText = currentWord.ru;-->
+
+<!--        if (isShowingList) {-->
+<!--            updateImageDisplayNormal();-->
+<!--        } else {-->
+<!--            updateImageDisplayNormal();-->
+<!--        }-->
+
+<!--        translationVisible = false;-->
+<!--        const transBlock = document.getElementById("translationBlock");-->
+<!--        transBlock.classList.add("hidden-translation");-->
+<!--        transBlock.innerText = "🔒 Нажмите «Показать перевод»";-->
+
+<!--        document.getElementById("difficultyButtons").style.display = "none";-->
+<!--        updateCounter();-->
+<!--    }-->
+
+<!--    function showTranslation() {-->
+<!--        if (!currentWord) return;-->
+<!--        if (!translationVisible) {-->
+<!--            translationVisible = true;-->
+<!--            const transBlock = document.getElementById("translationBlock");-->
+<!--            transBlock.classList.remove("hidden-translation");-->
+<!--            transBlock.innerText = `🇵🇱 ${currentWord.pl}`;-->
+<!--            if (currentMode === "spaced") {-->
+<!--                document.getElementById("difficultyButtons").style.display = "flex";-->
+<!--            }-->
+<!--        }-->
+<!--    }-->
+
+<!--    function handleRating(quality) {-->
+<!--        if (!currentWord || currentMode !== "spaced") return;-->
+<!--        updateWordInterval(currentWord.id, quality);-->
+<!--        loadNextWord();-->
+<!--        updateStats();-->
+<!--    }-->
+
+<!--    function resetAllProgress() {-->
+<!--        if (confirm("Сбросить прогресс интервальных повторений? (режим шпаргалки не зависит от прогресса)")) {-->
+<!--            const today = new Date().toDateString();-->
+<!--            wordsDB.forEach(word => {-->
+<!--                progressData[word.id] = {-->
+<!--                    repetitions: 0, interval: 1, easeFactor: 2.5, nextReview: today, learned: false-->
+<!--                };-->
+<!--            });-->
+<!--            saveProgress();-->
+<!--            if (currentMode === "spaced") loadNextWord();-->
+<!--            updateStats();-->
+<!--        }-->
+<!--    }-->
+
+<!--    function resetCompletedCategories() {-->
+<!--        if (confirm("Сбросить отметки о пройденных категориях?")) {-->
+<!--            completedCategories = {};-->
+<!--            saveCompletedCategories();-->
+<!--            renderCategoryButtons();-->
+<!--        }-->
+<!--    }-->
+
+<!--    function switchMode(mode) {-->
+<!--        currentMode = mode;-->
+<!--        translationVisible = false;-->
+<!--        document.getElementById("difficultyButtons").style.display = "none";-->
+<!--        document.querySelectorAll(".mode-btn").forEach(btn => {-->
+<!--            if (btn.getAttribute("data-mode") === mode) btn.classList.add("active");-->
+<!--            else btn.classList.remove("active");-->
+<!--        });-->
+
+<!--        const shuffleBtn = document.getElementById("shuffleBtn");-->
+<!--        if (mode === "simple") {-->
+<!--            shuffleBtn.style.display = "inline-block";-->
+<!--        } else {-->
+<!--            shuffleBtn.style.display = "none";-->
+<!--        }-->
+
+<!--        simpleIndex = 0;-->
+<!--        simpleCategoryWords = [];-->
+<!--        if (isShowingList) hideWordList();-->
+<!--        loadNextWord();-->
+<!--        updateStats();-->
+<!--    }-->
+
+<!--    function renderCategoryButtons() {-->
+<!--        const bar = document.getElementById("categoryBar");-->
+<!--        bar.innerHTML = "";-->
+<!--        const categoryCounts = getCategoryCounts();-->
+<!--        const allCategories = ["все", ...new Set(wordsDB.map(w => w.category))];-->
+
+<!--        const resetCheckboxBtn = document.createElement("button");-->
+<!--        resetCheckboxBtn.innerText = "🔄 Сброс ✅";-->
+<!--        resetCheckboxBtn.classList.add("reset-checkboxes-btn");-->
+<!--        resetCheckboxBtn.addEventListener("click", (e) => {-->
+<!--            e.stopPropagation();-->
+<!--            resetCompletedCategories();-->
+<!--        });-->
+<!--        bar.appendChild(resetCheckboxBtn);-->
+
+<!--        allCategories.forEach(cat => {-->
+<!--            const catItem = document.createElement("div");-->
+<!--            catItem.className = "cat-item";-->
+<!--            if (completedCategories[cat]) catItem.classList.add("completed");-->
+
+<!--            const checkbox = document.createElement("input");-->
+<!--            checkbox.type = "checkbox";-->
+<!--            checkbox.checked = !!completedCategories[cat];-->
+<!--            checkbox.addEventListener("change", (e) => {-->
+<!--                e.stopPropagation();-->
+<!--                toggleCategoryCompleted(cat);-->
+<!--            });-->
+
+<!--            const btn = document.createElement("button");-->
+<!--            const icon = categoryIcons[cat] || "📌";-->
+<!--            const count = cat === "все" ? wordsDB.length : (categoryCounts[cat] || 0);-->
+<!--            btn.innerHTML = `${icon} ${cat === "все" ? "Все" : cat} <span class="count">${count}</span>`;-->
+<!--            btn.classList.add("cat-btn");-->
+<!--            if (currentCategory === cat) btn.classList.add("active");-->
+<!--            btn.addEventListener("click", () => {-->
+<!--                currentCategory = cat;-->
+<!--                translationVisible = false;-->
+<!--                document.getElementById("difficultyButtons").style.display = "none";-->
+<!--                if (currentMode === "simple") {-->
+<!--                    simpleIndex = 0;-->
+<!--                    simpleCategoryWords = [];-->
+<!--                }-->
+<!--                if (isShowingList) hideWordList();-->
+<!--                loadNextWord();-->
+<!--                renderCategoryButtons(); // перерисовка для обновления active класса-->
+<!--                updateStats();-->
+<!--            });-->
+
+<!--            catItem.appendChild(checkbox);-->
+<!--            catItem.appendChild(btn);-->
+<!--            bar.appendChild(catItem);-->
+<!--        });-->
+<!--    }-->
+
+<!--    function init() {-->
+<!--        loadCompletedCategories();-->
+<!--        renderCategoryButtons();-->
+<!--        loadNextWord();-->
+<!--        updateStats();-->
+
+<!--        document.getElementById("showTranslateBtn").addEventListener("click", showTranslation);-->
+<!--        document.getElementById("nextWordBtn").addEventListener("click", () => {-->
+<!--            if (isShowingList) hideWordList();-->
+<!--            loadNextWord();-->
+<!--            updateStats();-->
+<!--        });-->
+<!--        document.getElementById("resetProgressBtn").addEventListener("click", resetAllProgress);-->
+<!--        document.getElementById("shuffleBtn").addEventListener("click", () => shuffleSimpleWords());-->
+
+<!--        document.querySelectorAll(".btn-difficulty").forEach(btn => {-->
+<!--            btn.addEventListener("click", (e) => {-->
+<!--                const quality = parseInt(btn.getAttribute("data-quality"));-->
+<!--                if (!isNaN(quality)) handleRating(quality);-->
+<!--            });-->
+<!--        });-->
+
+<!--        document.getElementById("translationBlock").addEventListener("click", () => {-->
+<!--            if (!translationVisible) showTranslation();-->
+<!--        });-->
+
+<!--        const imageContainer = document.getElementById("imageContainer");-->
+<!--        imageContainer.addEventListener("click", (e) => {-->
+<!--            if (e.target.closest('.close-list-btn')) return;-->
+<!--            if (isShowingList) {-->
+<!--                hideWordList();-->
+<!--            } else {-->
+<!--                showFullCategoryWords();-->
+<!--            }-->
+<!--        });-->
+
+<!--        document.querySelectorAll(".mode-btn").forEach(btn => {-->
+<!--            btn.addEventListener("click", (e) => {-->
+<!--                const mode = btn.getAttribute("data-mode");-->
+<!--                if (mode === "spaced") switchMode("spaced");-->
+<!--                else if (mode === "simple") switchMode("simple");-->
+<!--            });-->
+<!--        });-->
+<!--    }-->
+
+<!--    init();-->
+<!--</script>-->
+<!--</body>-->
+<!--</html>-->
+
+
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -51,26 +1517,42 @@
             box-shadow: 0 10px 25px rgba(0,0,0,0.1);
             text-align: center;
         }
-        .image-area {
-            width: 100%;
-            min-height: 100px;
-            max-height: 280px;
+        .split-container {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            min-height: 280px;
+        }
+        .left-panel {
+            flex: 1;
             background: #f3f3f3;
             border-radius: 32px;
             display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 20px;
-            overflow-y: auto;
+            flex-direction: column;
+            overflow: hidden;
             cursor: pointer;
             transition: 0.1s;
             padding: 12px;
-            font-size: 0.9rem;
-            color: #2c3e66;
-            flex-direction: column;
-            position: relative;
+            min-height: 250px;
         }
-        .image-area img { width: 100%; height: 100%; object-fit: cover; border-radius: 24px; }
+        .right-panel {
+            flex: 1;
+            background: #f8f9fa;
+            border-radius: 32px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .image-area {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            cursor: pointer;
+        }
         .words-list {
             text-align: left;
             width: 100%;
@@ -105,6 +1587,63 @@
             margin-bottom: 8px;
             flex-wrap: wrap;
             gap: 8px;
+        }
+        .translator-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #dee2e6;
+            border-radius: 28px;
+            font-size: 0.9rem;
+            font-family: inherit;
+            outline: none;
+            transition: 0.2s;
+        }
+        .translator-input:focus {
+            border-color: #667eea;
+        }
+        .translator-result {
+            background: white;
+            padding: 12px;
+            border-radius: 28px;
+            font-size: 1rem;
+            font-weight: 500;
+            color: #1e6f3f;
+            min-height: 55px;
+            word-break: break-word;
+            border: 1px solid #dee2e6;
+        }
+        .btn-translate {
+            background: #3a5a78;
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.85rem;
+        }
+        .btn-translate:hover { background: #2c4c6c; transform: scale(0.97); }
+        .direction-buttons {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+        }
+        .btn-direction {
+            flex: 1;
+            background: #e9ecef;
+            color: #2c3e66;
+            border: none;
+            padding: 8px;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.8rem;
+        }
+        .btn-direction.active {
+            background: #667eea;
+            color: white;
         }
         .russian-word {
             font-size: 2.4rem;
@@ -152,6 +1691,19 @@
             color: white;
             box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
+        .shuffle-btn {
+            background: #6f42c1;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-left: 10px;
+        }
+        .shuffle-btn:hover { background: #5a32a3; transform: scale(0.98); }
         .counter {
             background: #e9ecef;
             border-radius: 40px;
@@ -204,14 +1756,29 @@
             justify-content: center;
             gap: 10px;
             flex-wrap: wrap;
-            max-height: 220px;
+            max-height: 260px;
             overflow-y: auto;
         }
-        .cat-btn {
+        .cat-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
             background: #cbd5e1;
+            border-radius: 40px;
+            padding: 4px 12px 4px 8px;
+            transition: all 0.2s;
+        }
+        .cat-item input {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            margin: 0;
+        }
+        .cat-btn {
+            background: transparent;
             color: #1f2a3e;
-            border: none;
-            padding: 8px 16px;
+            border: 2px solid transparent;
+            padding: 6px 8px 6px 4px;
             border-radius: 40px;
             font-weight: 600;
             font-size: 0.8rem;
@@ -222,6 +1789,11 @@
             gap: 6px;
             white-space: nowrap;
         }
+        .cat-btn.active {
+            border: 2px solid #dc3545;
+            background: rgba(220, 53, 69, 0.1);
+            border-radius: 40px;
+        }
         .cat-btn span.count {
             background: rgba(0,0,0,0.15);
             border-radius: 20px;
@@ -230,12 +1802,20 @@
             font-weight: 700;
             margin-left: 4px;
         }
-        .cat-btn.active {
-            background: #2b3b4e;
-            color: white;
-            box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+        .cat-item.completed {
+            background: #9bc48f;
+            opacity: 0.8;
         }
-        .reset-btn { background: #6c757d; font-size: 0.75rem; padding: 5px 12px; }
+        .reset-checkboxes-btn {
+            background: #6c757d;
+            font-size: 0.7rem;
+            padding: 4px 10px;
+            margin-left: 8px;
+            border: none;
+            border-radius: 40px;
+            color: white;
+            cursor: pointer;
+        }
         .list-hint { font-size: 0.7rem; color: #2c5f8a; margin-top: 6px; font-weight: normal; }
         footer { text-align: center; margin-top: 15px; font-size: 0.65rem; color: #5a6e85; }
         @media (max-width: 550px) {
@@ -243,8 +1823,11 @@
             .translation { font-size: 1.3rem; }
             .btn-difficulty { font-size: 0.7rem; min-width: 65px; }
             .stat-value { font-size: 1.2rem; }
-            .cat-btn { font-size: 0.65rem; padding: 5px 10px; }
+            .cat-btn { font-size: 0.65rem; }
             .counter { font-size: 0.75rem; padding: 5px 15px; }
+            .cat-item { padding: 2px 8px 2px 5px; }
+            .cat-item input { width: 14px; height: 14px; }
+            .split-container { flex-direction: column; }
         }
     </style>
 </head>
@@ -260,13 +1843,31 @@
     <div class="mode-switch">
         <button class="mode-btn active" data-mode="spaced">📆 Интервальные повторения</button>
         <button class="mode-btn" data-mode="simple">📖 Шпаргалка (без учёта)</button>
+        <button class="shuffle-btn" id="shuffleBtn" style="display: none;">🎲 Перемешать</button>
     </div>
 
     <div class="category-bar" id="categoryBar"></div>
     <div class="card">
-        <div class="image-area" id="imageContainer">
-            🖼️ Нажмите, чтобы показать список слов
+        <div class="split-container">
+            <!-- Левая панель: изображение / список слов -->
+            <div class="left-panel" id="leftPanel">
+                <div class="image-area" id="imageContainer">
+                    🖼️ Нажмите, чтобы показать список слов
+                </div>
+            </div>
+
+            <!-- Правая панель: переводчик -->
+            <div class="right-panel" id="rightPanel">
+                <div class="direction-buttons">
+                    <button class="btn-direction active" data-dir="ru-pl">🇷🇺 → 🇵🇱</button>
+                    <button class="btn-direction" data-dir="pl-ru">🇵🇱 → 🇷🇺</button>
+                </div>
+                <input type="text" class="translator-input" id="translatorInput" placeholder="Введите слово...">
+                <button class="btn-translate" id="translateBtn">🔍 Перевести</button>
+                <div class="translator-result" id="translatorResult">Результат появится здесь</div>
+            </div>
         </div>
+
         <div class="russian-word" id="russianWord">---</div>
         <div class="counter" id="wordCounter" style="display: none;"></div>
         <div class="translation hidden-translation" id="translationBlock">🔒 нажмите «Показать перевод»</div>
@@ -281,7 +1882,7 @@
             <button class="btn-difficulty btn-easy" data-quality="4">⭐ Легко</button>
         </div>
     </div>
-    <footer>📊 SM‑2 • нажмите на изображение → список слов категории (кнопка "Скрыть" вернёт карточку)</footer>
+    <footer>📊 SM‑2 • 🔴 активная категория — красная рамка • ✅ чекбокс — пройдено • 🔍 переводчик</footer>
 </div>
 
 <script>
@@ -298,10 +1899,8 @@
         });
     }
 
-    // ---------- РАСШИРЕННАЯ БАЗА СЛОВ ----------
-    addWord("Хлеб", "chleb", "еда");
-    addWord("Масло", "masło", "еда");
-    addWord("Сыр", "ser", "еда");
+    // ---------- БАЗА СЛОВ ----------
+    // ===================== 1. Еда (Jedzenie) — 30 пар =====================
     addWord("Колбаса", "kiełbasa", "еда");
     addWord("Мясо", "mięso", "еда");
     addWord("Курица", "kurczak", "еда");
@@ -2959,7 +4558,42 @@
         return counts;
     }
 
-    // Иконки для категорий
+    // Словари для переводчика
+    const ruToPlDict = {};
+    const plToRuDict = {};
+    wordsDB.forEach(word => {
+        ruToPlDict[word.ru.toLowerCase()] = word.pl;
+        plToRuDict[word.pl.toLowerCase()] = word.ru;
+    });
+
+    let translatorDirection = "ru-pl";
+
+    function performTranslation() {
+        const input = document.getElementById("translatorInput").value.trim().toLowerCase();
+        const resultDiv = document.getElementById("translatorResult");
+        if (!input) {
+            resultDiv.innerText = "Введите слово для перевода";
+            return;
+        }
+
+        if (translatorDirection === "ru-pl") {
+            const translation = ruToPlDict[input];
+            if (translation) {
+                resultDiv.innerText = `🇵🇱 ${translation}`;
+            } else {
+                resultDiv.innerText = `❌ Перевод не найден для "${input}"`;
+            }
+        } else {
+            const translation = plToRuDict[input];
+            if (translation) {
+                resultDiv.innerText = `🇷🇺 ${translation}`;
+            } else {
+                resultDiv.innerText = `❌ Перевод не найден для "${input}"`;
+            }
+        }
+    }
+
+    // ===================== ИКОНКИ КАТЕГОРИЙ =====================
     const categoryIcons = {
         "все": "📁",
         "еда": "🍲",
@@ -2991,21 +4625,20 @@
         "прилагательные": "📝",
         "наречия": "📍",
         "вопросы": "❓",
-        "овощи": "🥕.",
-        "фрукты": "🍎.",
-        "напитки": "🥤.",
-        "путешествие": "✈️.",
-        "части тела": "👃.",
-        "офис": "📎.",
-        "домашние животные": "🐕.",
-        "дикие животные": "🦁.",
-        "погодные явления": "🌩️.",
-        "пространство": "🧭.",
-        "инструменты": "🔧.",
-        "запахи": "👃.",
-        "внешность": "👨.",
-        ////////////
-        "посуда": "🍽️.",
+        "овощи": "🥕",
+        "фрукты": "🍎",
+        "напитки": "🥤",
+        "путешествие": "✈️",
+        "части тела": "👃",
+        "офис": "📎",
+        "домашние животные": "🐕",
+        "дикие животные": "🦁",
+        "погодные явления": "🌩️",
+        "пространство": "🧭",
+        "инструменты": "🔧",
+        "запахи": "👃",
+        "внешность": "👨",
+        "посуда": "🍽️",
         "кухня": "🍳",
         "образование": "🎓",
         "обувь": "👟",
@@ -3039,6 +4672,38 @@
         "числительные (исключения)": "✨",
         "числительные (разговорная форма)": "🎲",
     };
+
+    function getCategoryCounts() {
+        const counts = {};
+        wordsDB.forEach(word => { counts[word.category] = (counts[word.category] || 0) + 1; });
+        return counts;
+    }
+
+    // ----- ХРАНЕНИЕ СОСТОЯНИЯ ЧЕКБОКСОВ -----
+    let completedCategories = {};
+
+    function loadCompletedCategories() {
+        const saved = localStorage.getItem("polish_completed_categories");
+        if (saved) {
+            completedCategories = JSON.parse(saved);
+        } else {
+            completedCategories = {};
+        }
+    }
+
+    function saveCompletedCategories() {
+        localStorage.setItem("polish_completed_categories", JSON.stringify(completedCategories));
+    }
+
+    function toggleCategoryCompleted(category) {
+        if (completedCategories[category]) {
+            delete completedCategories[category];
+        } else {
+            completedCategories[category] = true;
+        }
+        saveCompletedCategories();
+        renderCategoryButtons();
+    }
 
     // ----- Система интервальных повторений -----
     function loadProgress() {
@@ -3127,10 +4792,33 @@
         }
     }
 
+    function shuffleSimpleWords() {
+        if (currentMode !== "simple") return;
+        let targetList = getWordsForCurrentMode();
+        if (targetList.length === 0) return;
+        for (let i = targetList.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [targetList[i], targetList[j]] = [targetList[j], targetList[i]];
+        }
+        simpleCategoryWords = [...targetList];
+        simpleIndex = 0;
+        if (simpleCategoryWords.length > 0) {
+            currentWord = simpleCategoryWords[0];
+            simpleIndex = 1;
+            document.getElementById("russianWord").innerText = currentWord.ru;
+            if (isShowingList) hideWordList();
+            updateImageDisplayNormal();
+            translationVisible = false;
+            const transBlock = document.getElementById("translationBlock");
+            transBlock.classList.add("hidden-translation");
+            transBlock.innerText = "🔒 Нажмите «Показать перевод»";
+            updateCounter();
+        }
+    }
+
     function updateCounter() {
         const counterElement = document.getElementById("wordCounter");
         if (currentMode === "simple" && simpleCategoryWords.length > 0) {
-            // Находим индекс текущего слова в списке simpleCategoryWords
             const currentIndex = simpleCategoryWords.findIndex(w => w.id === currentWord?.id);
             if (currentIndex !== -1) {
                 const displayNumber = currentIndex + 1;
@@ -3151,7 +4839,6 @@
             imgContainer.innerHTML = `<div>🖼️ Нет слова</div>`;
             return;
         }
-        // imgContainer.innerHTML = `<img src="${currentWord.image}" alt="иллюстрация" style="max-height:180px; width:auto;">`;
         imgContainer.innerHTML = '';
         imgContainer.style.cursor = "pointer";
         imgContainer.style.flexDirection = "column";
@@ -3193,6 +4880,9 @@
                 hideWordList();
             });
         }
+
+        // Скрываем правую панель при открытии списка
+        document.getElementById("rightPanel").style.display = "none";
     }
 
     function hideWordList() {
@@ -3205,6 +4895,8 @@
             imgContainer.style.cursor = "pointer";
             isShowingList = false;
         }
+        // Показываем правую панель обратно
+        document.getElementById("rightPanel").style.display = "flex";
     }
 
     function loadNextWord() {
@@ -3216,7 +4908,6 @@
         } else {
             let targetList = getWordsForCurrentMode();
             if (targetList.length === 0) return;
-            // Обновляем кэш, если список изменился (например, при смене категории)
             if (simpleCategoryWords.length === 0 ||
                 simpleCategoryWords.length !== targetList.length ||
                 simpleCategoryWords[0]?.id !== targetList[0]?.id) {
@@ -3232,7 +4923,7 @@
         document.getElementById("russianWord").innerText = currentWord.ru;
 
         if (isShowingList) {
-            updateImageDisplayNormal();
+            hideWordList();
         } else {
             updateImageDisplayNormal();
         }
@@ -3242,13 +4933,7 @@
         transBlock.classList.add("hidden-translation");
         transBlock.innerText = "🔒 Нажмите «Показать перевод»";
 
-        if (currentMode === "spaced") {
-            document.getElementById("difficultyButtons").style.display = "none";
-        } else {
-            document.getElementById("difficultyButtons").style.display = "none";
-        }
-
-        // Обновляем счётчик для режима шпаргалки
+        document.getElementById("difficultyButtons").style.display = "none";
         updateCounter();
     }
 
@@ -3261,8 +4946,6 @@
             transBlock.innerText = `🇵🇱 ${currentWord.pl}`;
             if (currentMode === "spaced") {
                 document.getElementById("difficultyButtons").style.display = "flex";
-            } else {
-                document.getElementById("difficultyButtons").style.display = "none";
             }
         }
     }
@@ -3275,7 +4958,7 @@
     }
 
     function resetAllProgress() {
-        if (confirm("Сбросить прогресс интервальных повторений? (режим шпаргалки не зависит от прогресса)")) {
+        if (confirm("Сбросить прогресс интервальных повторений?")) {
             const today = new Date().toDateString();
             wordsDB.forEach(word => {
                 progressData[word.id] = {
@@ -3288,6 +4971,14 @@
         }
     }
 
+    function resetCompletedCategories() {
+        if (confirm("Сбросить отметки о пройденных категориях?")) {
+            completedCategories = {};
+            saveCompletedCategories();
+            renderCategoryButtons();
+        }
+    }
+
     function switchMode(mode) {
         currentMode = mode;
         translationVisible = false;
@@ -3296,6 +4987,14 @@
             if (btn.getAttribute("data-mode") === mode) btn.classList.add("active");
             else btn.classList.remove("active");
         });
+
+        const shuffleBtn = document.getElementById("shuffleBtn");
+        if (mode === "simple") {
+            shuffleBtn.style.display = "inline-block";
+        } else {
+            shuffleBtn.style.display = "none";
+        }
+
         simpleIndex = 0;
         simpleCategoryWords = [];
         if (isShowingList) hideWordList();
@@ -3308,7 +5007,29 @@
         bar.innerHTML = "";
         const categoryCounts = getCategoryCounts();
         const allCategories = ["все", ...new Set(wordsDB.map(w => w.category))];
+
+        const resetCheckboxBtn = document.createElement("button");
+        resetCheckboxBtn.innerText = "🔄 Сброс ✅";
+        resetCheckboxBtn.classList.add("reset-checkboxes-btn");
+        resetCheckboxBtn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            resetCompletedCategories();
+        });
+        bar.appendChild(resetCheckboxBtn);
+
         allCategories.forEach(cat => {
+            const catItem = document.createElement("div");
+            catItem.className = "cat-item";
+            if (completedCategories[cat]) catItem.classList.add("completed");
+
+            const checkbox = document.createElement("input");
+            checkbox.type = "checkbox";
+            checkbox.checked = !!completedCategories[cat];
+            checkbox.addEventListener("change", (e) => {
+                e.stopPropagation();
+                toggleCategoryCompleted(cat);
+            });
+
             const btn = document.createElement("button");
             const icon = categoryIcons[cat] || "📌";
             const count = cat === "все" ? wordsDB.length : (categoryCounts[cat] || 0);
@@ -3328,11 +5049,15 @@
                 renderCategoryButtons();
                 updateStats();
             });
-            bar.appendChild(btn);
+
+            catItem.appendChild(checkbox);
+            catItem.appendChild(btn);
+            bar.appendChild(catItem);
         });
     }
 
     function init() {
+        loadCompletedCategories();
         renderCategoryButtons();
         loadNextWord();
         updateStats();
@@ -3344,6 +5069,21 @@
             updateStats();
         });
         document.getElementById("resetProgressBtn").addEventListener("click", resetAllProgress);
+        document.getElementById("shuffleBtn").addEventListener("click", () => shuffleSimpleWords());
+        document.getElementById("translateBtn").addEventListener("click", performTranslation);
+        document.getElementById("translatorInput").addEventListener("keypress", (e) => {
+            if (e.key === "Enter") performTranslation();
+        });
+
+        document.querySelectorAll(".btn-direction").forEach(btn => {
+            btn.addEventListener("click", (e) => {
+                document.querySelectorAll(".btn-direction").forEach(b => b.classList.remove("active"));
+                btn.classList.add("active");
+                translatorDirection = btn.getAttribute("data-dir");
+                document.getElementById("translatorResult").innerText = "Результат появится здесь";
+                document.getElementById("translatorInput").value = "";
+            });
+        });
 
         document.querySelectorAll(".btn-difficulty").forEach(btn => {
             btn.addEventListener("click", (e) => {
@@ -3356,8 +5096,8 @@
             if (!translationVisible) showTranslation();
         });
 
-        const imageContainer = document.getElementById("imageContainer");
-        imageContainer.addEventListener("click", (e) => {
+        const leftPanel = document.getElementById("leftPanel");
+        leftPanel.addEventListener("click", (e) => {
             if (e.target.closest('.close-list-btn')) return;
             if (isShowingList) {
                 hideWordList();
