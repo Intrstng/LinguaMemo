@@ -423,6 +423,7 @@
   // ===================== БАЗА ДАННЫХ СЛОВ =====================
   const wordsDB = [];
   let idCounter = 0;
+  let isShuffled = false;
   function addWord(ru, tr, category, image = null) {
     wordsDB.push({
       id: idCounter++,
@@ -2139,28 +2140,30 @@
   }
 
   function shuffleSimpleWords() {
-    if (currentMode !== "simple") return;
-    let targetList = getWordsForCurrentMode();
-    if (targetList.length === 0) return;
-    for (let i = targetList.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [targetList[i], targetList[j]] = [targetList[j], targetList[i]];
+        if (currentMode !== "simple") return;
+        let targetList = getWordsForCurrentMode();
+        if (targetList.length === 0) return;
+        // Перемешиваем массив
+        for (let i = targetList.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [targetList[i], targetList[j]] = [targetList[j], targetList[i]];
+        }
+        simpleCategoryWords = [...targetList];
+        simpleIndex = 0;
+        isShuffled = true; // Устанавливаем флаг, что массив перемешан
+        if (simpleCategoryWords.length > 0) {
+            currentWord = simpleCategoryWords[0];
+            simpleIndex = 1;
+            document.getElementById("russianWord").innerText = currentWord.ru;
+            if (isShowingList) hideWordList();
+            updateImageDisplayNormal();
+            translationVisible = false;
+            const transBlock = document.getElementById("translationBlock");
+            transBlock.classList.add("hidden-translation");
+            transBlock.innerText = "🔒 Нажмите «Показать перевод»";
+            updateCounter();
+        }
     }
-    simpleCategoryWords = [...targetList];
-    simpleIndex = 0;
-    if (simpleCategoryWords.length > 0) {
-      currentWord = simpleCategoryWords[0];
-      simpleIndex = 1;
-      document.getElementById("russianWord").innerText = currentWord.ru;
-      if (isShowingList) hideWordList();
-      updateImageDisplayNormal();
-      translationVisible = false;
-      const transBlock = document.getElementById("translationBlock");
-      transBlock.classList.add("hidden-translation");
-      transBlock.innerText = "🔒 Нажмите «Показать перевод»";
-      updateCounter();
-    }
-  }
 
   function updateCounter() {
     const counterElement = document.getElementById("wordCounter");
@@ -2246,42 +2249,47 @@
   }
 
   function loadNextWord() {
-    if (currentMode === "spaced") {
-      const due = getWordsForCurrentMode();
-      if (due.length === 0) return;
-      const randomIndex = Math.floor(Math.random() * due.length);
-      currentWord = due[randomIndex];
-    } else {
-      let targetList = getWordsForCurrentMode();
-      if (targetList.length === 0) return;
-      if (simpleCategoryWords.length === 0 ||
-              simpleCategoryWords.length !== targetList.length ||
-              simpleCategoryWords[0]?.id !== targetList[0]?.id) {
-        simpleCategoryWords = [...targetList];
-        simpleIndex = 0;
-      }
-      if (simpleIndex >= simpleCategoryWords.length) simpleIndex = 0;
-      currentWord = simpleCategoryWords[simpleIndex];
-      simpleIndex = (simpleIndex + 1) % simpleCategoryWords.length;
+        if (currentMode === "spaced") {
+            const due = getWordsForCurrentMode();
+            if (due.length === 0) return;
+            const randomIndex = Math.floor(Math.random() * due.length);
+            currentWord = due[randomIndex];
+        } else {
+            let targetList = getWordsForCurrentMode();
+            if (targetList.length === 0) return;
+
+            // ТОЛЬКО если simpleCategoryWords пуст, ИЛИ флаг isShuffled == false (не перемешан),
+            // ИЛИ список изменился (другая категория)
+            if (simpleCategoryWords.length === 0 ||
+                (!isShuffled && (simpleCategoryWords.length !== targetList.length ||
+                    simpleCategoryWords[0]?.id !== targetList[0]?.id))) {
+                simpleCategoryWords = [...targetList];
+                simpleIndex = 0;
+                isShuffled = false;
+            }
+
+            if (simpleIndex >= simpleCategoryWords.length) simpleIndex = 0;
+            currentWord = simpleCategoryWords[simpleIndex];
+            simpleIndex = (simpleIndex + 1) % simpleCategoryWords.length;
+        }
+
+        if (!currentWord) return;
+        document.getElementById("russianWord").innerText = currentWord.ru;
+
+        if (isShowingList) {
+            hideWordList();
+        } else {
+            updateImageDisplayNormal();
+        }
+
+        translationVisible = false;
+        const transBlock = document.getElementById("translationBlock");
+        transBlock.classList.add("hidden-translation");
+        transBlock.innerText = "🔒 Нажмите «Показать перевод»";
+
+        document.getElementById("difficultyButtons").style.display = "none";
+        updateCounter();
     }
-
-    if (!currentWord) return;
-    document.getElementById("russianWord").innerText = currentWord.ru;
-
-    if (isShowingList) {
-      hideWordList();
-    } else {
-      updateImageDisplayNormal();
-    }
-
-    translationVisible = false;
-    const transBlock = document.getElementById("translationBlock");
-    transBlock.classList.add("hidden-translation");
-    transBlock.innerText = "🔒 Нажмите «Показать перевод»";
-
-    document.getElementById("difficultyButtons").style.display = "none";
-    updateCounter();
-  }
 
   function showTranslation() {
     if (!currentWord) return;
