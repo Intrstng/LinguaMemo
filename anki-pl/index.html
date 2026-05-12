@@ -14027,19 +14027,20 @@
         "Напраление": "🧭",
         "школа": "📚",
         "тело": "🧍",
-        "растения": "🌿",
-        "кухня": "🥘",
-        "животные": "🐾",
         "профессия": "👔",
         "разное": "📦",
-        "небо": "✨"
+        "небо": "✨",
+        "животные": "🐘",
+        "глаголы": "💭",
+        "растения": "🌿",
+        "кухня": "🍰"
     };
 
     let completedCategories = {};
 
     function loadCompletedCategories() {
-        cons  saved = localStorage.getItem("polish_completed_categories");
-        if (saved  {
+        const saved = localStorage.getItem("polish_completed_categories");
+        if (saved) {
             completedCategories = JSON.parse(saved);
         } else {
             completedCategories = {};
